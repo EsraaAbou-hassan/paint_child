@@ -30,5 +30,6 @@ void ActionChangeBackgroundColor::Execute()
         break;
     };
 
+    pGUI->ClearDrawArea();
     pGUI->ClearStatusBar();
 }

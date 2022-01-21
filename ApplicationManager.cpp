@@ -5,6 +5,7 @@
 #include "Actions\ActionChangeDrawColor.h"
 #include "Actions\ActionChangeFillColor.h"
 #include "Actions\ActionChangeBackgroundColor.h"
+#include "Actions\ActionDeleteItem.h"
 #include<iostream>
 
 //Constructor
@@ -84,6 +85,9 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 		case CHNG_BK_CLR:
 			newAct = new ActionChangeBackgroundColor(this);
 			break;
+
+		case DEL:
+			newAct = new ActionDeleteItem(this);
 
 		case EXIT:
 			///create ExitAction here

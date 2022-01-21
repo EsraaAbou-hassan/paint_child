@@ -20,7 +20,7 @@ GUI::GUI()
 	UI.DrawColor = BLUE;	//Drawing color
 	UI.FillColor = GREEN;	//Filling color
 	UI.MsgColor = RED;		//Messages color
-	UI.BkGrndColor = WHITE;	//Background color
+	UI.BkGrndColor = CYAN;	//Background color
 	UI.HighlightColor = MAGENTA;	//This color should NOT be used to draw figures. use if for highlight only
 	UI.StatusBarColor = VIOLET;
 	UI.PenWidth = 3;	//width of the figures frames
@@ -92,6 +92,7 @@ ActionType GUI::MapInputToActionType() const
 			case ITM_DRAW_CLR: return CHNG_DRAW_CLR;
 			case ITM_FILL_CLR: return CHNG_FILL_CLR;
 			case ITM_BACKGROUND_CLR: return CHNG_BK_CLR;
+			case ITM_DEL: return DEL;
 			case ITM_EXIT: return EXIT;	
 			case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
 			case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
@@ -169,6 +170,7 @@ void GUI::CreateDrawToolBar() const
 	MenuItemImages[ITM_DRAW_CLR] = "images\\MenuItems\\Border_Color.jpg";
 	MenuItemImages[ITM_FILL_CLR] = "images\\MenuItems\\Fill_Color.jpg";
 	MenuItemImages[ITM_BACKGROUND_CLR] = "images\\MenuItems\\Background_Color.jpg";
+	MenuItemImages[ITM_DEL] = "images\\MenuItems\\delete.jpg";
 	MenuItemImages[ITM_CLR_CYAN] = "images\\MenuItems\\cyan.jpg";
 	MenuItemImages[ITM_CLR_GREEN] = "images\\MenuItems\\green.jpg";
 	MenuItemImages[ITM_CLR_RED] = "images\\MenuItems\\red.jpg";
@@ -203,7 +205,6 @@ void GUI::ClearDrawArea() const
 	pWind->SetPen(UI.BkGrndColor, 1);
 	pWind->SetBrush(UI.BkGrndColor);
 	pWind->DrawRectangle(0, UI.ToolBarHeight, UI.width, UI.height - UI.StatusBarHeight);	
-	
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -224,6 +225,15 @@ void GUI::setCrntDrawColor(color c) const
 
 color GUI::getCrntDrawColor() const	//get current drwawing color
 {	return UI.DrawColor;	}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+void GUI::setCrntFillColor(color c) const
+{
+	UI.isFilled = true;
+	UI.FillColor = c;
+}
+color GUI::getCrntFillColor() const	//get current filling color
+{	return UI.FillColor;	}
 //////////////////////////////////////////////////////////////////////////////////////////
 void GUI::setCrntBackgroundColor(color c) const
 {
@@ -234,14 +244,6 @@ void GUI::setCrntBackgroundColor(color c) const
 //{
 //	return UI.BkGrndColor;
 //}
-//////////////////////////////////////////////////////////////////////////////////////////
-void GUI::setCrntFillColor(color c) const
-{
-	UI.isFilled = true;
-	UI.FillColor = c;
-}
-color GUI::getCrntFillColor() const	//get current filling color
-{	return UI.FillColor;	}
 //////////////////////////////////////////////////////////////////////////////////////////
 	
 int GUI::getCrntPenWidth() const		//get current pen width

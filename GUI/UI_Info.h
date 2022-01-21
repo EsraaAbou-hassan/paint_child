@@ -23,6 +23,7 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 	ITM_DRAW_CLR,	//Draw Color item in menu
 	ITM_FILL_CLR,	//Fill Color item in menu
 	ITM_BACKGROUND_CLR,	//Background Color item in menu
+	ITM_DEL,
 
 	
 	//TODO: Add more items names here
