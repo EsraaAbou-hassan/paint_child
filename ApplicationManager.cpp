@@ -2,12 +2,10 @@
 #include "Actions\ActionAddSquare.h"
 #include "Actions\ActionAddElps.h"
 #include "Actions\ActionAddHex.h"
-#include "Actions\ActionDeleteItem.h"
 #include "Actions\ActionChangeDrawColor.h"
 #include "Actions\ActionChangeFillColor.h"
+#include "Actions\ActionChangeBackgroundColor.h"
 #include<iostream>
-
-
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -56,6 +54,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 	POINT p1, p2;
 	int numberOfFiguresSelected = 0, previosFigure = 0;
 	int length;
+	bool s;
 	string figureName;
 	//According to Action Type, create the corresponding action object
 	switch (ActType)
@@ -81,8 +80,9 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 		case CHNG_FILL_CLR:
 			newAct = new ActionChangeFillColor(this);
 			break;
-		case DEL:
-			newAct = new ActionDeleteItem(this);
+
+		case CHNG_BK_CLR:
+			newAct = new ActionChangeBackgroundColor(this);
 			break;
 
 		case EXIT:
@@ -100,12 +100,14 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 				{
 					temp = FigList[i];
 					length = temp->getFigureData(p1, p2);
+
 					if (x >= p1.x && x <= p2.x && y >= p1.y && y <= p2.y)
 					{
+						s = temp->IsSelected();
 						numberOfFiguresSelected++;
 						figureName = temp->getFigureName();
-						pGUI->PrintMessage(figureName);
-						temp->SetSelected(true);
+						s ? pGUI->CreateStatusBar() : pGUI->PrintMessage(figureName);
+						s ? temp->SetSelected(false) : temp->SetSelected(true);
 					}
 					else {
 						pGUI->PrintMessage("drawing area");

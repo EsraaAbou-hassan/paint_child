@@ -22,37 +22,18 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 	ITM_HEX,		//Hexa item in menu
 	ITM_DRAW_CLR,	//Draw Color item in menu
 	ITM_FILL_CLR,	//Fill Color item in menu
+	ITM_BACKGROUND_CLR,	//Background Color item in menu
 
 	
 	//TODO: Add more items names here
 
-			//Exit item
+	ITM_EXIT,		//Exit item
 	ITM_CLR_CYAN,
 	ITM_CLR_GREEN,
 	ITM_CLR_RED,
-	ITM_DEL,
-	ITM_EXIT,
+	
 	DRAW_ITM_COUNT		//no. of menu items ==> This should be the last line in this enum
 	
-};
-
-//enum ColorsPicker {
-//	COLOR_BISQUE,
-//	COLOR_IVORY,
-//	COLOR_LAVENDER,
-//	COLOR_BLACK,
-//	COLOR_CHOCOLATE,
-//	COLOR_KHAKI,
-//	COLOR_CORNFLOWERBLUE,
-//	COLOR_TOMATO,
-//	COLOR_DARKCYAN,
-//	COLOR_GAINSBORO,
-//};
-
-enum ColorsPicker {
-	COLOR_CYAN,
-	COLOR_GREEN,
-	COLOR_RED,
 };
 
 enum PlayMenuItem //The items of the Play menu (you should add more items)

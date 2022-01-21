@@ -19,11 +19,11 @@ void CHex::DrawMe(GUI* pGUI) const
 
 int CHex::getFigureData(POINT& p1, POINT& p2)
 {
-	/*p1.x = TopLeftCorner.x;
-	p1.y = TopLeftCorner.y;
-	p2.x = TopLeftCorner.x + length;
-	p2.y = TopLeftCorner.y + length;*/
-	return 0;
+	p1.x = center.x - radius;
+	p1.y = center.y - radius;
+	p2.x = center.x + radius;
+	p2.y = center.y + radius;
+	return -1;
 }
 
 string CHex::getFigureName() {

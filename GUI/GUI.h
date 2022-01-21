@@ -12,9 +12,6 @@
 //No other class is allowed to perform direct i/o
 class GUI	
 {
-private:
-	int ColorsCount;
-	color* ColorsPallete;
 public:	
 	window* pWind;	//Pointer to the Graphics Window
 public:
@@ -37,6 +34,9 @@ public:
 	bool getCrntIsFilled() const;
 	void setCrntDrawColor(color c) const;
 	void setCrntFillColor(color c) const;
+	void setCrntBackgroundColor(color c) const;
+
+
 
 	void ClearDrawArea() const;	//Clears the drawing area
 
@@ -54,6 +54,8 @@ public:
 	void PrintMessage(string msg) const;	//Print a message on Status bar
 	color getCrntDrawColor() const;	//get current drwawing color
 	color getCrntFillColor() const;	//get current filling color
+	color getCrntBackgroundColor() const;	//get current Background color
+
 	int getCrntPenWidth() const;		//get current pen width
 
 

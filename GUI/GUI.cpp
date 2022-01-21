@@ -1,5 +1,6 @@
 #include "GUI.h"
 #include "../Figures/HexaStruct.h"
+#include <iostream>
 
 //constructor make necessary initializations
 GUI::GUI()
@@ -30,11 +31,6 @@ GUI::GUI()
 	pWind = CreateWind(UI.width, UI.height, UI.wx, UI.wy);
 	//Change the title
 	pWind->ChangeTitle("Paint for Kids - Programming Techniques Project");
-
-	ColorsCount = 3;
-	ColorsPallete = new color[ColorsCount]{
-		CYAN,GREEN,RED
-	};
 	
 	CreateDrawToolBar();
 	CreateStatusBar();
@@ -95,11 +91,11 @@ ActionType GUI::MapInputToActionType() const
 			case ITM_HEX: return DRAW_HEX;
 			case ITM_DRAW_CLR: return CHNG_DRAW_CLR;
 			case ITM_FILL_CLR: return CHNG_FILL_CLR;
+			case ITM_BACKGROUND_CLR: return CHNG_BK_CLR;
 			case ITM_EXIT: return EXIT;	
 			case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
 			case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
 			case ITM_CLR_RED: return SELECT_COLOR_RED;
-			case ITM_DEL: return DEL;
 			
 			default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
@@ -169,15 +165,13 @@ void GUI::CreateDrawToolBar() const
 	string MenuItemImages[DRAW_ITM_COUNT];
 	MenuItemImages[ITM_SQUR] = "images\\MenuItems\\Menu_Sqr.jpg";
 	MenuItemImages[ITM_ELPS] = "images\\MenuItems\\Menu_Elps.jpg";
-	
+	MenuItemImages[ITM_HEX] = "images\\MenuItems\\Menu_Hex.jpg";
 	MenuItemImages[ITM_DRAW_CLR] = "images\\MenuItems\\Border_Color.jpg";
 	MenuItemImages[ITM_FILL_CLR] = "images\\MenuItems\\Fill_Color.jpg";
+	MenuItemImages[ITM_BACKGROUND_CLR] = "images\\MenuItems\\Background_Color.jpg";
 	MenuItemImages[ITM_CLR_CYAN] = "images\\MenuItems\\cyan.jpg";
 	MenuItemImages[ITM_CLR_GREEN] = "images\\MenuItems\\green.jpg";
 	MenuItemImages[ITM_CLR_RED] = "images\\MenuItems\\red.jpg";
-	
-	MenuItemImages[ITM_DEL] = "images\\MenuItems\\delete.jpg";
-	MenuItemImages[ITM_HEX] = "images\\MenuItems\\Menu_Hex.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
 
 
@@ -231,8 +225,19 @@ void GUI::setCrntDrawColor(color c) const
 color GUI::getCrntDrawColor() const	//get current drwawing color
 {	return UI.DrawColor;	}
 //////////////////////////////////////////////////////////////////////////////////////////
+void GUI::setCrntBackgroundColor(color c) const
+{
+	UI.BkGrndColor = c;
+}
+
+//color GUI::getCrntBackgroundColor() const	//get current Background color
+//{
+//	return UI.BkGrndColor;
+//}
+//////////////////////////////////////////////////////////////////////////////////////////
 void GUI::setCrntFillColor(color c) const
 {
+	UI.isFilled = true;
 	UI.FillColor = c;
 }
 color GUI::getCrntFillColor() const	//get current filling color

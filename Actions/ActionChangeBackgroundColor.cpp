@@ -1,32 +1,32 @@
-#include "ActionChangeFillColor.h"
+#include "ActionChangeBackgroundColor.h"
 
 #include "..\ApplicationManager.h"
 
 #include "..\GUI\GUI.h"
 #include <iostream>
 
-ActionChangeFillColor::ActionChangeFillColor(ApplicationManager* pApp) : Action(pApp)
+ActionChangeBackgroundColor::ActionChangeBackgroundColor(ApplicationManager* pApp) : Action(pApp)
 {}
 
 //Execute the action
-void ActionChangeFillColor::Execute()
+void ActionChangeBackgroundColor::Execute()
 {
 
     GUI* pGUI = pManager->GetGUI();
 
     ActionType ActType;
-    pGUI->PrintMessage("Select a color");
+    pGUI->PrintMessage("Select a Background color");
     ActType = pGUI->MapInputToActionType();
 
     switch (ActType) {
     case SELECT_COLOR_CYAN:
-        pGUI->setCrntFillColor(CYAN);
+        pGUI->setCrntBackgroundColor(CYAN);
         break;
     case SELECT_COLOR_GREEN:
-        pGUI->setCrntFillColor(GREEN);
+        pGUI->setCrntBackgroundColor(GREEN);
         break;
     case SELECT_COLOR_RED:
-        pGUI->setCrntFillColor(RED);
+        pGUI->setCrntBackgroundColor(RED);
         break;
     };
 

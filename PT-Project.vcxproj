@@ -131,9 +131,9 @@
   <ItemGroup>
     <ClCompile Include="Actions\ActionAddElps.cpp" />
     <ClCompile Include="Actions\ActionAddHex.cpp" />
+    <ClCompile Include="Actions\ActionChangeBackgroundColor.cpp" />
     <ClCompile Include="Actions\ActionChangeDrawColor.cpp" />
     <ClCompile Include="Actions\ActionChangeFillColor.cpp" />
-    <ClCompile Include="Actions\ActionDeleteItem.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp" />
     <ClCompile Include="CMUgraphicsLib\CMUgraphics.cpp" />
     <ClCompile Include="CMUgraphicsLib\image.cpp" />
@@ -181,9 +181,9 @@
   <ItemGroup>
     <ClInclude Include="Actions\ActionAddElps.h" />
     <ClInclude Include="Actions\ActionAddHex.h" />
+    <ClInclude Include="Actions\ActionChangeBackgroundColor.h" />
     <ClInclude Include="Actions\ActionChangeDrawColor.h" />
     <ClInclude Include="Actions\ActionChangeFillColor.h" />
-    <ClInclude Include="Actions\ActionDeleteItem.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />
     <ClInclude Include="CMUgraphicsLib\colors.h" />

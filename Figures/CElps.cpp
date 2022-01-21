@@ -19,9 +19,9 @@ int CElps::getFigureData(POINT& p1, POINT& p2)
 {
 	p1.x = TopLeftCorner.x;
 	p1.y = TopLeftCorner.y;
-	p2.x = TopLeftCorner.x;
-	p2.y = TopLeftCorner.y;
-	return TopLeftCorner.x+ TopLeftCorner.y;
+	p2.x = BottomRightCorner.x;
+	p2.y = BottomRightCorner.y;
+	return BottomRightCorner.y - TopLeftCorner.y;
 }
 
 string CElps::getFigureName() {
