@@ -1,0 +1,5 @@
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  ActionDeleteItem.cpp
+D:\ITI\ITI_9_month\Datastructure\project\21-01-2022\Actions\ActionDeleteItem.cpp(21,11): warning C4101: 'temp': unreferenced local variable
+ActionAddElps.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  PT-Project.vcxproj -> D:\ITI\ITI_9_month\Datastructure\project\21-01-2022\Debug\PT Project.exe
