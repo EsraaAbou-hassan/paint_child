@@ -77,6 +77,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 		case DRAW_HEX:
 			///create HEX here
 			newAct = new ActionAddHex(this);
+			
 			break;
 
 		case CHNG_DRAW_CLR:
@@ -174,6 +175,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			return NULL;
 			break;
 	}	
+	
 	return newAct;
 }
 //////////////////////////////////////////////////////////////////////
@@ -223,6 +225,9 @@ void ApplicationManager::UpdateInterface() const
 {	
 	for(int i=0; i<FigCount; i++)
 		FigList[i]->DrawMe(pGUI);		//Call Draw function (virtual member fn)
+
+	pGUI->CreateDrawToolBar();
+	pGUI->CreateStatusBar();
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Return a pointer to the interface
