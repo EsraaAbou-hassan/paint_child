@@ -111,8 +111,27 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 		case LOAD:
-			pGUI->PrintMessage("load");
-			newAct = new ActionLoad(this);
+			if (FigCount == 0) {
+				pGUI->PrintMessage("load");
+				newAct = new ActionLoad(this);
+			}
+			else {
+				pGUI->PrintMessage("Do you want to save the figuers ? y:n");
+				char choice = pGUI->GetKeyPressed();
+				switch (choice) {
+				case 'N':
+				case 'n':
+					pGUI->PrintMessage("load");
+					newAct = new ActionLoad(this);
+					break;
+				case 'Y':
+				case 'y':
+					pGUI->PrintMessage("saving old figuers");
+					//save action
+					break;
+				}
+			}
+			
 			///create AddLineAction here
 
 			break;

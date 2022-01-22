@@ -67,6 +67,12 @@ string GUI::GetSrting() const
 	}
 }
 
+char GUI::GetKeyPressed() const 
+{
+	char Key;
+	pWind->WaitKeyPress(Key);
+	return Key;
+}
 //This function reads the position where the user clicks to determine the desired action
 ActionType GUI::MapInputToActionType() const
 {	
