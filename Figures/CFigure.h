@@ -26,7 +26,6 @@ public:
 
 	virtual int getFigureData(POINT& p1, POINT& p2) = 0;
 	virtual string getFigureName() = 0;
-	void changeFigureFillClr(GUI* pGUI);
 
 	///The following functions should be supported by the figure class
 	///It should be overridden by each inherited figure
