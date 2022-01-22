@@ -136,6 +136,7 @@
     <ClCompile Include="Actions\ActionChangeDrawColor.cpp" />
     <ClCompile Include="Actions\ActionChangeFillColor.cpp" />
     <ClCompile Include="Actions\ActionDeleteItem.cpp" />
+    <ClCompile Include="Actions\ActionLoad.cpp" />
     <ClCompile Include="Actions\ActionSendToBack.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp" />
     <ClCompile Include="CMUgraphicsLib\CMUgraphics.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Actions\ActionChangeDrawColor.h" />
     <ClInclude Include="Actions\ActionChangeFillColor.h" />
     <ClInclude Include="Actions\ActionDeleteItem.h" />
+    <ClInclude Include="Actions\ActionLoad.h" />
     <ClInclude Include="Actions\ActionSendToBack.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />

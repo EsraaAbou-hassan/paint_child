@@ -1,11 +1,13 @@
 #include "CSquare.h"
+#include <fstream>
+#include <iostream>
 
 CSquare::CSquare(Point P1, int len, GfxInfo FigureGfxInfo):CFigure(FigureGfxInfo)
 {
 	TopLeftCorner = P1;
 	length = len;
 }
-	
+CSquare::CSquare() {}
 
 void CSquare::DrawMe(GUI* pGUI) const
 {
@@ -27,4 +29,26 @@ int CSquare::getFigureData(POINT& p1, POINT& p2)
 
 string CSquare::getFigureName() {
 	return "Square selected";
+}
+void CSquare::Load(ifstream& file)
+{
+	string FigureColor;
+	string FigureFill;
+
+	//Get a Pointer to the Interface
+
+	file >> ID >> TopLeftCorner.x >> TopLeftCorner.y >> length;
+	std::cout << TopLeftCorner.x << " " << TopLeftCorner.y << " " << length << " ";
+	file >> FigureColor >> FigureFill;
+	std::cout << FigureColor << " " << FigureFill << endl;
+	FigGfxInfo.DrawClr = ConvertToColor(FigureColor);
+	FigGfxInfo.BorderWdth = UI.PenWidth;
+	if (FigureFill == "NO_FILL") {
+		FigGfxInfo.isFilled = false;
+	}
+	else {
+		FigGfxInfo.FillClr = ConvertToColor(FigureFill);
+		FigGfxInfo.isFilled = true;
+	}
+
 }

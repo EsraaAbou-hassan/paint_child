@@ -6,6 +6,7 @@
 #include "Actions\ActionChangeFillColor.h"
 #include "Actions\ActionChangeBackgroundColor.h"
 #include "Actions\ActionDeleteItem.h"
+#include "Actions\ActionLoad.h"
 #include "Actions/ActionSendToBack.h"
 #include "Actions/ActionBringToFront.h"
 #include<iostream>
@@ -22,7 +23,11 @@ ApplicationManager::ApplicationManager()
 	for(int i=0; i<MaxFigCount; i++)
 		FigList[i] = NULL;	
 }
-
+void ApplicationManager::DeleteFigures() {
+	for (int i = 0; i < MaxFigCount; i++)
+		FigList[i] = NULL;
+	FigCount = 0;
+}
 void ApplicationManager::Run()
 {
 	ActionType ActType;
@@ -39,11 +44,14 @@ void ApplicationManager::Run()
 
 		//4- Update the interface
 		UpdateInterface();	
-
 	}while(ActType != EXIT);
 	
 }
 
+void ApplicationManager::reDrawBars() const{
+	pGUI->CreateDrawToolBar();
+	pGUI->CreateStatusBar();
+}
 
 //==================================================================================//
 //								Actions Related Functions							//
@@ -74,6 +82,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 		case DRAW_HEX:
 			///create HEX here
 			newAct = new ActionAddHex(this);
+			
 			break;
 
 		case CHNG_DRAW_CLR:
@@ -110,6 +119,8 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 
 		case DEL:
 			newAct = new ActionDeleteItem(this);
+			break;
+
 		
 		case SEND_BACK:
 			newAct = new ActionSendToBack(this);
@@ -122,7 +133,33 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			///create ExitAction here
 			
 			break;
-		
+
+		case LOAD:
+			if (FigCount == 0) {
+				pGUI->PrintMessage("load");
+				newAct = new ActionLoad(this);
+			}
+			else {
+				pGUI->PrintMessage("Do you want to save the figuers ? y:n");
+				char choice = pGUI->GetKeyPressed();
+				switch (choice) {
+				case 'N':
+				case 'n':
+					pGUI->PrintMessage("load");
+					newAct = new ActionLoad(this);
+					break;
+				case 'Y':
+				case 'y':
+					pGUI->PrintMessage("saving old figuers");
+					//save action
+					break;
+				}
+			}
+			
+			///create AddLineAction here
+
+			break;
+
 		case DRAWING_AREA:
 			pGUI->GetPointClicked(x, y);
 			if (FigCount == 0) {
@@ -161,6 +198,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			return NULL;
 			break;
 	}	
+	
 	return newAct;
 }
 //////////////////////////////////////////////////////////////////////
@@ -237,6 +275,8 @@ void ApplicationManager::UpdateInterface() const
 {	
 	for(int i=0; i<FigCount; i++)
 		FigList[i]->DrawMe(pGUI);		//Call Draw function (virtual member fn)
+
+	
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Return a pointer to the interface
