@@ -26,6 +26,25 @@ public:
 
 	virtual int getFigureData(POINT& p1, POINT& p2) = 0;
 	virtual string getFigureName() = 0;
+	void changeFigureFillClr(GUI* pGUI)
+	{
+		ActionType ActType;
+		pGUI->PrintMessage("Select a color");
+		ActType = pGUI->MapInputToActionType();
+
+		switch (ActType) {
+		case SELECT_COLOR_CYAN:
+			this->ChngFillClr(CYAN);
+			break;
+		case SELECT_COLOR_GREEN:
+			this->ChngFillClr(GREEN);
+			break;
+		case SELECT_COLOR_RED:
+			this->ChngFillClr(RED);
+			break;
+		};
+		pGUI->ClearStatusBar();
+	}
 
 	///The following functions should be supported by the figure class
 	///It should be overridden by each inherited figure
