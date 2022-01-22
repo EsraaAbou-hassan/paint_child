@@ -16,6 +16,7 @@ protected:
 
 public:
 	CFigure(GfxInfo FigureGfxInfo);
+	CFigure();
 	void SetSelected(bool);	//select/unselect the figure
 	bool IsSelected() const;	//check whether fig is selected
 
@@ -27,6 +28,7 @@ public:
 	virtual int getFigureData(POINT& p1, POINT& p2) = 0;
 	virtual string getFigureName() = 0;
 	void changeFigureFillClr(GUI* pGUI);
+	color CFigure::ConvertToColor(string s);
 	///The following functions should be supported by the figure class
 	///It should be overridden by each inherited figure
 
@@ -38,7 +40,7 @@ public:
 	//virtual void Move() = 0;		//Move the figure
 
 	//virtual void Save(ofstream &OutFile) = 0;	//Save the figure parameters to the file
-	//virtual void Load(ifstream &Infile) = 0;	//Load the figure parameters to the file
+	virtual void Load(ifstream &Infile) = 0;	//Load the figure parameters to the file
 
 	//virtual void PrintInfo(Output* pOut) = 0;	//print all figure info on the status bar
 };

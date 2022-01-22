@@ -97,6 +97,8 @@ ActionType GUI::MapInputToActionType() const
 			case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
 			case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
 			case ITM_CLR_RED: return SELECT_COLOR_RED;
+			case ITM_SAVE: return SAVE;
+			case ITM_LOAD: return LOAD;
 			
 			default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
@@ -174,6 +176,8 @@ void GUI::CreateDrawToolBar() const
 	MenuItemImages[ITM_CLR_CYAN] = "images\\MenuItems\\cyan.jpg";
 	MenuItemImages[ITM_CLR_GREEN] = "images\\MenuItems\\green.jpg";
 	MenuItemImages[ITM_CLR_RED] = "images\\MenuItems\\red.jpg";
+	MenuItemImages[ITM_SAVE] = "images\\MenuItems\\Menu_Save.jpg";
+	MenuItemImages[ITM_LOAD] = "images\\MenuItems\\Menu_Load.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
 
 

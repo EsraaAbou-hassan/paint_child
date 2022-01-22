@@ -37,6 +37,7 @@ public:
 	// -- Interface Management Functions	
 	GUI *GetGUI() const; //Return pointer to the interface
 	void UpdateInterface() const;	//Redraws all the drawing window	
+	void DeleteFigures();
 };
 
 #endif

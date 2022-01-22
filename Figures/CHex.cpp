@@ -1,13 +1,14 @@
 #include "CHex.h"
 #include "HexaStruct.h"
-
+#include <fstream>
+#include <iostream>
 CHex::CHex(Point _center, float _rotation, int _radius, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
 	center = _center;
 	rotation = _rotation;
 	radius = _radius;
 }
-
+CHex::CHex() {}
 
 void CHex::DrawMe(GUI* pGUI) const
 {
@@ -28,4 +29,27 @@ int CHex::getFigureData(POINT& p1, POINT& p2)
 
 string CHex::getFigureName() {
 	return "Hexagon selected";
+}
+void CHex::Load(ifstream& file)
+{
+
+	string FigureColor;
+	string FigureFill;
+
+	//Get a Pointer to the Interface
+
+	file >> ID >> center.x >> center.y >> rotation >> radius;
+	std::cout << ID << " " << center.x << " " << center.y << " " << rotation << " " << radius << " ";
+	file >> FigureColor >> FigureFill;
+	std::cout << FigureColor << " " << FigureFill << endl;
+	FigGfxInfo.DrawClr = ConvertToColor(FigureColor);
+	FigGfxInfo.BorderWdth = UI.PenWidth;
+	if (FigureFill == "NO_FILL") {
+		FigGfxInfo.isFilled = false;
+	}
+	else {
+		FigGfxInfo.FillClr = ConvertToColor(FigureFill);
+		FigGfxInfo.isFilled = true;
+	}
+
 }

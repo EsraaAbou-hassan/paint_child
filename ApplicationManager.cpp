@@ -6,6 +6,7 @@
 #include "Actions\ActionChangeFillColor.h"
 #include "Actions\ActionChangeBackgroundColor.h"
 #include "Actions\ActionDeleteItem.h"
+#include "Actions\ActionLoad.h"
 #include<iostream>
 
 //Constructor
@@ -20,7 +21,11 @@ ApplicationManager::ApplicationManager()
 	for(int i=0; i<MaxFigCount; i++)
 		FigList[i] = NULL;	
 }
-
+void ApplicationManager::DeleteFigures() {
+	for (int i = 0; i < MaxFigCount; i++)
+		FigList[i] = NULL;
+	FigCount = 0;
+}
 void ApplicationManager::Run()
 {
 	ActionType ActType;
@@ -98,12 +103,20 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 
 		case DEL:
 			newAct = new ActionDeleteItem(this);
+			break;
 
 		case EXIT:
 			///create ExitAction here
 			
 			break;
-		
+
+		case LOAD:
+			pGUI->PrintMessage("load");
+			newAct = new ActionLoad(this);
+			///create AddLineAction here
+
+			break;
+
 		case DRAWING_AREA:
 			pGUI->GetPointClicked(x, y);
 			if (FigCount == 0) {
