@@ -31,10 +31,30 @@ void ActionAddHex::Execute()
     //Read 1st point and store in point Center
         pGUI->GetPointClicked(Center.x, Center.y);
 
+        if (!isValid(Center))
+        {
+            Center.x = 0;
+            Center.y = 0;
+            (pManager->GetGUI())->PrintMessage("Invalid point, please select another action");
+            return;
+        }
+
     pGUI->PrintMessage("New Hexagon: Click at First Vertex point");
     //Read 2nd point and store in point FirstVertex
         pGUI->GetPointClicked(FirstVertex.x, FirstVertex.y);
 
+        while (FirstVertex.x == FirstVertex.y)
+        {
+            (pManager->GetGUI())->PrintMessage("Invalid point, please select another point");
+            pGUI->GetPointClicked(FirstVertex.x, FirstVertex.y);
+        }
+        if (!isValid(FirstVertex))
+        {
+            FirstVertex.x = 0;
+            FirstVertex.y = 0;
+            (pManager->GetGUI())->PrintMessage("Invalid point, please select another action");
+            return;
+        }
     pGUI->ClearStatusBar();
 
     HexagonInfo hexagon;

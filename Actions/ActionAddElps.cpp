@@ -31,9 +31,34 @@ void ActionAddElps::Execute()
 	//Read 1st point and store in point P1
 	pGUI->GetPointClicked(P1.x, P1.y);
 
+	if (!isValid(P1))
+	{
+		P1.x = 0;
+		P1.y = 0;
+		P2.x = 0;
+		P2.y = 0;
+		(pManager->GetGUI())->PrintMessage("Invalid point, please select another action");
+		return;
+	}
+
 	pGUI->PrintMessage("New Elps: Click at second point");
 	//Read 2nd point and store in point P2
 	pGUI->GetPointClicked(P2.x, P2.y);
+
+	while (P2.x == P1.x || P2.y == P1.y)
+	{
+		(pManager->GetGUI())->PrintMessage("Invalid point, please select another point");
+		pGUI->GetPointClicked(P2.x, P2.y);
+	}
+	if (!isValid(P2))
+	{
+		P1.x = 0;
+		P1.y = 0;
+		P2.x = 0;
+		P2.y = 0;
+		(pManager->GetGUI())->PrintMessage("Invalid point, please select another action");
+		return;
+	}
 
 	pGUI->ClearStatusBar();
 
