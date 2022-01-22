@@ -55,7 +55,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 	POINT p1, p2;
 	int numberOfFiguresSelected = 0, previosFigure = 0;
 	int length;
-	bool s;
+	bool s=false;
 	string figureName;
 	//According to Action Type, create the corresponding action object
 	switch (ActType)
@@ -79,7 +79,17 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 		case CHNG_FILL_CLR:
-			newAct = new ActionChangeFillColor(this);
+			for (int i = 0; i < FigCount; i++)
+			{
+				temp = FigList[i];
+				if (temp->IsSelected()) {
+					temp->changeFigureFillClr(pGUI);
+					s = true;
+					break;
+				}
+			}
+			if(!s)
+				newAct = new ActionChangeFillColor(this);
 			break;
 
 		case CHNG_BK_CLR:
@@ -114,7 +124,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 						s ? temp->SetSelected(false) : temp->SetSelected(true);
 					}
 					else {
-						pGUI->PrintMessage("drawing area");
+						//s? pGUI->PrintMessage(figureName):pGUI->PrintMessage("drawing area");
 						temp->SetSelected(false);
 					}
 					if (numberOfFiguresSelected == 1 && previosFigure == 0) {
