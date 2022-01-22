@@ -6,6 +6,8 @@
 #include "Actions\ActionChangeFillColor.h"
 #include "Actions\ActionChangeBackgroundColor.h"
 #include "Actions\ActionDeleteItem.h"
+#include "Actions/ActionSendToBack.h"
+#include "Actions/ActionBringToFront.h"
 #include<iostream>
 
 //Constructor
@@ -75,6 +77,16 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 		case CHNG_DRAW_CLR:
+			for (int i = 0; i < FigCount; i++)
+			{
+				temp = FigList[i];
+				if (temp->IsSelected()) {
+					temp->changeFigureDrawClr(pGUI);
+					s = true;
+					break;
+				}
+			}
+			if(!s)
 			newAct = new ActionChangeDrawColor(this);
 			break;
 
@@ -98,6 +110,13 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 
 		case DEL:
 			newAct = new ActionDeleteItem(this);
+		
+		case SEND_BACK:
+			newAct = new ActionSendToBack(this);
+			break;
+		case BRNG_FRNT:
+			newAct = new ActionBringToFront(this);
+			break;
 
 		case EXIT:
 			///create ExitAction here
@@ -143,6 +162,33 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 	}	
 	return newAct;
+}
+//////////////////////////////////////////////////////////////////////
+
+int ApplicationManager::GetSelectedIndexFigure() {
+	for (int i = FigCount - 1; i >= 0; i--) {
+		if (FigList[i] != NULL) {
+			if (FigList[i]->IsSelected())
+				return i;
+		}
+	}
+	return -1;
+}
+
+void ApplicationManager::SendToBack(int selectedIndex) {
+	CFigure* SelectedFigure = FigList[selectedIndex];
+	for (int i = selectedIndex; i > 0; i--)
+		FigList[i] = FigList[i - 1];
+
+	FigList[0] = SelectedFigure;
+}
+
+void ApplicationManager::BringToFront(int selectedIndex) {
+	CFigure* SelectedFigure = FigList[selectedIndex];
+	for (int i = selectedIndex; i < FigCount - 1; i++)
+		FigList[i] = FigList[i + 1];
+
+	FigList[FigCount - 1] = SelectedFigure;
 }
 //////////////////////////////////////////////////////////////////////
 //Executes the created Action

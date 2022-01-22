@@ -93,6 +93,8 @@ ActionType GUI::MapInputToActionType() const
 			case ITM_FILL_CLR: return CHNG_FILL_CLR;
 			case ITM_BACKGROUND_CLR: return CHNG_BK_CLR;
 			case ITM_DEL: return DEL;
+			case ITM_SENDBACK: return SEND_BACK;
+			case ITM_BRINGFRONT: return BRNG_FRNT;
 			case ITM_EXIT: return EXIT;	
 			case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
 			case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
@@ -171,12 +173,12 @@ void GUI::CreateDrawToolBar() const
 	MenuItemImages[ITM_FILL_CLR] = "images\\MenuItems\\Fill_Color.jpg";
 	MenuItemImages[ITM_BACKGROUND_CLR] = "images\\MenuItems\\Background_Color.jpg";
 	MenuItemImages[ITM_DEL] = "images\\MenuItems\\delete.jpg";
+	MenuItemImages[ITM_SENDBACK] = "images\\MenuItems\\Send_Back.jpg";
+	MenuItemImages[ITM_BRINGFRONT] = "images\\MenuItems\\Bring_Front.jpg";
 	MenuItemImages[ITM_CLR_CYAN] = "images\\MenuItems\\cyan.jpg";
 	MenuItemImages[ITM_CLR_GREEN] = "images\\MenuItems\\green.jpg";
 	MenuItemImages[ITM_CLR_RED] = "images\\MenuItems\\red.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
-
-
 
 	//TODO: Prepare images for each menu item and add it to the list
 

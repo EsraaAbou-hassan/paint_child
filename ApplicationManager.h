@@ -28,6 +28,9 @@ public:
 	
 	// -- Action-Related Functions
 	Action* CreateAction(ActionType);
+	int GetSelectedIndexFigure();
+	void BringToFront(int selectedIndex);
+	void SendToBack(int selectedIndex);
 	void ExecuteAction(Action*&) ; //Execute an action
 	
 	// -- Figures Management Functions

@@ -26,6 +26,28 @@ void CFigure::ChngFillClr(color Fclr)
 	FigGfxInfo.isFilled = true;
 	FigGfxInfo.FillClr = Fclr;
 }
+
+void CFigure::changeFigureDrawClr(GUI* pGUI)
+{
+	ActionType ActType;
+	pGUI->PrintMessage("Select a color");
+	ActType = pGUI->MapInputToActionType();
+
+	switch (ActType) {
+	case SELECT_COLOR_CYAN:
+		this->ChngDrawClr(CYAN);
+		break;
+	case SELECT_COLOR_GREEN:
+		this->ChngDrawClr(GREEN);
+		break;
+	case SELECT_COLOR_RED:
+		this->ChngDrawClr(RED);
+		break;
+	};
+	pGUI->ClearStatusBar();
+}
+
+
 void CFigure::changeFigureFillClr(GUI* pGUI)
 {
 	ActionType ActType;
