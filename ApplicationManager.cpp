@@ -42,11 +42,14 @@ void ApplicationManager::Run()
 
 		//4- Update the interface
 		UpdateInterface();	
-
 	}while(ActType != EXIT);
 	
 }
 
+void ApplicationManager::reDrawBars() const{
+	pGUI->CreateDrawToolBar();
+	pGUI->CreateStatusBar();
+}
 
 //==================================================================================//
 //								Actions Related Functions							//
@@ -226,8 +229,7 @@ void ApplicationManager::UpdateInterface() const
 	for(int i=0; i<FigCount; i++)
 		FigList[i]->DrawMe(pGUI);		//Call Draw function (virtual member fn)
 
-	pGUI->CreateDrawToolBar();
-	pGUI->CreateStatusBar();
+	
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Return a pointer to the interface
