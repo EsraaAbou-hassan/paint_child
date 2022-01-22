@@ -121,7 +121,6 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			newAct = new ActionDeleteItem(this);
 			break;
 
-		
 		case SEND_BACK:
 			newAct = new ActionSendToBack(this);
 			break;
