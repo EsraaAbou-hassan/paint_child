@@ -235,6 +235,7 @@ void ApplicationManager::SendToBack(int selectedIndex) {
 		FigList[i] = FigList[i - 1];
 
 	FigList[0] = SelectedFigure;
+	UpdateInterface();
 }
 
 void ApplicationManager::BringToFront(int selectedIndex) {
@@ -243,6 +244,7 @@ void ApplicationManager::BringToFront(int selectedIndex) {
 		FigList[i] = FigList[i + 1];
 
 	FigList[FigCount - 1] = SelectedFigure;
+	UpdateInterface();
 }
 //////////////////////////////////////////////////////////////////////
 //Executes the created Action

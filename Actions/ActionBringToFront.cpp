@@ -17,5 +17,6 @@ void ActionBringToFront::Execute()
 	if (selectedIndexFigure > -1) {
 		pManager->BringToFront(selectedIndexFigure);
 		pGUI->PrintMessage("The shape was brought to Front");
+		
 	}
 }
