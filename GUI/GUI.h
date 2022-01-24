@@ -28,6 +28,7 @@ public:
 	/////////// Output Functoinality  ////////////////
 	void CreateDrawToolBar() const;	//creates Draw mode toolbar & menu
 	void CreatePlayToolBar() const;	//creates Play mode toolbar & menu
+	void CreateColorToolBar()const;
 	void CreateStatusBar() const;	//create the status bar
 
 	void ClearStatusBar() const;	//Clears the status bar
@@ -37,7 +38,7 @@ public:
 	void setCrntBackgroundColor(color c) const;
 
 
-
+	void ClearBar()const;
 	void ClearDrawArea() const;	//Clears the drawing area
 
 	// -- Figures Drawing functions

@@ -32,7 +32,6 @@ public:
 	void BringToFront(int selectedIndex);
 	void SendToBack(int selectedIndex);
 	void ExecuteAction(Action*&) ; //Execute an action
-	
 	// -- Figures Management Functions
 	void AddFigure(CFigure* pFig); //Adds a new figure to the FigList
 	CFigure *GetFigure(int x, int y) const; //Search for a figure given a point inside the figure

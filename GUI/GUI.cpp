@@ -32,7 +32,8 @@ GUI::GUI()
 	//Change the title
 	pWind->ChangeTitle("Paint for Kids - Programming Techniques Project");
 	
-	CreateDrawToolBar();
+		CreateDrawToolBar();
+		
 	CreateStatusBar();
 	
 }
@@ -102,11 +103,9 @@ ActionType GUI::MapInputToActionType() const
 			case ITM_SENDBACK: return SEND_BACK;
 			case ITM_BRINGFRONT: return BRNG_FRNT;
 			case ITM_EXIT: return EXIT;	
-			case ITM_CLR_CYAN: return SELECT_COLOR_CYAN;
-			case ITM_CLR_GREEN: return SELECT_COLOR_GREEN;
-			case ITM_CLR_RED: return SELECT_COLOR_RED;
 			case ITM_SAVE: return SAVE;
 			case ITM_LOAD: return LOAD;
+			case ITM_PLAY: return TO_PLAY;
 			
 			default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
@@ -121,13 +120,60 @@ ActionType GUI::MapInputToActionType() const
 		//[3] User clicks on the status bar
 		return STATUS;
 	}
-	else	//GUI is in PLAY mode
+	else if(UI.InterfaceMode == MODE_PLAY)	//GUI is in PLAY mode
 	{
 		///TODO:
 		//perform checks similar to Draw mode checks above
 		//and return the correspoding action
-		return TO_PLAY;	//just for now. This should be updated
-	}	
+		//return TO_PLAY;	//just for now. This should be updated
+		int ClickedItemOrder = (x / UI.MenuItemWidth);
+		//Divide x coord of the point clicked by the menu item width (int division)
+		//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
+
+		switch (ClickedItemOrder)
+		{
+		
+		case ITM_DRAW: return TO_DRAW;
+
+		default: return EMPTY;	//A click on empty place in desgin toolbar
+		}
+	}
+	else if (UI.InterfaceMode == MODE_COLOR) {
+		///TODO:
+		//perform checks similar to Draw mode checks above
+		//and return the correspoding action
+		//return TO_PLAY;	//just for now. This should be updated
+		int ClickedItemOrder = (x / UI.MenuItemWidth);
+		//Divide x coord of the point clicked by the menu item width (int division)
+		//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
+
+		switch (ClickedItemOrder)
+		{
+
+
+		case ITM_CLR_CYAN_T: return SELECT_COLOR_CYAN;
+		case ITM_CLR_GREEN_T: return SELECT_COLOR_GREEN;
+		case ITM_CLR_RED_T: return SELECT_COLOR_RED;
+		case ITM_CLR_YELLOW_T: return SELECT_COLOR_YELLOW;
+		case ITM_CLR_BLUE_T: return SELECT_COLOR_BLUE;
+		case ITM_CLR_PINK_T: return SELECT_COLOR_PINK;
+		case ITM_CLR_BLACK_T: return SELECT_COLOR_BLACK;
+		case ITM_CLR_ORANGE_T: return SELECT_COLOR_ORANGE;
+		case ITM_CLR_BROWN_T: return SELECT_COLOR_BROWN;
+
+		default: return EMPTY;	//A click on empty place in desgin toolbar
+		}
+	}
+
+	//[2] User clicks on the playing area
+	if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+	{
+		return DRAWING_AREA;
+	}
+
+	//[3] User clicks on the status bar
+	return STATUS;
+		
 
 }
 //======================================================================================//
@@ -159,12 +205,14 @@ void GUI::ClearStatusBar() const
 	
 }
 
+
 bool GUI::getCrntIsFilled() const {
 	return UI.isFilled;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 void GUI::CreateDrawToolBar() const
 {
+	ClearBar();
 	UI.InterfaceMode = MODE_DRAW;
 
 	//You can draw the tool bar icons in any way you want.
@@ -172,7 +220,6 @@ void GUI::CreateDrawToolBar() const
 	
 	//First prepare List of images for each menu item
 	//To control the order of these images in the menu, 
-	//reoder them in UI_Info.h ==> enum DrawMenuItem
 	string MenuItemImages[DRAW_ITM_COUNT];
 	MenuItemImages[ITM_SQUR] = "images\\MenuItems\\Menu_Sqr.jpg";
 	MenuItemImages[ITM_ELPS] = "images\\MenuItems\\Menu_Elps.jpg";
@@ -183,24 +230,24 @@ void GUI::CreateDrawToolBar() const
 	MenuItemImages[ITM_DEL] = "images\\MenuItems\\delete.jpg";
 	MenuItemImages[ITM_SENDBACK] = "images\\MenuItems\\Send_Back.jpg";
 	MenuItemImages[ITM_BRINGFRONT] = "images\\MenuItems\\Bring_Front.jpg";
-	MenuItemImages[ITM_CLR_CYAN] = "images\\MenuItems\\cyan.jpg";
-	MenuItemImages[ITM_CLR_GREEN] = "images\\MenuItems\\green.jpg";
-	MenuItemImages[ITM_CLR_RED] = "images\\MenuItems\\red.jpg";
 	MenuItemImages[ITM_SAVE] = "images\\MenuItems\\Menu_Save.jpg";
 	MenuItemImages[ITM_LOAD] = "images\\MenuItems\\Menu_Load.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
+	MenuItemImages[ITM_PLAY] = "images\\MenuItems\\play.jpeg";
+
+
 
 	//TODO: Prepare images for each menu item and add it to the list
 
 	//Draw menu item one image at a time
-	for(int i=0; i<DRAW_ITM_COUNT; i++)
-		pWind->DrawImage(MenuItemImages[i], i*UI.MenuItemWidth,0,UI.MenuItemWidth, UI.ToolBarHeight);
+	for (int i = 0; i < DRAW_ITM_COUNT; i++)
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
 
 
 
 	//Draw a line under the toolbar
 	pWind->SetPen(RED, 3);
-	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);	
+	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 
 }
 
@@ -208,8 +255,67 @@ void GUI::CreateDrawToolBar() const
 
 void GUI::CreatePlayToolBar() const
 {
+	ClearBar();
 	UI.InterfaceMode = MODE_PLAY;
 	///TODO: write code to create Play mode menu
+	string MenuItemImages[PLAY_ITM_COUNT];
+	MenuItemImages[ITM_DRAW] = "images\\MenuItems\\Draw.jpg";
+
+	//TODO: Prepare images for each menu item a	nd add it to the list
+
+	//Draw menu item one image at a time
+	for (int i = 0; i < PLAY_ITM_COUNT; i++) {
+	//	if (i== ITM_DRAW) {
+
+	//	pWind->DrawImage(MenuItemImages[i], 15 * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+	//	}
+	//	else {
+
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+		//}
+
+	}
+
+
+
+
+	//Draw a line under the toolbar
+	pWind->SetPen(RED, 3);
+	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+	
+}
+///////////////////color bar
+///////////////////color bar
+///////////////////color bar
+void GUI::CreateColorToolBar() const
+{
+	ClearBar();
+	UI.InterfaceMode = MODE_COLOR;
+	string MenuItemImages[Color_ITM_COUNT];
+	MenuItemImages[ITM_CLR_CYAN_T] = "images\\MenuItems\\cyan.jpg";
+	MenuItemImages[ITM_CLR_GREEN_T] = "images\\MenuItems\\green.jpg";
+	MenuItemImages[ITM_CLR_YELLOW_T] = "images\\MenuItems\\yellow.jpg";
+	MenuItemImages[ITM_CLR_BLUE_T] = "images\\MenuItems\\blue.jpg";
+	MenuItemImages[ITM_CLR_PINK_T] = "images\\MenuItems\\pink.jpg";
+	MenuItemImages[ITM_CLR_ORANGE_T] = "images\\MenuItems\\orange.jpg";
+	MenuItemImages[ITM_CLR_BLACK_T] = "images\\MenuItems\\black.jpg";
+	MenuItemImages[ITM_CLR_RED_T] = "images\\MenuItems\\red.jpg";
+	MenuItemImages[ITM_CLR_BROWN_T] = "images\\MenuItems\\brown.jpg";
+	//TODO: Prepare images for each menu item a	nd add it to the list
+
+	//Draw menu item one image at a time
+	for (int i = 0; i < Color_ITM_COUNT; i++) {
+
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+	}
+
+
+
+
+	//Draw a line under the toolbar
+	pWind->SetPen(RED, 3);
+	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -219,7 +325,12 @@ void GUI::ClearDrawArea() const
 	pWind->SetBrush(UI.BkGrndColor);
 	pWind->DrawRectangle(0, UI.ToolBarHeight, UI.width, UI.height - UI.StatusBarHeight);	
 }
-
+void GUI::ClearBar()const
+{
+	pWind->SetPen(WHITE, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0,  UI.width, UI.ToolBarHeight);
+}
 //////////////////////////////////////////////////////////////////////////////////////////
 
 void GUI::PrintMessage(string msg) const	//Prints a message on status bar

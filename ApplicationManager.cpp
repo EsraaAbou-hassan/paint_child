@@ -193,6 +193,23 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 				}
 			}
 			break;
+		case TO_PLAY:
+			if (FigCount != 0) {
+				//save figuers
+				//figuerflag =1
+			}
+			pGUI->PrintMessage("playing");
+			pGUI->CreatePlayToolBar();
+			break;
+
+		case TO_DRAW:
+			//if figuerflag ==1
+			//load figuers
+			pGUI->CreateDrawToolBar();
+			pGUI->PrintMessage("drwaing");
+			break;
+
+		
 		case STATUS:	//a click on the status bar ==> no action
 			return NULL;
 			break;
@@ -239,6 +256,7 @@ void ApplicationManager::ExecuteAction(Action* &pAct)
 		pAct = NULL;
 	}
 }
+
 //==================================================================================//
 //						Figures Management Functions								//
 //==================================================================================//

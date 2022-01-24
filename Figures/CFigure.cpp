@@ -35,6 +35,7 @@ void CFigure::changeFigureDrawClr(GUI* pGUI)
 {
 	ActionType ActType;
 	pGUI->PrintMessage("Select a color");
+	pGUI->CreateColorToolBar();
 	ActType = pGUI->MapInputToActionType();
 
 	switch (ActType) {
@@ -47,8 +48,27 @@ void CFigure::changeFigureDrawClr(GUI* pGUI)
 	case SELECT_COLOR_RED:
 		this->ChngDrawClr(RED);
 		break;
+	case SELECT_COLOR_BLACK:
+		this->ChngDrawClr(BLACK);
+		break;
+	case SELECT_COLOR_YELLOW:
+		this->ChngDrawClr(YELLOW);
+		break;
+	case SELECT_COLOR_BLUE:
+		this->ChngDrawClr(BLUE);
+		break;
+	case SELECT_COLOR_PINK:
+		this->ChngDrawClr(PINK);
+		break;
+	case SELECT_COLOR_BROWN:
+		this->ChngDrawClr(BROWN);
+		break;
+	case SELECT_COLOR_ORANGE:
+		this->ChngDrawClr(ORANGE);
+		break;
 	};
 	pGUI->ClearStatusBar();
+	pGUI->CreateDrawToolBar();
 }
 
 
@@ -56,6 +76,7 @@ void CFigure::changeFigureFillClr(GUI* pGUI)
 {
 	ActionType ActType;
 	pGUI->PrintMessage("Select a color");
+	pGUI->CreateColorToolBar();
 	ActType = pGUI->MapInputToActionType();
 
 	switch (ActType) {
@@ -68,8 +89,27 @@ void CFigure::changeFigureFillClr(GUI* pGUI)
 	case SELECT_COLOR_RED:
 		this->ChngFillClr(RED);
 		break;
+	case SELECT_COLOR_BLACK:
+		this->ChngFillClr(BLACK);
+		break;
+	case SELECT_COLOR_YELLOW:
+		this->ChngFillClr(YELLOW);
+		break;
+	case SELECT_COLOR_BLUE:
+		this->ChngFillClr(BLUE);
+		break;
+	case SELECT_COLOR_PINK:
+		this->ChngFillClr(PINK);
+		break;
+	case SELECT_COLOR_BROWN:
+		this->ChngFillClr(BROWN);
+		break;
+	case SELECT_COLOR_ORANGE:
+		this->ChngFillClr(ORANGE);
+		break;
 	};
 	pGUI->ClearStatusBar();
+	pGUI->CreateDrawToolBar();
 }
 
 color CFigure::ConvertToColor(string s)

@@ -24,7 +24,12 @@ enum ActionType //The actions supported (you can add more if needed)
 	SELECT_COLOR_CYAN, //Cyan Color selection 
 	SELECT_COLOR_GREEN, //Green Color selection
 	SELECT_COLOR_RED, //Red Color selection
-
+	SELECT_COLOR_BLACK, //black Color selection
+	SELECT_COLOR_YELLOW, //yellow Color selection
+	SELECT_COLOR_BLUE, //blue Color selection
+	SELECT_COLOR_PINK, //pink Color selection
+	SELECT_COLOR_BROWN, //brown Color selection
+	SELECT_COLOR_ORANGE, //Red Color selection
 	DRAWING_AREA,	//A click on the drawing area
 	STATUS,			//A click on the status bar
 	EMPTY,			//A click on empty place in the toolbar
