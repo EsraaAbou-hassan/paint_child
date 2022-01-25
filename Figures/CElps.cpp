@@ -51,3 +51,7 @@ void CElps::Load(ifstream& file)
 	}
 
 }
+
+void CElps::Save(ofstream& MyFile)
+{
+}

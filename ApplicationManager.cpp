@@ -7,9 +7,11 @@
 #include "Actions\ActionChangeBackgroundColor.h"
 #include "Actions\ActionDeleteItem.h"
 #include "Actions\ActionLoad.h"
+#include "Actions\ActionSave.h"
 #include "Actions/ActionSendToBack.h"
 #include "Actions/ActionBringToFront.h"
 #include<iostream>
+#include <fstream>
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -133,6 +135,9 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			
 			break;
 
+		case SAVE:
+			newAct = new ActionSave(this);
+			break;
 		case LOAD:
 			if (FigCount == 0) {
 				pGUI->PrintMessage("load");
@@ -284,6 +289,18 @@ CFigure *ApplicationManager::GetFigure(int x, int y) const
 
 	}
 	return NULL;
+}
+////////////////////////////////////////////////////////////////////////////////////
+void ApplicationManager::SaveAll(ofstream& MyFile)
+{
+
+	MyFile << to_string(FigCount) << endl;
+
+	for (int i = 0; i < FigCount; i++)
+	{
+		FigList[i]->Save(MyFile);
+	}
+
 }
 //==================================================================================//
 //							Interface Management Functions							//

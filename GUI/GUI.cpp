@@ -373,6 +373,35 @@ void GUI::setCrntBackgroundColor(color c) const
 int GUI::getCrntPenWidth() const		//get current pen width
 {	return UI.PenWidth;	}
 
+
+
+//======================================================================================//
+//								Converting Color  Functions								//
+//======================================================================================//
+string GUI::ConvertColorToString(color c)
+{
+	if ((c.ucRed == BLACK.ucRed) && (c.ucGreen == BLACK.ucGreen) && (c.ucBlue == BLACK.ucBlue))
+		return "BLACK";
+	else if ((c.ucRed == BLUE.ucRed) && (c.ucGreen == BLUE.ucGreen) && (c.ucBlue == BLUE.ucBlue))
+		return "BLUE";
+	else if ((c.ucRed == WHITE.ucRed) && (c.ucGreen == WHITE.ucGreen) && (c.ucBlue == WHITE.ucBlue))
+		return "WHITE";
+	else if ((c.ucRed == RED.ucRed) && (c.ucGreen == RED.ucGreen) && (c.ucBlue == RED.ucBlue))
+		return "RED";
+	else if ((c.ucRed == YELLOW.ucRed) && (c.ucGreen == YELLOW.ucGreen) && (c.ucBlue == YELLOW.ucBlue))
+		return "YELLOW";
+	else if ((c.ucRed == GREEN.ucRed) && (c.ucGreen == GREEN.ucGreen) && (c.ucBlue == GREEN.ucBlue))
+		return "GREEN";
+	else if ((c.ucRed == LIGHTGOLDENRODYELLOW.ucRed) && (c.ucGreen == LIGHTGOLDENRODYELLOW.ucGreen) && (c.ucBlue == LIGHTGOLDENRODYELLOW.ucBlue))
+		return "LIGHTGOLDENRODYELLOW";
+	else if ((c.ucRed == MAGENTA.ucRed) && (c.ucGreen == MAGENTA.ucGreen) && (c.ucBlue == MAGENTA.ucBlue))
+		return "MAGENTA";
+	else if ((c.ucRed == TURQUOISE.ucRed) && (c.ucGreen == TURQUOISE.ucGreen) && (c.ucBlue == TURQUOISE.ucBlue))
+		return "TURQUOISE";
+	return "Not colored";
+
+}
+
 //======================================================================================//
 //								Figures Drawing Functions								//
 //======================================================================================//

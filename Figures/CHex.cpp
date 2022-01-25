@@ -53,3 +53,7 @@ void CHex::Load(ifstream& file)
 	}
 
 }
+
+void CHex::Save(ofstream& MyFile)
+{
+}
