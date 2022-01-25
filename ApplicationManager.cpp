@@ -158,7 +158,6 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 					break;
 				}
 			}
-			
 			///create AddLineAction here
 
 			break;

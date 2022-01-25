@@ -1,15 +1,17 @@
 #include "CFigure.h"
-
+int CFigure::mainID = 0;
 CFigure::CFigure(GfxInfo FigureGfxInfo)
 {
 	FigGfxInfo = FigureGfxInfo;	//Default status is non-filled.
 	Selected = false;
+	ID= ++mainID;
 }
 CFigure::CFigure() {
 	GfxInfo FigureGfxInfo;
 	FigGfxInfo = FigureGfxInfo;	//Default status is non-filled.
 	Selected = false;
 }
+
 void CFigure::SetSelected(bool s)
 {
 	Selected = s;
