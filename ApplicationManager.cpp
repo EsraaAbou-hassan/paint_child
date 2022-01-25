@@ -136,7 +136,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 		case SAVE:
-			newAct = new ActionSave(this);
+			newAct = new ActionSave(this,false);
 			break;
 		case LOAD:
 			if (FigCount == 0) {
@@ -154,8 +154,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 					break;
 				case 'Y':
 				case 'y':
-					pGUI->PrintMessage("saving old figuers");
-					//save action
+					newAct = new ActionSave(this,true);//with loading => true
 					break;
 				}
 			}
@@ -302,6 +301,38 @@ void ApplicationManager::SaveAll(ofstream& MyFile)
 	}
 
 }
+//Delete a figure to the list of figures
+void ApplicationManager::DeleteSelectedItem() {
+
+	for (int i = 0; i < FigCount; i++) {
+
+
+		if (FigList[i]->IsSelected()) {
+
+			delete 	FigList[i];
+			FigList[i] = NULL;
+			ShiftItem(i);
+			FigCount--;
+
+		}
+		else {
+			pGUI->PrintMessage("you must selected item first");
+		}
+
+	}
+	pGUI->PrintMessage("Selected figuer Deleted");
+	pGUI->ClearDrawArea();
+	UpdateInterface();
+
+}
+void ApplicationManager::ShiftItem(int figure) {
+
+	for (int i = figure; i < FigCount; i++) {
+		FigList[i] = FigList[i + 1];
+	}
+
+
+}
 //==================================================================================//
 //							Interface Management Functions							//
 //==================================================================================//
@@ -309,6 +340,7 @@ void ApplicationManager::SaveAll(ofstream& MyFile)
 //Draw all figures on the user interface
 void ApplicationManager::UpdateInterface() const
 {	
+
 	for(int i=0; i<FigCount; i++)
 		FigList[i]->DrawMe(pGUI);		//Call Draw function (virtual member fn)
 

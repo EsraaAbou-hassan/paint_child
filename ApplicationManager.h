@@ -42,7 +42,9 @@ public:
 	// -- Interface Management Functions	
 	GUI *GetGUI() const; //Return pointer to the interface
 	void UpdateInterface() const;	//Redraws all the drawing window	
-	void DeleteFigures();
+	void DeleteFigures(); //remove all figures from array
+	void DeleteSelectedItem() ; //remove selected figuer
+	void ShiftItem(int figure) ;  //shift other figuer un the array
 };
 
 #endif

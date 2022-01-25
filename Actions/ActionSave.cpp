@@ -1,4 +1,5 @@
 #include "ActionSave.h"
+#include "ActionLoad.h"
 #include "..\Figures\CSquare.h"
 #include "..\ApplicationManager.h"
 #include "..\GUI\GUI.h"
@@ -7,14 +8,17 @@
 #include <fstream>
 
 
-ActionSave::ActionSave(ApplicationManager* pApp) :Action(pApp)
-{}
+ActionSave::ActionSave(ApplicationManager* pApp,bool withLoading) :Action(pApp)
+{
+	 loading = withLoading;
+}
 
 
 //Execute the action
 void ActionSave::Execute()
 {
 
+	
 	GUI* g = pManager->GetGUI();
 	g->PrintMessage("Enter your text File Name");
 	string Filename = g->GetSrting();
@@ -33,5 +37,12 @@ void ActionSave::Execute()
 	pManager->SaveAll(MyFile);
 
 	MyFile.close();
+	g->ClearStatusBar();
 
+	if (loading) {
+		g->PrintMessage("load");
+		Action* pAct = new ActionLoad(pManager);
+		pAct->Execute();
+
+	}
 }

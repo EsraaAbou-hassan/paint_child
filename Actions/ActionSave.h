@@ -8,7 +8,8 @@
 class ActionSave : public Action
 {
 public:
-	ActionSave(ApplicationManager* pApp);
+	bool loading;
+	ActionSave(ApplicationManager* pApp,bool withLoading);
 
 	//Save  to the ApplicationManager
 	virtual void Execute();
