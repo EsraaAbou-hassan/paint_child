@@ -51,50 +51,6 @@ void ActionLoad::Execute() {
 
 		if (GetOpenFileName(&ofn)) {
 			loading(ofn.lpstrFile);
-			//GUI* pGUI = pManager->GetGUI();
-			//pGUI->ClearDrawArea();
-			//pManager->DeleteFigures();
-			//ifstream MyReadFile(ofn.lpstrFile);
-			
-
-			//string DrawColor, FillColor, BackColor, FigursNumber, FigureType;
-			//int FigNumbers = 0;
-
-
-			//MyReadFile >> DrawColor >> FillColor >> BackColor;
-			//std::cout << DrawColor << " " << FillColor << " " << BackColor << " " << endl;
-			//pGUI->setCrntDrawColor(ConvertToColor(DrawColor));
-			//pGUI->setCrntFillColor(ConvertToColor(FillColor));
-			//pGUI->setCrntBackgroundColor(ConvertToColor(BackColor));
-			//pGUI->ClearDrawArea();
-
-			//MyReadFile >> FigursNumber;
-			//std::cout << FigursNumber << endl;
-			//FigNumbers = std::stoi(FigursNumber);
-			//while (FigNumbers) {
-			//	MyReadFile >> FigureType;
-			//	std::cout << FigureType << " ";
-			/*	if (FigureType == "SQR") {
-					figer = new CSquare;
-
-				}
-				else if (FigureType == "ELPS") {
-					figer = new CElps;
-
-				}
-				else if (FigureType == "HEXA") {
-					figer = new CHex;
-
-				}
-				figer->Load(MyReadFile);
-				pManager->AddFigure(figer);
-				FigNumbers--;
-			}
-
-
-
-			MyReadFile.close();
-		*/
 		}
 		else {
 			std::cout << "no file selected ";
