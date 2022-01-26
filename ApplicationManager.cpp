@@ -10,6 +10,7 @@
 #include "Actions\ActionSave.h"
 #include "Actions/ActionSendToBack.h"
 #include "Actions/ActionBringToFront.h"
+#include "Actions/ActionPickFigure.h"
 #include<iostream>
 #include <fstream>
 
@@ -219,6 +220,8 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 
 		case PLAY_FIGUERS :	 //play with figuer type
 			pGUI->PrintMessage("PLAY_FIGUERS");
+			newAct = new ActionPickFigure(this);
+
 			break;
 
 		case PLAY_COLORS:	 // play with color type
@@ -314,31 +317,36 @@ void ApplicationManager::SaveAll(ofstream& MyFile)
 	for (int i = 0; i < FigCount; i++)
 	{
 		FigList[i]->Save(MyFile);
-	}
 
+	}
+		
 }
 //Delete a figure to the list of figures
 void ApplicationManager::DeleteSelectedItem() {
-
+	bool flag = false;
 	for (int i = 0; i < FigCount; i++) {
 
 
 		if (FigList[i]->IsSelected()) {
-
+			flag = true;
 			delete 	FigList[i];
+
 			FigList[i] = NULL;
 			ShiftItem(i);
 			FigCount--;
+			
 
 		}
-		else {
-			pGUI->PrintMessage("you must selected item first");
-		}
-
 	}
-	pGUI->PrintMessage("Selected figuer Deleted");
-	pGUI->ClearDrawArea();
-	UpdateInterface();
+	if (flag) {
+		pGUI->PrintMessage("you must select  an item first");
+	}
+	else {
+		pGUI->PrintMessage("Selected figuer Deleted");
+		pGUI->ClearDrawArea();
+		UpdateInterface();
+	}
+	
 
 }
 void ApplicationManager::ShiftItem(int figure) {

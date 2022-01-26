@@ -126,18 +126,22 @@ ActionType GUI::MapInputToActionType() const
 		//perform checks similar to Draw mode checks above
 		//and return the correspoding action
 		//return TO_PLAY;	//just for now. This should be updated
-		int ClickedItemOrder = (x / UI.MenuItemWidth);
-		//Divide x coord of the point clicked by the menu item width (int division)
-		//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
-
-		switch (ClickedItemOrder)
+		//[1] If user clicks on the Toolbar
+		if (y >= 0 && y < UI.ToolBarHeight)
 		{
-		case ITM_FIGURE: return PLAY_FIGUERS;
-		case ITM_COLOR: return  PLAY_COLORS;
-		case ITM_FIG_COL: return  PLAY_FIG_COL;
-		case ITM_DRAW: return TO_DRAW;
+			int ClickedItemOrder = (x / UI.MenuItemWidth);
+			//Divide x coord of the point clicked by the menu item width (int division)
+			//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
 
-		default: return EMPTY;	//A click on empty place in desgin toolbar
+			switch (ClickedItemOrder)
+			{
+			case ITM_FIGURE: return PLAY_FIGUERS;
+			case ITM_COLOR: return  PLAY_COLORS;
+			case ITM_FIG_COL: return  PLAY_FIG_COL;
+			case ITM_DRAW: return TO_DRAW;
+
+			default: return EMPTY;	//A click on empty place in desgin toolbar
+			}
 		}
 	}
 	else if (UI.InterfaceMode == MODE_COLOR) {
@@ -145,25 +149,29 @@ ActionType GUI::MapInputToActionType() const
 		//perform checks similar to Draw mode checks above
 		//and return the correspoding action
 		//return TO_PLAY;	//just for now. This should be updated
-		int ClickedItemOrder = (x / UI.MenuItemWidth);
-		//Divide x coord of the point clicked by the menu item width (int division)
-		//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
-
-		switch (ClickedItemOrder)
+		//[1] If user clicks on the Toolbar
+		if (y >= 0 && y < UI.ToolBarHeight)
 		{
+			int ClickedItemOrder = (x / UI.MenuItemWidth);
+			//Divide x coord of the point clicked by the menu item width (int division)
+			//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
+
+			switch (ClickedItemOrder)
+			{
 
 
-		case ITM_CLR_CYAN_T: return SELECT_COLOR_CYAN;
-		case ITM_CLR_GREEN_T: return SELECT_COLOR_GREEN;
-		case ITM_CLR_RED_T: return SELECT_COLOR_RED;
-		case ITM_CLR_YELLOW_T: return SELECT_COLOR_YELLOW;
-		case ITM_CLR_BLUE_T: return SELECT_COLOR_BLUE;
-		case ITM_CLR_PINK_T: return SELECT_COLOR_PINK;
-		case ITM_CLR_BLACK_T: return SELECT_COLOR_BLACK;
-		case ITM_CLR_ORANGE_T: return SELECT_COLOR_ORANGE;
-		case ITM_CLR_BROWN_T: return SELECT_COLOR_BROWN;
+			case ITM_CLR_CYAN_T: return SELECT_COLOR_CYAN;
+			case ITM_CLR_GREEN_T: return SELECT_COLOR_GREEN;
+			case ITM_CLR_RED_T: return SELECT_COLOR_RED;
+			case ITM_CLR_YELLOW_T: return SELECT_COLOR_YELLOW;
+			case ITM_CLR_BLUE_T: return SELECT_COLOR_BLUE;
+			case ITM_CLR_PINK_T: return SELECT_COLOR_PINK;
+			case ITM_CLR_BLACK_T: return SELECT_COLOR_BLACK;
+			case ITM_CLR_ORANGE_T: return SELECT_COLOR_ORANGE;
+			case ITM_CLR_BROWN_T: return SELECT_COLOR_BROWN;
 
-		default: return EMPTY;	//A click on empty place in desgin toolbar
+			default: return EMPTY;	//A click on empty place in desgin toolbar
+			}
 		}
 	}
 
@@ -276,7 +284,9 @@ void GUI::CreatePlayToolBar() const
 	//	}
 	//	else {
 
-		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, 50);
+		//pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
 		//}
 
 	}
@@ -311,7 +321,7 @@ void GUI::CreateColorToolBar() const
 	//Draw menu item one image at a time
 	for (int i = 0; i < Color_ITM_COUNT; i++) {
 
-		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, 50);
 
 	}
 
