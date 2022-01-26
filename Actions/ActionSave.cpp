@@ -8,9 +8,10 @@
 #include <fstream>
 
 
-ActionSave::ActionSave(ApplicationManager* pApp,bool withLoading) :Action(pApp)
+ActionSave::ActionSave(ApplicationManager* pApp,bool withLoading,bool forPlay) :Action(pApp)
 {
 	 loading = withLoading;
+	 playing = forPlay;
 }
 
 
@@ -20,17 +21,23 @@ void ActionSave::Execute()
 
 	
 	GUI* g = pManager->GetGUI();
-	g->PrintMessage("Enter your text File Name");
-	string Filename = g->GetSrting();
-	if (Filename == "")
-	{
-		g->PrintMessage("Wrong file name");
-		return;
-	}
 	GfxInfo gf;
 	CFigure* f;
 	ofstream MyFile;
-	MyFile.open(Filename + ".txt", ios::app);
+	if (playing) {
+		MyFile.open("playing.txt", ios::trunc);
+	}
+	else {
+		g->PrintMessage("Enter your text File Name");
+		string Filename = g->GetSrting();
+		if (Filename == "")
+		{
+			g->PrintMessage("Wrong file name");
+			return;
+		}
+		MyFile.open(Filename + ".txt", ios::app);
+	}
+
 	MyFile << g->ConvertColorToString(UI.DrawColor) << "\t" << g->ConvertColorToString(UI.FillColor) << "\t" << g->ConvertColorToString(UI.BkGrndColor)<< endl;
 
 
@@ -41,7 +48,7 @@ void ActionSave::Execute()
 
 	if (loading) {
 		g->PrintMessage("load");
-		Action* pAct = new ActionLoad(pManager);
+		Action* pAct = new ActionLoad(pManager,false);
 		pAct->Execute();
 
 	}

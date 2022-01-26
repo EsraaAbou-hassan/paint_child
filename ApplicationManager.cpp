@@ -136,12 +136,12 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 		case SAVE:
-			newAct = new ActionSave(this,false);
+			newAct = new ActionSave(this,false,false);//with loading => false //for playing => false
 			break;
 		case LOAD:
 			if (FigCount == 0) {
 				pGUI->PrintMessage("load");
-				newAct = new ActionLoad(this);
+				newAct = new ActionLoad(this,false);
 			}
 			else {
 				pGUI->PrintMessage("Do you want to save the figuers ? y:n");
@@ -150,11 +150,11 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 				case 'N':
 				case 'n':
 					pGUI->PrintMessage("load");
-					newAct = new ActionLoad(this);
+					newAct = new ActionLoad(this,false);
 					break;
 				case 'Y':
 				case 'y':
-					newAct = new ActionSave(this,true);//with loading => true
+					newAct = new ActionSave(this,true,false);//with loading => true //for playing => false
 					break;
 				}
 			}
@@ -198,16 +198,21 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 		case TO_PLAY:
 			if (FigCount != 0) {
-				//save figuers
-				//figuerflag =1
+				newAct = new ActionSave(this, false, true);//with loading => false //for playing => true
+				pGUI->PrintMessage("playing");
+				pGUI->CreatePlayToolBar();
 			}
-			pGUI->PrintMessage("playing");
-			pGUI->CreatePlayToolBar();
+			else {
+				pGUI->PrintMessage("draw figuers first");
+
+			}
+
+			
+
 			break;
 
 		case TO_DRAW:
-			//if figuerflag ==1
-			//load figuers
+			newAct = new ActionLoad(this,true);//with loading => false //for playing => true
 			pGUI->CreateDrawToolBar();
 			pGUI->PrintMessage("drwaing");
 			break;
