@@ -34,6 +34,9 @@ enum ActionType //The actions supported (you can add more if needed)
 	STATUS,			//A click on the status bar
 	EMPTY,			//A click on empty place in the toolbar
 
+	PLAY_FIGUERS,	 //play with figuer type
+	PLAY_COLORS,	 // play with color type
+	PLAY_FIG_COL,	//play with figuer type and color 
 	TO_DRAW,		//Switch interface to Draw mode
 	TO_PLAY			//Switch interface to Play mode
 

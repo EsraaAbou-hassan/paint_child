@@ -132,7 +132,9 @@ ActionType GUI::MapInputToActionType() const
 
 		switch (ClickedItemOrder)
 		{
-		
+		case ITM_FIGURE: return PLAY_FIGUERS;
+		case ITM_COLOR: return  PLAY_COLORS;
+		case ITM_FIG_COL: return  PLAY_FIG_COL;
 		case ITM_DRAW: return TO_DRAW;
 
 		default: return EMPTY;	//A click on empty place in desgin toolbar
@@ -259,6 +261,9 @@ void GUI::CreatePlayToolBar() const
 	UI.InterfaceMode = MODE_PLAY;
 	///TODO: write code to create Play mode menu
 	string MenuItemImages[PLAY_ITM_COUNT];
+	MenuItemImages[ITM_FIGURE] = "images\\MenuItems\\figuers.jpg";
+	MenuItemImages[ITM_COLOR] = "images\\MenuItems\\colors.JPG";
+	MenuItemImages[ITM_FIG_COL] = "images\\MenuItems\\fig&colors.JPG";
 	MenuItemImages[ITM_DRAW] = "images\\MenuItems\\Draw.jpg";
 
 	//TODO: Prepare images for each menu item a	nd add it to the list

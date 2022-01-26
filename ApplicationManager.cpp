@@ -217,7 +217,19 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			pGUI->PrintMessage("drwaing");
 			break;
 
-		
+		case PLAY_FIGUERS :	 //play with figuer type
+			pGUI->PrintMessage("PLAY_FIGUERS");
+			break;
+
+		case PLAY_COLORS:	 // play with color type
+			pGUI->PrintMessage("PLAY_COLORS");
+
+			break;
+
+		case PLAY_FIG_COL: //play with figuer type and color 
+			pGUI->PrintMessage("PLAY_FIG_COL");
+			break;
+
 		case STATUS:	//a click on the status bar ==> no action
 			return NULL;
 			break;
