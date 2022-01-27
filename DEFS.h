@@ -31,9 +31,13 @@ enum ActionType //The actions supported (you can add more if needed)
 	SELECT_COLOR_BROWN, //brown Color selection
 	SELECT_COLOR_ORANGE, //Red Color selection
 	DRAWING_AREA,	//A click on the drawing area
+	PLAYING_AREA,	//A click on the playing area
 	STATUS,			//A click on the status bar
 	EMPTY,			//A click on empty place in the toolbar
-
+	RESIZE_4,			//Resize a figure(s) 
+	RESIZE_2,			//Resize a figure(s)
+	RESIZE_0_5,			//Resize a figure(s)
+	RESIZE_0_25,			//Resize a figure(s)
 	PLAY_FIGUERS,	 //play with figuer type
 	PLAY_COLORS,	 // play with color type
 	PLAY_FIG_COL,	//play with figuer type and color 

@@ -11,6 +11,7 @@
 #include "Actions/ActionSendToBack.h"
 #include "Actions/ActionBringToFront.h"
 #include "Actions/ActionPickFigure.h"
+#include "Actions/ActionResize.h"
 #include<iostream>
 #include <fstream>
 
@@ -197,6 +198,9 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 				}
 			}
 			break;
+		case PLAYING_AREA:
+			pGUI->PrintMessage("playing Area");
+			break;
 		case TO_PLAY:
 			if (FigCount != 0) {
 				newAct = new ActionSave(this, false, true);//with loading => false //for playing => true
@@ -233,9 +237,16 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			pGUI->PrintMessage("PLAY_FIG_COL");
 			break;
 
+		case RESIZE:
+			newAct = new ActionRsize(this);
+			
+
+			break;
 		case STATUS:	//a click on the status bar ==> no action
 			return NULL;
 			break;
+
+		
 	}	
 	
 	return newAct;

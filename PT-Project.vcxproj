@@ -138,6 +138,7 @@
     <ClCompile Include="Actions\ActionDeleteItem.cpp" />
     <ClCompile Include="Actions\ActionLoad.cpp" />
     <ClCompile Include="Actions\ActionPickFigure.cpp" />
+    <ClCompile Include="Actions\ActionResize.cpp" />
     <ClCompile Include="Actions\ActionSave.cpp" />
     <ClCompile Include="Actions\ActionSendToBack.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Actions\ActionDeleteItem.h" />
     <ClInclude Include="Actions\ActionLoad.h" />
     <ClInclude Include="Actions\ActionPickFigure.h" />
+    <ClInclude Include="Actions\ActionResize.h" />
     <ClInclude Include="Actions\ActionSave.h" />
     <ClInclude Include="Actions\ActionSendToBack.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />

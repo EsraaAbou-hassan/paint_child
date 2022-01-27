@@ -30,6 +30,7 @@ public:
 	void CreatePlayToolBar() const;	//creates Play mode toolbar & menu
 	void CreateColorToolBar()const;
 	void CreateStatusBar() const;	//create the status bar
+	void GUI::CreateResizeToolBar() const;
 
 	void ClearStatusBar() const;	//Clears the status bar
 	bool getCrntIsFilled() const;

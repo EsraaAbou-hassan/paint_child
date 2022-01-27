@@ -102,10 +102,11 @@ ActionType GUI::MapInputToActionType() const
 			case ITM_DEL: return DEL;
 			case ITM_SENDBACK: return SEND_BACK;
 			case ITM_BRINGFRONT: return BRNG_FRNT;
-			case ITM_EXIT: return EXIT;	
+			case ITM_EXIT: return EXIT;		
 			case ITM_SAVE: return SAVE;
 			case ITM_LOAD: return LOAD;
 			case ITM_PLAY: return TO_PLAY;
+			case ITM_RESIZE:return RESIZE;
 			
 			default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
@@ -143,6 +144,14 @@ ActionType GUI::MapInputToActionType() const
 			default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
 		}
+		//[2] User clicks on the playing area
+		if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+		{
+			return PLAYING_AREA;
+		}
+
+		//[3] User clicks on the status bar
+		return STATUS;
 	}
 	else if (UI.InterfaceMode == MODE_COLOR) {
 		///TODO:
@@ -173,8 +182,37 @@ ActionType GUI::MapInputToActionType() const
 			default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
 		}
-	}
+		//[2] User clicks on the playing area
+		if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+		{
+			return DRAWING_AREA;
+		}
 
+		//[3] User clicks on the status bar
+		return STATUS;
+	}
+	else if (UI.InterfaceMode == MODE_RESIZE) {
+	
+	//[1] If user clicks on the Toolbar
+	if (y >= 0 && y < UI.ToolBarHeight)
+	{
+		int ClickedItemOrder = (x / UI.MenuItemWidth);
+		//Divide x coord of the point clicked by the menu item width (int division)
+		//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
+
+		switch (ClickedItemOrder)
+		{
+
+
+		case ITM_4_SIZE: return RESIZE_4;
+		case ITM_2_SIZE: return RESIZE_2;
+		case ITM_0_5_SIZE: return RESIZE_0_5;
+		case ITM_0_25_SIZE: return RESIZE_0_25;
+		
+
+		default: return EMPTY;	//A click on empty place in desgin toolbar
+		}
+	}
 	//[2] User clicks on the playing area
 	if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
 	{
@@ -183,6 +221,9 @@ ActionType GUI::MapInputToActionType() const
 
 	//[3] User clicks on the status bar
 	return STATUS;
+	}
+
+	
 		
 
 }
@@ -237,13 +278,14 @@ void GUI::CreateDrawToolBar() const
 	MenuItemImages[ITM_DRAW_CLR] = "images\\MenuItems\\Border_Color.jpg";
 	MenuItemImages[ITM_FILL_CLR] = "images\\MenuItems\\Fill_Color.jpg";
 	MenuItemImages[ITM_BACKGROUND_CLR] = "images\\MenuItems\\Background_Color.jpg";
-	MenuItemImages[ITM_DEL] = "images\\MenuItems\\delete.jpg";
 	MenuItemImages[ITM_SENDBACK] = "images\\MenuItems\\Send_Back.jpg";
 	MenuItemImages[ITM_BRINGFRONT] = "images\\MenuItems\\Bring_Front.jpg";
+	MenuItemImages[ITM_RESIZE] = "images\\MenuItems\\resize.jpg";
+	MenuItemImages[ITM_DEL] = "images\\MenuItems\\delete.jpg";
 	MenuItemImages[ITM_SAVE] = "images\\MenuItems\\Menu_Save.jpg";
 	MenuItemImages[ITM_LOAD] = "images\\MenuItems\\Menu_Load.jpg";
-	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
 	MenuItemImages[ITM_PLAY] = "images\\MenuItems\\play.jpeg";
+	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
 
 
 
@@ -278,17 +320,8 @@ void GUI::CreatePlayToolBar() const
 
 	//Draw menu item one image at a time
 	for (int i = 0; i < PLAY_ITM_COUNT; i++) {
-	//	if (i== ITM_DRAW) {
 
-	//	pWind->DrawImage(MenuItemImages[i], 15 * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
-	//	}
-	//	else {
-
-		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, 50);
-		//pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
-
-		//}
-
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
 	}
 
 
@@ -299,8 +332,7 @@ void GUI::CreatePlayToolBar() const
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 	
 }
-///////////////////color bar
-///////////////////color bar
+
 ///////////////////color bar
 void GUI::CreateColorToolBar() const
 {
@@ -321,12 +353,36 @@ void GUI::CreateColorToolBar() const
 	//Draw menu item one image at a time
 	for (int i = 0; i < Color_ITM_COUNT; i++) {
 
-		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, 50);
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
 
 	}
 
 
 
+
+	//Draw a line under the toolbar
+	pWind->SetPen(RED, 3);
+	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+void GUI::CreateResizeToolBar() const
+{
+	ClearBar();
+	UI.InterfaceMode = MODE_RESIZE;
+
+	string MenuItemImages[Resize_ITM_COUNT];
+	MenuItemImages[ITM_4_SIZE] = "images\\MenuItems\\resize4.jpg";
+	MenuItemImages[ITM_2_SIZE] = "images\\MenuItems\\resize2.jpg";
+	MenuItemImages[ITM_0_5_SIZE] = "images\\MenuItems\\resize0.5.jpg";
+	MenuItemImages[ITM_0_25_SIZE] = "images\\MenuItems\\resize0.25.jpg";
+	
+
+	//Draw menu item one image at a time
+	for (int i = 0; i < Resize_ITM_COUNT; i++) {
+
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+	}
 
 	//Draw a line under the toolbar
 	pWind->SetPen(RED, 3);
