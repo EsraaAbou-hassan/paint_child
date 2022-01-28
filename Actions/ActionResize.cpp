@@ -9,14 +9,15 @@ ActionRsize::ActionRsize(ApplicationManager* pApp) : Action(pApp)
 void ActionRsize::Execute()
 {
     GUI* pGUI = pManager->GetGUI();
-
+    int x, y;
     ActionType ActType;
     pGUI->PrintMessage("resize");
     pGUI->CreateResizeToolBar();
-    ActType = pGUI->MapInputToActionType();
+    ActType = pGUI->MapInputToActionType(x,y);
     switch (ActType) {
 
     case RESIZE_4:
+        
         pGUI->PrintMessage("resize 4");
         break;
     case RESIZE_2:

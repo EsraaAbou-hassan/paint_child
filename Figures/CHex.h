@@ -13,10 +13,11 @@ public:
 	CHex(Point _center, float _rotation, int _radius, GfxInfo FigureGfxInfo);
 	CHex();
 	virtual void DrawMe(GUI* pOut) const;
-	virtual int getFigureData(POINT& p1, POINT& p2);
-	virtual string getFigureName();
+	int getFigureData(POINT& p1, POINT& p2);
+	string getFigureName();
 	virtual void Load(ifstream& file);
 	virtual void Save(ofstream& MyFile);
+	void changeFigureSize(GUI* pGUI);
 
 };
 

@@ -11,13 +11,13 @@ ActionChangeBackgroundColor::ActionChangeBackgroundColor(ApplicationManager* pAp
 //Execute the action
 void ActionChangeBackgroundColor::Execute()
 {
-
+    int x, y;
     GUI* pGUI = pManager->GetGUI();
     //pGUI->CreateColorToolBar();
     ActionType ActType;
     pGUI->PrintMessage("Select a Background color");
     pGUI->CreateColorToolBar();
-    ActType = pGUI->MapInputToActionType();
+    ActType = pGUI->MapInputToActionType(x,y);
     
     switch (ActType) {
     case SELECT_COLOR_CYAN:

@@ -12,10 +12,11 @@ public:
 	CElps(Point, Point, GfxInfo FigureGfxInfo);
 	CElps();
 	virtual void DrawMe(GUI* pOut) const;
-	virtual int getFigureData(POINT& p1, POINT& p2);
-	virtual string getFigureName();
+	int getFigureData(POINT& p1, POINT& p2);
+	string getFigureName();
 	virtual void Load(ifstream& file);
 	virtual void Save(ofstream& MyFile);
+	void changeFigureSize(GUI* pGUI);
 
 
 };

@@ -36,12 +36,13 @@ void ApplicationManager::Run()
 {
 	ActionType ActType;
 	do
-	{		
+	{
+		int x, y;
 		//1- Read user action
-		ActType = pGUI->MapInputToActionType();
+		ActType = pGUI->MapInputToActionType(x,y);
 
 		//2- Create the corresponding Action
-		Action *pAct = CreateAction(ActType);
+		Action *pAct = CreateAction(ActType,x,y);
 		
 		//3- Execute the action
 		ExecuteAction(pAct);
@@ -61,15 +62,14 @@ void ApplicationManager::reDrawBars() const{
 //								Actions Related Functions							//
 //==================================================================================//
 //Creates an action
-Action* ApplicationManager::CreateAction(ActionType ActType) 
+Action* ApplicationManager::CreateAction(ActionType ActType,int &x,int &y) 
 {
 	Action* newAct = NULL;
-	int x, y;
 	CFigure* temp;
 	POINT p1, p2;
 	int numberOfFiguresSelected = 0, previosFigure = 0;
 	int length;
-	bool s=false;
+	bool s = false, clear = true;
 	string figureName;
 	//According to Action Type, create the corresponding action object
 	switch (ActType)
@@ -165,7 +165,6 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 		case DRAWING_AREA:
-			pGUI->GetPointClicked(x, y);
 			if (FigCount == 0) {
 				pGUI->PrintMessage("no figures drawing");
 			}
@@ -177,10 +176,11 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 
 					if (x >= p1.x && x <= p2.x && y >= p1.y && y <= p2.y)
 					{
+						clear = false;
 						s = temp->IsSelected();
 						numberOfFiguresSelected++;
 						figureName = temp->getFigureName();
-						s ? pGUI->CreateStatusBar() : pGUI->PrintMessage(figureName);
+						s ? pGUI->ClearStatusBar() : pGUI->PrintMessage(figureName);
 						s ? temp->SetSelected(false) : temp->SetSelected(true);
 					}
 					else {
@@ -196,6 +196,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 						previosFigure = i;
 					}
 				}
+				clear ? pGUI->ClearStatusBar() : true;
 			}
 			break;
 		case PLAYING_AREA:
@@ -238,9 +239,15 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 		case RESIZE:
-			newAct = new ActionRsize(this);
-			
-
+			for (int i = 0; i < FigCount; i++)
+			{
+				temp = FigList[i];
+				if (temp->IsSelected()) {
+					temp->changeFigureSize(pGUI);
+					s = true;
+					break;
+				}
+			}
 			break;
 		case STATUS:	//a click on the status bar ==> no action
 			return NULL;

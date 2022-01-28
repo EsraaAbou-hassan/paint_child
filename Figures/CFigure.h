@@ -26,6 +26,7 @@ public:
 	void ChngFillClr(color Fclr);	//changes the figure's filling color
 	void changeFigureDrawClr(GUI* pGUI);
 	void changeFigureFillClr(GUI* pGUI);
+	virtual void changeFigureSize(GUI* pGUI) = 0;;
 
 	virtual int getFigureData(POINT& p1, POINT& p2) = 0;
 	virtual string getFigureName() = 0;
