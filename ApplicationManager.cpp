@@ -10,6 +10,8 @@
 #include "Actions\ActionSave.h"
 #include "Actions/ActionSendToBack.h"
 #include "Actions/ActionBringToFront.h"
+#include "Actions/ActionPickFigure.h"
+#include "Actions/ActionResize.h"
 #include<iostream>
 #include <fstream>
 
@@ -34,12 +36,13 @@ void ApplicationManager::Run()
 {
 	ActionType ActType;
 	do
-	{		
+	{
+		int x, y;
 		//1- Read user action
-		ActType = pGUI->MapInputToActionType();
+		ActType = pGUI->MapInputToActionType(x,y);
 
 		//2- Create the corresponding Action
-		Action *pAct = CreateAction(ActType);
+		Action *pAct = CreateAction(ActType,x,y);
 		
 		//3- Execute the action
 		ExecuteAction(pAct);
@@ -59,15 +62,14 @@ void ApplicationManager::reDrawBars() const{
 //								Actions Related Functions							//
 //==================================================================================//
 //Creates an action
-Action* ApplicationManager::CreateAction(ActionType ActType) 
+Action* ApplicationManager::CreateAction(ActionType ActType,int &x,int &y) 
 {
 	Action* newAct = NULL;
-	int x, y;
 	CFigure* temp;
 	POINT p1, p2;
 	int numberOfFiguresSelected = 0, previosFigure = 0;
 	int length;
-	bool s=false;
+	bool s = false, clear = true;
 	string figureName;
 	//According to Action Type, create the corresponding action object
 	switch (ActType)
@@ -136,12 +138,12 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 		case SAVE:
-			newAct = new ActionSave(this);
+			newAct = new ActionSave(this,false,false);//with loading => false //for playing => false
 			break;
 		case LOAD:
 			if (FigCount == 0) {
 				pGUI->PrintMessage("load");
-				newAct = new ActionLoad(this);
+				newAct = new ActionLoad(this,false);
 			}
 			else {
 				pGUI->PrintMessage("Do you want to save the figuers ? y:n");
@@ -150,22 +152,19 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 				case 'N':
 				case 'n':
 					pGUI->PrintMessage("load");
-					newAct = new ActionLoad(this);
+					newAct = new ActionLoad(this,false);
 					break;
 				case 'Y':
 				case 'y':
-					pGUI->PrintMessage("saving old figuers");
-					//save action
+					newAct = new ActionSave(this,true,false);//with loading => true //for playing => false
 					break;
 				}
 			}
-			
 			///create AddLineAction here
 
 			break;
 
 		case DRAWING_AREA:
-			pGUI->GetPointClicked(x, y);
 			if (FigCount == 0) {
 				pGUI->PrintMessage("no figures drawing");
 			}
@@ -177,10 +176,11 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 
 					if (x >= p1.x && x <= p2.x && y >= p1.y && y <= p2.y)
 					{
+						clear = false;
 						s = temp->IsSelected();
 						numberOfFiguresSelected++;
 						figureName = temp->getFigureName();
-						s ? pGUI->CreateStatusBar() : pGUI->PrintMessage(figureName);
+						s ? pGUI->ClearStatusBar() : pGUI->PrintMessage(figureName);
 						s ? temp->SetSelected(false) : temp->SetSelected(true);
 					}
 					else {
@@ -196,28 +196,64 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 						previosFigure = i;
 					}
 				}
+				clear ? pGUI->ClearStatusBar() : true;
 			}
+			break;
+		case PLAYING_AREA:
+			pGUI->PrintMessage("playing Area");
 			break;
 		case TO_PLAY:
 			if (FigCount != 0) {
-				//save figuers
-				//figuerflag =1
+				newAct = new ActionSave(this, false, true);//with loading => false //for playing => true
+				pGUI->PrintMessage("playing");
+				pGUI->CreatePlayToolBar();
 			}
-			pGUI->PrintMessage("playing");
-			pGUI->CreatePlayToolBar();
+			else {
+				pGUI->PrintMessage("draw figuers first");
+
+			}
+
+			
+
 			break;
 
 		case TO_DRAW:
-			//if figuerflag ==1
-			//load figuers
+			newAct = new ActionLoad(this,true);//with loading => false //for playing => true
 			pGUI->CreateDrawToolBar();
 			pGUI->PrintMessage("drwaing");
 			break;
 
-		
+		case PLAY_FIGUERS :	 //play with figuer type
+			pGUI->PrintMessage("PLAY_FIGUERS");
+			newAct = new ActionPickFigure(this);
+
+			break;
+
+		case PLAY_COLORS:	 // play with color type
+			pGUI->PrintMessage("PLAY_COLORS");
+
+			break;
+
+		case PLAY_FIG_COL: //play with figuer type and color 
+			pGUI->PrintMessage("PLAY_FIG_COL");
+			break;
+
+		case RESIZE:
+			for (int i = 0; i < FigCount; i++)
+			{
+				temp = FigList[i];
+				if (temp->IsSelected()) {
+					temp->changeFigureSize(pGUI);
+					s = true;
+					break;
+				}
+			}
+			break;
 		case STATUS:	//a click on the status bar ==> no action
 			return NULL;
 			break;
+
+		
 	}	
 	
 	return newAct;
@@ -299,7 +335,42 @@ void ApplicationManager::SaveAll(ofstream& MyFile)
 	for (int i = 0; i < FigCount; i++)
 	{
 		FigList[i]->Save(MyFile);
+
 	}
+		
+}
+//Delete a figure to the list of figures
+void ApplicationManager::DeleteSelectedItem() {
+	bool flag = false;
+	for (int i = 0; i < FigCount; i++) {
+
+
+		if (FigList[i]->IsSelected()) {
+			flag = true;
+			delete 	FigList[i];
+
+			FigList[i] = NULL;
+			ShiftItem(i);
+			FigCount--;
+		}
+	}
+	if (!flag) {
+		pGUI->PrintMessage("you must select  an item first");
+	}
+	else {
+		pGUI->PrintMessage("Selected figuer Deleted");
+		pGUI->ClearDrawArea();
+		UpdateInterface();
+	}
+	
+
+}
+void ApplicationManager::ShiftItem(int figure) {
+
+	for (int i = figure; i < FigCount; i++) {
+		FigList[i] = FigList[i + 1];
+	}
+
 
 }
 //==================================================================================//
@@ -309,6 +380,7 @@ void ApplicationManager::SaveAll(ofstream& MyFile)
 //Draw all figures on the user interface
 void ApplicationManager::UpdateInterface() const
 {	
+
 	for(int i=0; i<FigCount; i++)
 		FigList[i]->DrawMe(pGUI);		//Call Draw function (virtual member fn)
 

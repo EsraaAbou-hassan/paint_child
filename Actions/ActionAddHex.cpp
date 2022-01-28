@@ -58,6 +58,7 @@ void ActionAddHex::Execute()
     pGUI->ClearStatusBar();
 
     HexagonInfo hexagon;
+    hexagon.inBounds = false;
     hexagon.rotation = NULL;
     hexagon.radius = NULL;
     hexagon.center = Center;
@@ -66,10 +67,18 @@ void ActionAddHex::Execute()
     // Get the drawing info
     pGUI->GetHexagonDrawingInfo(hexagon);
 
+    //check if it's inBounds
+    if (hexagon.inBounds) {
         //Step 3 - Create a Hexagon with the parameters read from the user
         CHex* R = new CHex(hexagon.center, hexagon.rotation, hexagon.radius, SqrGfxInfo);
 
         //Step 4 - Add the Hexagon to the list of figures
         pManager->AddFigure(R);
+    }
+    else
+    {
+        pGUI->PrintMessage("Can't draw outside the drawing area!");
+    }
+
 
 }

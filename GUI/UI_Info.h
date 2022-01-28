@@ -30,6 +30,7 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 	ITM_BRINGFRONT,
 	ITM_SAVE,
 	ITM_LOAD,
+	ITM_RESIZE,
 	
 	//TODO: Add more items names here
 
@@ -44,8 +45,11 @@ enum PlayMenuItem //The items of the Play menu (you should add more items)
 {
 	//Note: Items are ordered here as they appear in menu
 	//If you want to change the menu items order, change the order here
-	
+
 	//TODO: Add more items names here
+	ITM_FIGURE,
+	ITM_COLOR,
+	ITM_FIG_COL,
 	ITM_DRAW,
 	PLAY_ITM_COUNT		//no. of menu items ==> This should be the last line in this enum
 	
@@ -63,7 +67,13 @@ enum ColorMenuItm
 	ITM_CLR_ORANGE_T,
 	Color_ITM_COUNT  //no. of menu items ==> This should be the last line in this enum
 };
-
+enum ResizeMenuItm {
+	ITM_4_SIZE,
+	ITM_2_SIZE,
+	ITM_0_5_SIZE,
+	ITM_0_25_SIZE,
+	Resize_ITM_COUNT //no. of menu items ==> This should be the last line in this enum
+};
 
 
 

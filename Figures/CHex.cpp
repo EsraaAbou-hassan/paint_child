@@ -28,7 +28,7 @@ int CHex::getFigureData(POINT& p1, POINT& p2)
 }
 
 string CHex::getFigureName() {
-	return "Hexagon selected";
+	return "Hexagon selected  center  = ( " + to_string(center.x) +" , " + to_string(center.y) + " ) , radius = " + to_string(this->radius);
 }
 void CHex::Load(ifstream& file)
 {
@@ -73,3 +73,35 @@ void CHex::Save(ofstream& MyFile)
 }
 
 
+}
+void CHex::changeFigureSize(GUI* pGUI)
+{
+	int x, y;
+	ActionType ActType;
+	pGUI->PrintMessage("resize");
+	pGUI->CreateResizeToolBar();
+	ActType = pGUI->MapInputToActionType(x, y);
+	switch (ActType) {
+
+	case RESIZE_4:
+		this->radius = this->radius * 4;
+		pGUI->PrintMessage("resize 4");
+		break;
+	case RESIZE_2:
+		this->radius = this->radius * 2;
+		pGUI->PrintMessage("resize 2");
+		break;
+	case RESIZE_0_5:
+		this->radius = this->radius * 0.5;
+		pGUI->PrintMessage("resize 0.5");
+		break;
+	case RESIZE_0_25:
+		this->radius = this->radius * 0.25;
+		pGUI->PrintMessage("resize 0.25");
+		break;
+
+	};
+
+	pGUI->ClearStatusBar();
+	pGUI->CreateDrawToolBar();
+}

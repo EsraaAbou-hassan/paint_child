@@ -27,7 +27,7 @@ public:
 	void Run();		//to run the application
 	void reDrawBars() const;
 	// -- Action-Related Functions
-	Action* CreateAction(ActionType);
+	Action* CreateAction(ActionType, int& x, int& y);
 	int GetSelectedIndexFigure();
 	void BringToFront(int selectedIndex);
 	void SendToBack(int selectedIndex);
@@ -42,7 +42,9 @@ public:
 	// -- Interface Management Functions	
 	GUI *GetGUI() const; //Return pointer to the interface
 	void UpdateInterface() const;	//Redraws all the drawing window	
-	void DeleteFigures();
+	void DeleteFigures(); //remove all figures from array
+	void DeleteSelectedItem() ; //remove selected figuer
+	void ShiftItem(int figure) ;  //shift other figuer un the array
 };
 
 #endif

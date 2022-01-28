@@ -13,11 +13,11 @@ void ActionChangeFillColor::Execute()
 {
 
     GUI* pGUI = pManager->GetGUI();
-
+    int x, y;
     ActionType ActType;
     pGUI->PrintMessage("Select a color");
     pGUI->CreateColorToolBar();
-    ActType = pGUI->MapInputToActionType();
+    ActType = pGUI->MapInputToActionType(x,y);
 
     switch (ActType) {
     case SELECT_COLOR_CYAN:

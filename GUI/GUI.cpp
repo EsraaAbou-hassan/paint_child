@@ -75,9 +75,8 @@ char GUI::GetKeyPressed() const
 	return Key;
 }
 //This function reads the position where the user clicks to determine the desired action
-ActionType GUI::MapInputToActionType() const
+ActionType GUI::MapInputToActionType(int &x,int &y) const
 {	
-	int x,y;
 	pWind->WaitMouseClick(x, y);	//Get the coordinates of the user click
 
 	if(UI.InterfaceMode == MODE_DRAW)	//GUI in the DRAW mode
@@ -102,10 +101,11 @@ ActionType GUI::MapInputToActionType() const
 			case ITM_DEL: return DEL;
 			case ITM_SENDBACK: return SEND_BACK;
 			case ITM_BRINGFRONT: return BRNG_FRNT;
-			case ITM_EXIT: return EXIT;	
+			case ITM_EXIT: return EXIT;		
 			case ITM_SAVE: return SAVE;
 			case ITM_LOAD: return LOAD;
 			case ITM_PLAY: return TO_PLAY;
+			case ITM_RESIZE:return RESIZE;
 			
 			default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
@@ -126,23 +126,75 @@ ActionType GUI::MapInputToActionType() const
 		//perform checks similar to Draw mode checks above
 		//and return the correspoding action
 		//return TO_PLAY;	//just for now. This should be updated
-		int ClickedItemOrder = (x / UI.MenuItemWidth);
-		//Divide x coord of the point clicked by the menu item width (int division)
-		//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
-
-		switch (ClickedItemOrder)
+		//[1] If user clicks on the Toolbar
+		if (y >= 0 && y < UI.ToolBarHeight)
 		{
-		
-		case ITM_DRAW: return TO_DRAW;
+			int ClickedItemOrder = (x / UI.MenuItemWidth);
+			//Divide x coord of the point clicked by the menu item width (int division)
+			//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
 
-		default: return EMPTY;	//A click on empty place in desgin toolbar
+			switch (ClickedItemOrder)
+			{
+			case ITM_FIGURE: return PLAY_FIGUERS;
+			case ITM_COLOR: return  PLAY_COLORS;
+			case ITM_FIG_COL: return  PLAY_FIG_COL;
+			case ITM_DRAW: return TO_DRAW;
+
+			default: return EMPTY;	//A click on empty place in desgin toolbar
+			}
 		}
+		//[2] User clicks on the playing area
+		if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+		{
+			return PLAYING_AREA;
+		}
+
+		//[3] User clicks on the status bar
+		return STATUS;
 	}
 	else if (UI.InterfaceMode == MODE_COLOR) {
 		///TODO:
 		//perform checks similar to Draw mode checks above
 		//and return the correspoding action
 		//return TO_PLAY;	//just for now. This should be updated
+		//[1] If user clicks on the Toolbar
+		if (y >= 0 && y < UI.ToolBarHeight)
+		{
+			int ClickedItemOrder = (x / UI.MenuItemWidth);
+			//Divide x coord of the point clicked by the menu item width (int division)
+			//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
+
+			switch (ClickedItemOrder)
+			{
+
+
+			case ITM_CLR_CYAN_T: return SELECT_COLOR_CYAN;
+			case ITM_CLR_GREEN_T: return SELECT_COLOR_GREEN;
+			case ITM_CLR_RED_T: return SELECT_COLOR_RED;
+			case ITM_CLR_YELLOW_T: return SELECT_COLOR_YELLOW;
+			case ITM_CLR_BLUE_T: return SELECT_COLOR_BLUE;
+			case ITM_CLR_PINK_T: return SELECT_COLOR_PINK;
+			case ITM_CLR_BLACK_T: return SELECT_COLOR_BLACK;
+			case ITM_CLR_ORANGE_T: return SELECT_COLOR_ORANGE;
+			case ITM_CLR_BROWN_T: return SELECT_COLOR_BROWN;
+
+			default: return EMPTY;	//A click on empty place in desgin toolbar
+			}
+		}
+		//[2] User clicks on the playing area
+		if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+		{
+			return DRAWING_AREA;
+		}
+
+		//[3] User clicks on the status bar
+		return STATUS;
+	}
+	else if (UI.InterfaceMode == MODE_RESIZE) {
+	
+	//[1] If user clicks on the Toolbar
+	if (y >= 0 && y < UI.ToolBarHeight)
+	{
 		int ClickedItemOrder = (x / UI.MenuItemWidth);
 		//Divide x coord of the point clicked by the menu item width (int division)
 		//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
@@ -151,20 +203,15 @@ ActionType GUI::MapInputToActionType() const
 		{
 
 
-		case ITM_CLR_CYAN_T: return SELECT_COLOR_CYAN;
-		case ITM_CLR_GREEN_T: return SELECT_COLOR_GREEN;
-		case ITM_CLR_RED_T: return SELECT_COLOR_RED;
-		case ITM_CLR_YELLOW_T: return SELECT_COLOR_YELLOW;
-		case ITM_CLR_BLUE_T: return SELECT_COLOR_BLUE;
-		case ITM_CLR_PINK_T: return SELECT_COLOR_PINK;
-		case ITM_CLR_BLACK_T: return SELECT_COLOR_BLACK;
-		case ITM_CLR_ORANGE_T: return SELECT_COLOR_ORANGE;
-		case ITM_CLR_BROWN_T: return SELECT_COLOR_BROWN;
+		case ITM_4_SIZE: return RESIZE_4;
+		case ITM_2_SIZE: return RESIZE_2;
+		case ITM_0_5_SIZE: return RESIZE_0_5;
+		case ITM_0_25_SIZE: return RESIZE_0_25;
+		
 
 		default: return EMPTY;	//A click on empty place in desgin toolbar
 		}
 	}
-
 	//[2] User clicks on the playing area
 	if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
 	{
@@ -173,6 +220,9 @@ ActionType GUI::MapInputToActionType() const
 
 	//[3] User clicks on the status bar
 	return STATUS;
+	}
+
+	
 		
 
 }
@@ -227,13 +277,14 @@ void GUI::CreateDrawToolBar() const
 	MenuItemImages[ITM_DRAW_CLR] = "images\\MenuItems\\Border_Color.jpg";
 	MenuItemImages[ITM_FILL_CLR] = "images\\MenuItems\\Fill_Color.jpg";
 	MenuItemImages[ITM_BACKGROUND_CLR] = "images\\MenuItems\\Background_Color.jpg";
-	MenuItemImages[ITM_DEL] = "images\\MenuItems\\delete.jpg";
 	MenuItemImages[ITM_SENDBACK] = "images\\MenuItems\\Send_Back.jpg";
 	MenuItemImages[ITM_BRINGFRONT] = "images\\MenuItems\\Bring_Front.jpg";
+	MenuItemImages[ITM_RESIZE] = "images\\MenuItems\\resize.jpg";
+	MenuItemImages[ITM_DEL] = "images\\MenuItems\\delete.jpg";
 	MenuItemImages[ITM_SAVE] = "images\\MenuItems\\Menu_Save.jpg";
 	MenuItemImages[ITM_LOAD] = "images\\MenuItems\\Menu_Load.jpg";
-	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
 	MenuItemImages[ITM_PLAY] = "images\\MenuItems\\play.jpeg";
+	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
 
 
 
@@ -259,21 +310,17 @@ void GUI::CreatePlayToolBar() const
 	UI.InterfaceMode = MODE_PLAY;
 	///TODO: write code to create Play mode menu
 	string MenuItemImages[PLAY_ITM_COUNT];
+	MenuItemImages[ITM_FIGURE] = "images\\MenuItems\\figuers.jpg";
+	MenuItemImages[ITM_COLOR] = "images\\MenuItems\\colors.JPG";
+	MenuItemImages[ITM_FIG_COL] = "images\\MenuItems\\fig&colors.JPG";
 	MenuItemImages[ITM_DRAW] = "images\\MenuItems\\Draw.jpg";
 
 	//TODO: Prepare images for each menu item a	nd add it to the list
 
 	//Draw menu item one image at a time
 	for (int i = 0; i < PLAY_ITM_COUNT; i++) {
-	//	if (i== ITM_DRAW) {
-
-	//	pWind->DrawImage(MenuItemImages[i], 15 * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
-	//	}
-	//	else {
 
 		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
-		//}
-
 	}
 
 
@@ -284,8 +331,7 @@ void GUI::CreatePlayToolBar() const
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 	
 }
-///////////////////color bar
-///////////////////color bar
+
 ///////////////////color bar
 void GUI::CreateColorToolBar() const
 {
@@ -312,6 +358,30 @@ void GUI::CreateColorToolBar() const
 
 
 
+
+	//Draw a line under the toolbar
+	pWind->SetPen(RED, 3);
+	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+void GUI::CreateResizeToolBar() const
+{
+	ClearBar();
+	UI.InterfaceMode = MODE_RESIZE;
+
+	string MenuItemImages[Resize_ITM_COUNT];
+	MenuItemImages[ITM_4_SIZE] = "images\\MenuItems\\resize4.jpg";
+	MenuItemImages[ITM_2_SIZE] = "images\\MenuItems\\resize2.jpg";
+	MenuItemImages[ITM_0_5_SIZE] = "images\\MenuItems\\resize0.5.jpg";
+	MenuItemImages[ITM_0_25_SIZE] = "images\\MenuItems\\resize0.25.jpg";
+	
+
+	//Draw menu item one image at a time
+	for (int i = 0; i < Resize_ITM_COUNT; i++) {
+
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+	}
 
 	//Draw a line under the toolbar
 	pWind->SetPen(RED, 3);
@@ -411,6 +481,28 @@ string GUI::ConvertColorToString(color c)
 }
 
 //======================================================================================//
+//									drawing area vaildation								//
+//======================================================================================//
+
+//Check if inside drawing area 
+bool GUI::inDrawingArea(int x, int y) const {
+	if (x > UI.width || x < 0)
+		return false;
+	if (y > (UI.height - UI.StatusBarHeight) || y < UI.ToolBarHeight)
+		return false;
+	return true;
+}
+
+//Check if inside drawing area for hexa (or other shapes with vertexs)
+bool GUI::inDrawingArea(int* xs, int* ys, int vertexsNums) const {
+	for (int i = 0; i < vertexsNums; i++) {
+		if (!inDrawingArea(xs[i], ys[i]))
+			return false;
+	}
+	return true;
+}
+
+//======================================================================================//
 //								Figures Drawing Functions								//
 //======================================================================================//
 
@@ -488,6 +580,14 @@ void GUI::GetHexagonDrawingInfo(HexagonInfo& hexagon)
 		hexagon.ipY[i] = (float)hexagon.center.y + (hexagon.radius * sin(angle));
 
 		angle += (3.14159265 / 3);
+	}
+
+	//check if hexagon is in the drawing area
+	if (!inDrawingArea(hexagon.ipX, hexagon.ipY, 6)) {
+		hexagon.inBounds = false;
+	}
+	else {
+		hexagon.inBounds = true;
 	}
 
 }

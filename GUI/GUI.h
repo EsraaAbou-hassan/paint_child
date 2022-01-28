@@ -22,7 +22,7 @@ public:
 	/////////// Input Functoinality  /////////////////
 	void GetPointClicked(int &x, int &y) const;//Get coordinate where user clicks
 	string GetSrting() const ;	 //Returns a string entered by the user
-	ActionType MapInputToActionType() const; //Read the user click and map to an action
+	ActionType MapInputToActionType(int& x, int& y) const; //Read the user click and map to an action
 	char GetKeyPressed() const;
 
 	/////////// Output Functoinality  ////////////////
@@ -30,6 +30,7 @@ public:
 	void CreatePlayToolBar() const;	//creates Play mode toolbar & menu
 	void CreateColorToolBar()const;
 	void CreateStatusBar() const;	//create the status bar
+	void GUI::CreateResizeToolBar() const;
 
 	void ClearStatusBar() const;	//Clears the status bar
 	bool getCrntIsFilled() const;
@@ -42,6 +43,8 @@ public:
 	void ClearDrawArea() const;	//Clears the drawing area
 
 	// -- Figures Drawing functions
+	bool inDrawingArea(int x, int y) const;
+	bool inDrawingArea(int* x, int* y, int vertexsNums) const;
 	void DrawSquare(Point P1, int length, GfxInfo RectGfxInfo, bool selected=false) const;  //Draw a Square
 	void DrawElps(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected = false) const;  //Draw a Elps
 	void GetHexagonDrawingInfo(HexagonInfo& hexagon);

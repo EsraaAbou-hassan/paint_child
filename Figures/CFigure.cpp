@@ -1,15 +1,17 @@
 #include "CFigure.h"
-
+int CFigure::mainID = 0;
 CFigure::CFigure(GfxInfo FigureGfxInfo)
 {
 	FigGfxInfo = FigureGfxInfo;	//Default status is non-filled.
 	Selected = false;
+	ID= ++mainID;
 }
 CFigure::CFigure() {
 	GfxInfo FigureGfxInfo;
 	FigGfxInfo = FigureGfxInfo;	//Default status is non-filled.
 	Selected = false;
 }
+
 void CFigure::SetSelected(bool s)
 {
 	Selected = s;
@@ -34,9 +36,10 @@ void CFigure::ChngFillClr(color Fclr)
 void CFigure::changeFigureDrawClr(GUI* pGUI)
 {
 	ActionType ActType;
+	int x, y;
 	pGUI->PrintMessage("Select a color");
 	pGUI->CreateColorToolBar();
-	ActType = pGUI->MapInputToActionType();
+	ActType = pGUI->MapInputToActionType(x,y);
 
 	switch (ActType) {
 	case SELECT_COLOR_CYAN:
@@ -75,9 +78,10 @@ void CFigure::changeFigureDrawClr(GUI* pGUI)
 void CFigure::changeFigureFillClr(GUI* pGUI)
 {
 	ActionType ActType;
+	int x, y;
 	pGUI->PrintMessage("Select a color");
 	pGUI->CreateColorToolBar();
-	ActType = pGUI->MapInputToActionType();
+	ActType = pGUI->MapInputToActionType(x, y);
 
 	switch (ActType) {
 	case SELECT_COLOR_CYAN:
