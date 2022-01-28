@@ -38,8 +38,6 @@ void ActionAddSquare::Execute()
 	{
 		P1.x = 0;
 		P1.y = 0;
-		P2.x = 0;
-		P2.y = 0;
 		(pManager->GetGUI())->PrintMessage("Invalid point, please select another action");
 		return;
 	}
@@ -55,8 +53,6 @@ void ActionAddSquare::Execute()
 	}
 	if (!isValid(P2))
 	{
-		P1.x = 0;
-		P1.y = 0;
 		P2.x = 0;
 		P2.y = 0;
 		(pManager->GetGUI())->PrintMessage("Invalid point, please select another action");
@@ -76,11 +72,19 @@ void ActionAddSquare::Execute()
 	//The square side length would be the longer distance between the two points coordinates
 	int SideLength = max(abs(P1.x-P2.x), abs(P1.y-P2.y));
 
-	
+	int bottomRightX = topLeft.x + SideLength;
+	int bottomRightY = topLeft.y + SideLength;
 
-	//Step 3 - Create a Square with the parameters read from the user
-	CSquare *R=new CSquare(topLeft, SideLength, SqrGfxInfo);
-	std::cout << "sqr object is squre: "  << (typeid(*R) == typeid(CSquare)) << endl;
-	//Step 4 - Add the Square to the list of figures
-	pManager->AddFigure(R);
+	if (pGUI->inDrawingArea(topLeft.x, topLeft.y) &&
+		pGUI->inDrawingArea(bottomRightX, bottomRightY)) {
+		//Step 3 - Create a Square with the parameters read from the user
+		CSquare* R = new CSquare(topLeft, SideLength, SqrGfxInfo);
+		std::cout << "sqr object is squre: " << (typeid(*R) == typeid(CSquare)) << endl;
+		//Step 4 - Add the Square to the list of figures
+		pManager->AddFigure(R);
+	}
+	else {
+		pGUI->PrintMessage("Can't draw outside the drawing area!");
+	}
+
 }

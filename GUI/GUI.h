@@ -43,6 +43,8 @@ public:
 	void ClearDrawArea() const;	//Clears the drawing area
 
 	// -- Figures Drawing functions
+	bool inDrawingArea(int x, int y) const;
+	bool inDrawingArea(int* x, int* y, int vertexsNums) const;
 	void DrawSquare(Point P1, int length, GfxInfo RectGfxInfo, bool selected=false) const;  //Draw a Square
 	void DrawElps(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected = false) const;  //Draw a Elps
 	void GetHexagonDrawingInfo(HexagonInfo& hexagon);

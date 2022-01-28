@@ -473,6 +473,28 @@ string GUI::ConvertColorToString(color c)
 }
 
 //======================================================================================//
+//									drawing area vaildation								//
+//======================================================================================//
+
+//Check if inside drawing area 
+bool GUI::inDrawingArea(int x, int y) const {
+	if (x > UI.width || x < 0)
+		return false;
+	if (y > (UI.height - UI.StatusBarHeight) || y < UI.ToolBarHeight)
+		return false;
+	return true;
+}
+
+//Check if inside drawing area for hexa (or other shapes with vertexs)
+bool GUI::inDrawingArea(int* xs, int* ys, int vertexsNums) const {
+	for (int i = 0; i < vertexsNums; i++) {
+		if (!inDrawingArea(xs[i], ys[i]))
+			return false;
+	}
+	return true;
+}
+
+//======================================================================================//
 //								Figures Drawing Functions								//
 //======================================================================================//
 
@@ -550,6 +572,14 @@ void GUI::GetHexagonDrawingInfo(HexagonInfo& hexagon)
 		hexagon.ipY[i] = (float)hexagon.center.y + (hexagon.radius * sin(angle));
 
 		angle += (3.14159265 / 3);
+	}
+
+	//check if hexagon is in the drawing area
+	if (!inDrawingArea(hexagon.ipX, hexagon.ipY, 6)) {
+		hexagon.inBounds = false;
+	}
+	else {
+		hexagon.inBounds = true;
 	}
 
 }

@@ -352,11 +352,9 @@ void ApplicationManager::DeleteSelectedItem() {
 			FigList[i] = NULL;
 			ShiftItem(i);
 			FigCount--;
-			
-
 		}
 	}
-	if (flag) {
+	if (!flag) {
 		pGUI->PrintMessage("you must select  an item first");
 	}
 	else {

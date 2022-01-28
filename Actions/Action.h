@@ -23,12 +23,14 @@ public:
 
 	protected: bool isValid(Point P) //utility function to check if point is inside drawing area
 	{
+
 		if (P.x > UI.width || P.x < 0)
 			return false;
 		if (P.y > (UI.height - UI.StatusBarHeight) || P.y < UI.ToolBarHeight)
 			return false;
 		return true;
 	}
+
 	//To undo this action (code depends on action type)
 	//virtual void Undo()=0;
 
