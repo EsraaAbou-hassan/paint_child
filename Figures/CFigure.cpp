@@ -132,5 +132,13 @@ color CFigure::ConvertToColor(string s)
 		return MAGENTA;
 	if (s == "TURQUOISE")
 		return TURQUOISE;
+	if (s == "CYAN")
+		return CYAN;
+	if (s == "PINK")
+		return PINK;
+	if (s == "BROWN")
+		return BROWN;
+	if (s == "ORANGE")
+		return ORANGE;
 	return BLACK;
 }

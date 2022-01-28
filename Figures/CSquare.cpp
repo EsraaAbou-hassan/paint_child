@@ -55,10 +55,21 @@ void CSquare::Load(ifstream& file)
 void CSquare::Save(ofstream& MyFile)
 {
 
-	// Create and open a text file
+	
 	GUI* g = nullptr;
+
+	string Fillcolor;
+
+	if (this->FigGfxInfo.isFilled == true)
+	{
+		Fillcolor = g->ConvertColorToString(this->FigGfxInfo.FillClr);
+	}
+	else if (this->FigGfxInfo.isFilled != true) {
+		Fillcolor = "NO_FILL";
+	}
+
 	// Write to the file
 	int idd = 1;
-	MyFile <<"SQR\t"<<idd<<"\t" << this->TopLeftCorner.x << "\t" << this->TopLeftCorner.y << "\t" << this->length << "\t" << g->ConvertColorToString(FigGfxInfo.DrawClr) << "\t" << g->ConvertColorToString(FigGfxInfo.FillClr) << endl;
+	MyFile <<"SQR\t"<<idd<<"\t"<<this->TopLeftCorner.x<< "\t"<< this->TopLeftCorner.y <<"\t"<< this->length <<"\t"<< g->ConvertColorToString(FigGfxInfo.DrawClr) <<"\t"<<Fillcolor<< endl;
 
 }

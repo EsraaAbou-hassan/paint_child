@@ -39,7 +39,7 @@ void CHex::Load(ifstream& file)
 	//Get a Pointer to the Interface
 
 	file >> ID >> center.x >> center.y >> rotation >> radius;
-	std::cout << ID << " " << center.x << " " << center.y << " " << rotation << " " << radius << " ";
+	std::cout << ID << " " << center.x <<  " " << center.y << " " << rotation << " " << radius << " ";
 	file >> FigureColor >> FigureFill;
 	std::cout << FigureColor << " " << FigureFill << endl;
 	FigGfxInfo.DrawClr = ConvertToColor(FigureColor);
@@ -56,4 +56,20 @@ void CHex::Load(ifstream& file)
 
 void CHex::Save(ofstream& MyFile)
 {
+	
+	GUI* g = nullptr;
+
+	string Fillcolor;
+	if (this->FigGfxInfo.isFilled == true)
+	{
+		Fillcolor = g->ConvertColorToString(this->FigGfxInfo.FillClr);
+	}
+	else if (this->FigGfxInfo.isFilled != true) {
+		Fillcolor = "NO_FILL";
+	}
+	// Write to the file
+	int idd = 1;
+	MyFile << "HEXA\t" <<idd<< "\t" << this->center.x <<"\t"<< this->center.y<<"\t"<<rotation<<"\t"<< this->radius << "\t" << g->ConvertColorToString(FigGfxInfo.DrawClr) << "\t" <<Fillcolor<< endl;
 }
+
+

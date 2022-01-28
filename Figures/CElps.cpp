@@ -54,4 +54,21 @@ void CElps::Load(ifstream& file)
 
 void CElps::Save(ofstream& MyFile)
 {
+	
+	GUI* g = nullptr;
+	
+	string Fillcolor;
+	if (this->FigGfxInfo.isFilled==true )
+	{
+		Fillcolor = g->ConvertColorToString(this->FigGfxInfo.FillClr);
+	}
+	else if (this->FigGfxInfo.isFilled != true) {
+		Fillcolor = "NO_FILL";	
+	}
+	
+
+	// Write to the file
+	int idd = 1;
+	MyFile << "ELPS\t" << idd << "\t" <<this->TopLeftCorner.x << "\t" << this->TopLeftCorner.y << "\t" <<BottomRightCorner.x <<"\t"<< BottomRightCorner.y << "\t" << g->ConvertColorToString(FigGfxInfo.DrawClr) << "\t" << Fillcolor << endl;
 }
+

@@ -398,7 +398,15 @@ string GUI::ConvertColorToString(color c)
 		return "MAGENTA";
 	else if ((c.ucRed == TURQUOISE.ucRed) && (c.ucGreen == TURQUOISE.ucGreen) && (c.ucBlue == TURQUOISE.ucBlue))
 		return "TURQUOISE";
-	return "Not colored";
+	else if ((c.ucRed == CYAN.ucRed) && (c.ucGreen == CYAN.ucGreen) && (c.ucBlue == CYAN.ucBlue))
+		return "CYAN";
+	else if ((c.ucRed == PINK.ucRed) && (c.ucGreen == PINK.ucGreen) && (c.ucBlue == PINK.ucBlue))
+		return "PINK";
+	else if ((c.ucRed == BROWN.ucRed) && (c.ucGreen == BROWN.ucGreen) && (c.ucBlue == BROWN.ucBlue))
+		return "BROWN";
+	else if ((c.ucRed == ORANGE.ucRed) && (c.ucGreen == ORANGE.ucGreen) && (c.ucBlue == ORANGE.ucBlue))
+		return "ORANGE";
+	return "NO_FILL";
 
 }
 
