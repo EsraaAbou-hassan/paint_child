@@ -105,7 +105,7 @@ void CSquare::changeFigureSize(GUI* pGUI)
 		break;
 
 	};
-
+	pGUI->ClearStatusBar();
 	pGUI->CreateDrawToolBar();
 	pGUI->ClearDrawArea();
 }

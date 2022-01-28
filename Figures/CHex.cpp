@@ -103,5 +103,6 @@ void CHex::changeFigureSize(GUI* pGUI)
 	};
 
 	pGUI->ClearStatusBar();
+	pGUI->ClearDrawArea();
 	pGUI->CreateDrawToolBar();
 }

@@ -92,9 +92,7 @@ ActionType GUI::MapInputToActionType(int &x,int &y) const
 
 			switch (ClickedItemOrder)
 			{
-			case ITM_SQUR: return DRAW_SQUARE;
-			case ITM_ELPS: return DRAW_ELPS;
-			case ITM_HEX: return DRAW_HEX;
+			case ITM_FIGURES : return FIGURES;
 			case ITM_DRAW_CLR: return CHNG_DRAW_CLR;
 			case ITM_FILL_CLR: return CHNG_FILL_CLR;
 			case ITM_BACKGROUND_CLR: return CHNG_BK_CLR;
@@ -221,7 +219,38 @@ ActionType GUI::MapInputToActionType(int &x,int &y) const
 	//[3] User clicks on the status bar
 	return STATUS;
 	}
+	else if (UI.InterfaceMode == MODE_FIGURES)	//GUI is in PLAY mode
+	{
+	///TODO:
+	//perform checks similar to Draw mode checks above
+	//and return the correspoding action
+	//return TO_PLAY;	//just for now. This should be updated
+	//[1] If user clicks on the Toolbar
+	if (y >= 0 && y < UI.ToolBarHeight)
+	{
+		int ClickedItemOrder = (x / UI.MenuItemWidth);
+		//Divide x coord of the point clicked by the menu item width (int division)
+		//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
 
+		switch (ClickedItemOrder)
+		{
+		case ITM_SQUR: return DRAW_SQUARE;
+		case ITM_ELPS: return DRAW_ELPS;
+		case ITM_HEX: return DRAW_HEX;
+		case ITM_DRAWING: return DRAWING;
+
+		default: return EMPTY;	//A click on empty place in desgin toolbar
+		}
+	}
+	//[2] User clicks on the playing area
+	if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+	{
+		return DRAWING_AREA;
+	}
+
+	//[3] User clicks on the status bar
+	return STATUS;
+	}
 	
 		
 
@@ -271,9 +300,8 @@ void GUI::CreateDrawToolBar() const
 	//First prepare List of images for each menu item
 	//To control the order of these images in the menu, 
 	string MenuItemImages[DRAW_ITM_COUNT];
-	MenuItemImages[ITM_SQUR] = "images\\MenuItems\\Menu_Sqr.jpg";
-	MenuItemImages[ITM_ELPS] = "images\\MenuItems\\Menu_Elps.jpg";
-	MenuItemImages[ITM_HEX] = "images\\MenuItems\\Menu_Hex.jpg";
+	
+	MenuItemImages[ITM_FIGURES] = "images\\MenuItems\\Figuresdraw.jpg";
 	MenuItemImages[ITM_DRAW_CLR] = "images\\MenuItems\\Border_Color.jpg";
 	MenuItemImages[ITM_FILL_CLR] = "images\\MenuItems\\Fill_Color.jpg";
 	MenuItemImages[ITM_BACKGROUND_CLR] = "images\\MenuItems\\Background_Color.jpg";
@@ -378,6 +406,31 @@ void GUI::CreateResizeToolBar() const
 
 	//Draw menu item one image at a time
 	for (int i = 0; i < Resize_ITM_COUNT; i++) {
+
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+	}
+
+	//Draw a line under the toolbar
+	pWind->SetPen(RED, 3);
+	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+void GUI::CreateFiguresToolBar() const
+{
+	ClearBar();
+	UI.InterfaceMode = MODE_FIGURES;
+
+	string MenuItemImages[Figures_ITM_COUNT];
+	MenuItemImages[ITM_SQUR] = "images\\MenuItems\\Menu_Sqr.jpg";
+	MenuItemImages[ITM_ELPS] = "images\\MenuItems\\Menu_Elps.jpg";
+	MenuItemImages[ITM_HEX] = "images\\MenuItems\\Menu_Hex.jpg";
+	MenuItemImages[ITM_DRAWING] = "images\\MenuItems\\Draw.jpg";
+
+
+	//Draw menu item one image at a time
+	for (int i = 0; i < Figures_ITM_COUNT; i++) {
 
 		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
 

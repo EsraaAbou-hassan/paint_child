@@ -28,8 +28,9 @@ ApplicationManager::ApplicationManager()
 		FigList[i] = NULL;	
 }
 void ApplicationManager::DeleteFigures() {
-	for (int i = 0; i < MaxFigCount; i++)
-		FigList[i] = NULL;
+	for (int i = 0; i < FigCount; i++) {
+		delete FigList[i];
+	}	
 	FigCount = 0;
 }
 void ApplicationManager::Run()
@@ -74,6 +75,12 @@ Action* ApplicationManager::CreateAction(ActionType ActType,int &x,int &y)
 	//According to Action Type, create the corresponding action object
 	switch (ActType)
 	{
+		case FIGURES:
+			pGUI->CreateFiguresToolBar();
+			break;
+		case DRAWING:
+			pGUI->CreateDrawToolBar();
+			break;
 		case DRAW_SQUARE:
 			newAct = new ActionAddSquare(this);
 			break;
@@ -133,7 +140,15 @@ Action* ApplicationManager::CreateAction(ActionType ActType,int &x,int &y)
 			break;
 
 		case EXIT:
-			///create ExitAction here
+			if (FigCount != 0) {
+				pGUI->PrintMessage("Do you want to save the figuers ? y for yes");
+				char choicing = pGUI->GetKeyPressed();
+				if(choicing =='Y'||choicing=='y') {
+					newAct = new ActionSave(this, false, false);//with loading => false //for playing => false
+				}
+				DeleteFigures();
+			}
+			
 			
 			break;
 
