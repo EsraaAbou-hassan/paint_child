@@ -72,7 +72,7 @@ void CElps::Save(ofstream& MyFile)
 	MyFile << "ELPS\t" << idd << "\t" <<this->TopLeftCorner.x << "\t" << this->TopLeftCorner.y << "\t" <<BottomRightCorner.x <<"\t"<< BottomRightCorner.y << "\t" << g->ConvertColorToString(FigGfxInfo.DrawClr) << "\t" << Fillcolor << endl;
 }
 
-}
+
 void CElps::changeFigureSize(GUI* pGUI)
 {
 	int x, y;

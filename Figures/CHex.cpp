@@ -73,7 +73,7 @@ void CHex::Save(ofstream& MyFile)
 }
 
 
-}
+
 void CHex::changeFigureSize(GUI* pGUI)
 {
 	int x, y;
