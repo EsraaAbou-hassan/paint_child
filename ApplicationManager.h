@@ -36,7 +36,7 @@ public:
 	void AddFigure(CFigure* pFig); //Adds a new figure to the FigList
 	CFigure *GetFigure(int x, int y) const; //Search for a figure given a point inside the figure
 	
-	
+	void selectFigure(int& x, int& y);
 	void SaveAll(ofstream& MyFile);//Save all figures in figure list
 
 	// -- Interface Management Functions	

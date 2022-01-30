@@ -13,7 +13,9 @@ protected:
 	GfxInfo FigGfxInfo;	//Figure graphis info
 	static int mainID;
 	/// Add more parameters if needed.
-
+protected:
+	Point startingPoint; //drawing area starting coordinates
+	Point endingPoint; //drawing area ending coordinates
 public:
 	CFigure(GfxInfo FigureGfxInfo);
 	CFigure();

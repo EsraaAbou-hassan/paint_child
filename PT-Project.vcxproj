@@ -140,6 +140,7 @@
     <ClCompile Include="Actions\ActionPickFigure.cpp" />
     <ClCompile Include="Actions\ActionResize.cpp" />
     <ClCompile Include="Actions\ActionSave.cpp" />
+    <ClCompile Include="Actions\ActionSelectFigure.cpp" />
     <ClCompile Include="Actions\ActionSendToBack.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp" />
     <ClCompile Include="CMUgraphicsLib\CMUgraphics.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Actions\ActionPickFigure.h" />
     <ClInclude Include="Actions\ActionResize.h" />
     <ClInclude Include="Actions\ActionSave.h" />
+    <ClInclude Include="Actions\actionSelectFigure.h" />
     <ClInclude Include="Actions\ActionSendToBack.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />

@@ -32,80 +32,45 @@ string CSquare::getFigureName() {
 }
 void CSquare::changeFigureSize(GUI* pGUI)
 {
-	Point startingPoint; //drawing area starting coordinates
-	Point endingPoint; //drawing area ending coordinates
-	startingPoint.x = UI.wx;
-	endingPoint.x = UI.wx + UI.width;
-	startingPoint.y = UI.wy+UI.ToolBarHeight;
-	endingPoint.y = UI.height - UI.StatusBarHeight;
-
-
 	int x, y;
 	ActionType ActType;
 	pGUI->PrintMessage("resize");
 	pGUI->CreateResizeToolBar();
 	ActType = pGUI->MapInputToActionType(x, y);
+	double factor = 0;
 	switch (ActType) {
 
 	case RESIZE_4:
-		this->length = this->length * 4;
-		x = this->length + this->TopLeftCorner.x;
-		y = this->length + this->TopLeftCorner.y;
-		if (x <= endingPoint.x && x >= startingPoint.x && y >= startingPoint.y && y <= endingPoint.y)
-		{
-			pGUI->PrintMessage("resize 4");
-		}
-		else
-		{
-			this->length = this->length / 4;
-			pGUI->PrintMessage("exceeds the window limit");
-		}
+		factor = 4;
 		break;
 	case RESIZE_2:
-		this->length = this->length * 2;
-		x = this->length + this->TopLeftCorner.x;
-		y = this->length + this->TopLeftCorner.y;
-		if (x <= endingPoint.x && x >= startingPoint.x&& y >= startingPoint.y&& y <= endingPoint.y)
-		{
-			pGUI->PrintMessage("resize 2");
-		}
-		else
-		{
-			this->length = this->length / 2;
-			pGUI->PrintMessage("exceeds the window limit");
-		}
+		factor = 2;
 		break;
 	case RESIZE_0_5:
-		this->length = this->length * 0.5;
-		x = this->length + this->TopLeftCorner.x;
-		y = this->length + this->TopLeftCorner.y;
-		if ((TopLeftCorner.x +10)<x&&(TopLeftCorner.y+10)<y)
-		{
-			pGUI->PrintMessage("resize 0.5");
-		}
-		else
-		{
-			this->length = this->length * 2;
-			pGUI->PrintMessage("too small");
-		}
+		factor = 0.5;
 		break;
 	case RESIZE_0_25:
-		this->length = this->length * 0.25;
-		x = this->length + this->TopLeftCorner.x;
-		y = this->length + this->TopLeftCorner.y;
-		if ((TopLeftCorner.x + 10) < x && (TopLeftCorner.y + 10) < y)
-		{
-			pGUI->PrintMessage("resize 0.0.25");
-		}
-		else
-		{
-			this->length = this->length * 4;
-			pGUI->PrintMessage("too small");
-		}
+		factor = 0.25;
 		break;
 
 	};
-	pGUI->ClearStatusBar();
+
+	this->length = this->length * factor;
+	x = this->length + this->TopLeftCorner.x;
+	y = this->length + this->TopLeftCorner.y;
+	if ((factor==2||factor==4) && x <= endingPoint.x && x >= startingPoint.x && y >= startingPoint.y && y <= endingPoint.y)
+	{
+		pGUI->PrintMessage("resize "+to_string(factor));
+	}
+	else if ((factor == 0.5 || factor == 0.25) &&  (TopLeftCorner.x + 10) < x && (TopLeftCorner.y + 10) < y)
+	{
+		pGUI->PrintMessage("resize "+to_string(factor));
+	}
+	else
+	{
+		this->length = this->length / factor;
+		pGUI->PrintMessage(factor==2||factor==4?"exceeds the window limit": "too small");
+	}
 	pGUI->CreateDrawToolBar();
 	pGUI->ClearDrawArea();
 }

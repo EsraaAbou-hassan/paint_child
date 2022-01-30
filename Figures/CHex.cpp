@@ -81,28 +81,43 @@ void CHex::changeFigureSize(GUI* pGUI)
 	pGUI->PrintMessage("resize");
 	pGUI->CreateResizeToolBar();
 	ActType = pGUI->MapInputToActionType(x, y);
+	x = center.x;
+	y = center.y;
+	double factor = 0;
 	switch (ActType) {
 
 	case RESIZE_4:
-		this->radius = this->radius * 4;
-		pGUI->PrintMessage("resize 4");
+		factor = 4;
 		break;
 	case RESIZE_2:
-		this->radius = this->radius * 2;
-		pGUI->PrintMessage("resize 2");
+		factor = 2;
 		break;
 	case RESIZE_0_5:
-		this->radius = this->radius * 0.5;
-		pGUI->PrintMessage("resize 0.5");
+		factor = 0.5;
 		break;
 	case RESIZE_0_25:
-		this->radius = this->radius * 0.25;
-		pGUI->PrintMessage("resize 0.25");
+		factor = 0.25;
 		break;
-
 	};
 
-	pGUI->ClearStatusBar();
+	this->radius = this->radius * factor;
+	int x1 = x-radius;
+	x += radius;
+	int y2 = y - radius;
+	y += radius;
+	if ((factor == 2 || factor == 4) && x <= endingPoint.x && x >= startingPoint.x && y >= startingPoint.y && y <= endingPoint.y && x1 <= endingPoint.x && x1 >= startingPoint.x && y2 >= startingPoint.y && y2 <= endingPoint.y)
+	{
+		pGUI->PrintMessage("resize " + to_string(factor));
+	}
+	else if ((factor == 0.5 || factor == 0.25) && radius >10)
+	{
+		pGUI->PrintMessage("resize " + to_string(factor));
+	}
+	else
+	{
+		this->radius = this->radius / factor;
+		pGUI->PrintMessage(factor == 2 || factor == 4 ? "exceeds the window limit" : "too small");
+	}
 	pGUI->ClearDrawArea();
 	pGUI->CreateDrawToolBar();
 }

@@ -10,6 +10,7 @@
 #include <iostream>
 ActionDeleteItem::ActionDeleteItem(ApplicationManager* pApp) :Action(pApp)
 { 
+
 }
 
 //Execute the action

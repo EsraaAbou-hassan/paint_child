@@ -12,6 +12,7 @@
 #include "Actions/ActionBringToFront.h"
 #include "Actions/ActionPickFigure.h"
 #include "Actions/ActionResize.h"
+#include"Actions/actionSelectFigure.h"
 #include<iostream>
 #include <fstream>
 
@@ -67,11 +68,9 @@ Action* ApplicationManager::CreateAction(ActionType ActType,int &x,int &y)
 {
 	Action* newAct = NULL;
 	CFigure* temp;
-	POINT p1, p2;
-	int numberOfFiguresSelected = 0, previosFigure = 0;
-	int length;
+	
 	bool s = false, clear = true;
-	string figureName;
+	
 	//According to Action Type, create the corresponding action object
 	switch (ActType)
 	{
@@ -180,39 +179,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType,int &x,int &y)
 			break;
 
 		case DRAWING_AREA:
-			if (FigCount == 0) {
-				pGUI->PrintMessage("no figures drawing");
-			}
-			else {
-				for (int i = 0; i < FigCount; i++)
-				{
-					temp = FigList[i];
-					length = temp->getFigureData(p1, p2);
-
-					if (x >= p1.x && x <= p2.x && y >= p1.y && y <= p2.y)
-					{
-						clear = false;
-						s = temp->IsSelected();
-						numberOfFiguresSelected++;
-						figureName = temp->getFigureName();
-						s ? pGUI->ClearStatusBar() : pGUI->PrintMessage(figureName);
-						s ? temp->SetSelected(false) : temp->SetSelected(true);
-					}
-					else {
-						//s? pGUI->PrintMessage(figureName):pGUI->PrintMessage("drawing area");
-						temp->SetSelected(false);
-					}
-					if (numberOfFiguresSelected == 1 && previosFigure == 0) {
-						previosFigure = i;
-					}
-					else if (numberOfFiguresSelected > 1) {
-						CFigure* t = FigList[previosFigure];
-						t->SetSelected(false);
-						previosFigure = i;
-					}
-				}
-				clear ? pGUI->ClearStatusBar() : true;
-			}
+			newAct = new SelectFigureAction(this,x,y);
 			break;
 		case PLAYING_AREA:
 			pGUI->PrintMessage("playing Area");
@@ -340,6 +307,48 @@ CFigure *ApplicationManager::GetFigure(int x, int y) const
 
 	}
 	return NULL;
+}
+void ApplicationManager::selectFigure(int& x, int& y)
+{
+	CFigure* temp;
+	POINT p1, p2;
+	int numberOfFiguresSelected = 0, previosFigure = 0;
+	int length;
+	bool s = false, clear = true;
+	string figureName;
+	if (FigCount == 0) {
+		pGUI->PrintMessage("no figures drawing");
+	}
+	else {
+		for (int i = 0; i < FigCount; i++)
+		{
+			temp = FigList[i];
+			length = temp->getFigureData(p1, p2);
+
+			if (x >= p1.x && x <= p2.x && y >= p1.y && y <= p2.y)
+			{
+				clear = false;
+				s = temp->IsSelected();
+				numberOfFiguresSelected++;
+				figureName = temp->getFigureName();
+				s ? pGUI->ClearStatusBar() : pGUI->PrintMessage(figureName);
+				s ? temp->SetSelected(false) : temp->SetSelected(true);
+			}
+			else {
+				//s? pGUI->PrintMessage(figureName):pGUI->PrintMessage("drawing area");
+				temp->SetSelected(false);
+			}
+			if (numberOfFiguresSelected == 1 && previosFigure == 0) {
+				previosFigure = i;
+			}
+			else if (numberOfFiguresSelected > 1) {
+				CFigure* t = FigList[previosFigure];
+				t->SetSelected(false);
+				previosFigure = i;
+			}
+		}
+		clear ? pGUI->ClearStatusBar() : true;
+	}
 }
 ////////////////////////////////////////////////////////////////////////////////////
 void ApplicationManager::SaveAll(ofstream& MyFile)

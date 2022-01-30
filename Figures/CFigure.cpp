@@ -5,11 +5,20 @@ CFigure::CFigure(GfxInfo FigureGfxInfo)
 	FigGfxInfo = FigureGfxInfo;	//Default status is non-filled.
 	Selected = false;
 	ID= ++mainID;
+
+	startingPoint.x = UI.wx;
+	startingPoint.y = UI.wy + UI.ToolBarHeight;
+	endingPoint.x = UI.wx + UI.width;
+	endingPoint.y = UI.height - UI.StatusBarHeight;
 }
 CFigure::CFigure() {
 	GfxInfo FigureGfxInfo;
 	FigGfxInfo = FigureGfxInfo;	//Default status is non-filled.
 	Selected = false;
+	startingPoint.x = UI.wx;
+	startingPoint.y = UI.wy + UI.ToolBarHeight;
+	endingPoint.x = UI.wx + UI.width;
+	endingPoint.y = UI.height - UI.StatusBarHeight;
 }
 
 void CFigure::SetSelected(bool s)

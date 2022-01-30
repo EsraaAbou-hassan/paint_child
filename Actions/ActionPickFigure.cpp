@@ -15,9 +15,6 @@ void ActionPickFigure::Execute()
 	GUI* pGUI = pManager->GetGUI();
 	
 
-	if (type == 0) {
-
-	}
 	switch (type)
 	{
 	case 0:
