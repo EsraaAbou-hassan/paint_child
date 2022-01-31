@@ -22,7 +22,7 @@ public:
 	
 	void SetSelected(bool);	//select/unselect the figure
 	bool IsSelected() const;	//check whether fig is selected
-
+	virtual bool InsideAFigure(int x, int y) = 0;
 	virtual void DrawMe(GUI*) const = 0;		//Draw the figure
 
 	void ChngDrawClr(color Dclr);	//changes the figure's drawing color

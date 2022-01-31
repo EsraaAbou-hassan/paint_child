@@ -31,7 +31,9 @@ int CElps::getFigureData(POINT& p1, POINT& p2)
 }
 
 string CElps::getFigureName() {
-	return "Elps selected  top left corner  = ( " + to_string(TopLeftCorner.x) + " , " + to_string(TopLeftCorner.y) + " ) , bottom right corner = ( " + to_string(BottomRightCorner.x) + " , " + to_string(BottomRightCorner.y) + " )";
+	int radiusX = (BottomRightCorner.x - TopLeftCorner.x)/2;
+	int radiusY = (BottomRightCorner.y - TopLeftCorner.y) / 2;
+	return "Elps selected  center  = ( " + to_string(TopLeftCorner.x+radiusX) + " , " + to_string(TopLeftCorner.y + radiusY) + " ) , radiusX = " + to_string(radiusX) + " , radiusY = " + to_string(radiusY);
 }
 void CElps::Load(ifstream& file)
 {
@@ -135,4 +137,18 @@ void CElps::changeFigureSize(GUI* pGUI)
 	}
 	pGUI->ClearDrawArea();
 	pGUI->CreateDrawToolBar();
+}
+
+bool CElps::InsideAFigure(int x, int y)
+{
+	int radiusX = (BottomRightCorner.x-TopLeftCorner.x)/2;
+	int radiusY = (BottomRightCorner.y - TopLeftCorner.y) / 2;
+	Point center;
+	center.x = TopLeftCorner.x + radiusX;
+	center.y = TopLeftCorner.y + radiusY;
+	if (pow(x - center.x, 2) / pow(radiusX, 2) + pow(y - center.y, 2) / pow(radiusY, 2) <= 1)
+	{
+		return true;
+	}
+	return false;
 }

@@ -21,6 +21,7 @@ public:
 	virtual void Load(ifstream& file);
 	virtual void Save(ofstream& MyFile);
 
+	bool InsideAFigure(int x, int y);
 
 };
 

@@ -300,7 +300,7 @@ CFigure* ApplicationManager::GetFigure(int x, int y) const
 {
 	//If a figure is found return a pointer to it.
 	//if this point (x,y) does not belong to any figure return NULL
-
+	
 
 	///Add your code here to search for a figure given a point x,y	
 	CFigure* pFig;
@@ -317,11 +317,8 @@ CFigure* ApplicationManager::GetFigure(int x, int y) const
 void ApplicationManager::selectFigure(int& x, int& y)
 {
 	CFigure* temp;
-	POINT p1, p2;
 	int numberOfFiguresSelected = 0, previosFigure = 0;
-	int length;
 	bool s = false, clear = true;
-	string figureName;
 	if (FigCount == 0) {
 		pGUI->PrintMessage("no figures drawing");
 	}
@@ -329,21 +326,20 @@ void ApplicationManager::selectFigure(int& x, int& y)
 		for (int i = 0; i < FigCount; i++)
 		{
 			temp = FigList[i];
-			length = temp->getFigureData(p1, p2);
-
-			if (x >= p1.x && x <= p2.x && y >= p1.y && y <= p2.y)
+			if (temp->InsideAFigure(x,y))
 			{
 				clear = false;
-				s = temp->IsSelected();
 				numberOfFiguresSelected++;
-				figureName = temp->getFigureName();
-				s ? pGUI->ClearStatusBar() : pGUI->PrintMessage(figureName);
+				temp->IsSelected() ? pGUI->ClearStatusBar() : pGUI->PrintMessage(temp->getFigureName());
+				s=temp->IsSelected();
+				for (int j = 0; j < FigCount; j++)FigList[j]->SetSelected(false);
 				s ? temp->SetSelected(false) : temp->SetSelected(true);
 			}
-			else {
-				//s? pGUI->PrintMessage(figureName):pGUI->PrintMessage("drawing area");
-				temp->SetSelected(false);
+			else if(clear)
+			{
+				pGUI->ClearStatusBar();
 			}
+			if (numberOfFiguresSelected == 0)temp->SetSelected(false);
 			if (numberOfFiguresSelected == 1 && previosFigure == 0) {
 				previosFigure = i;
 			}

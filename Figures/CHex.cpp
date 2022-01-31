@@ -125,3 +125,11 @@ void CHex::changeFigureSize(GUI* pGUI)
 	pGUI->ClearDrawArea();
 	pGUI->CreateDrawToolBar();
 }
+
+bool CHex::InsideAFigure(int x, int y)
+{
+	float dx = abs(x - center.x) / radius;
+	float dy = abs(y - center.y) / radius;
+	float a = 0.25 * sqrt(3.0);
+	return (dy <= a) && (a * dx + 0.25 * dy <= 0.5 * a);
+}

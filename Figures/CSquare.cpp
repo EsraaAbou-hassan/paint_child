@@ -126,3 +126,12 @@ void CSquare::Save(ofstream& MyFile)
 	MyFile <<"SQR\t"<<idd<<"\t"<<this->TopLeftCorner.x<< "\t"<< this->TopLeftCorner.y <<"\t"<< this->length <<"\t"<< g->ConvertColorToString(FigGfxInfo.DrawClr) <<"\t"<<Fillcolor<< endl;
 
 }
+
+bool CSquare::InsideAFigure(int x, int y)
+{
+	if (x >= TopLeftCorner.x && x <= TopLeftCorner.x+length && y >= TopLeftCorner.y && y <= TopLeftCorner.y+length)
+	{
+		return true;
+	}
+	return false;
+}
