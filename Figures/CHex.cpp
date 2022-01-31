@@ -10,7 +10,9 @@ CHex::CHex(Point _center, float _rotation, int _radius, GfxInfo FigureGfxInfo) :
 	radius = _radius;
 	hexaNumber++;
 }
-CHex::CHex() {}
+CHex::CHex() {
+	hexaNumber++;
+}
 
 void CHex::DrawMe(GUI* pGUI) const
 {

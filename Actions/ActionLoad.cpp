@@ -20,10 +20,15 @@ ActionLoad::ActionLoad(ApplicationManager* pApp, bool forPlaying) :Action(pApp) 
 }
 void ActionLoad::Execute() {
 
-	CFigure* figer;
+	CSquare* c;
+	c->squarersNumber = 0;
+	CElps* e;
+	e->ElpsNumber = 0;
+	CHex* h;
+	h->hexaNumber = 0;
 
 	if (playing) {
-
+		
 		loading("playing.txt");
 	}
 	else {

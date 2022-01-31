@@ -8,7 +8,14 @@ CSquare::CSquare(Point P1, int len, GfxInfo FigureGfxInfo):CFigure(FigureGfxInfo
 	length = len;
 	squarersNumber++;
 }
-CSquare::CSquare() {}
+CSquare::CSquare() {
+	squarersNumber++;
+
+}
+CSquare::~CSquare() {
+	squarersNumber--;
+	std::cout << "deleted";
+}
 
 void CSquare::DrawMe(GUI* pGUI) const
 {
@@ -77,6 +84,7 @@ void CSquare::changeFigureSize(GUI* pGUI)
 }
 void CSquare::Load(ifstream& file)
 {
+	
 	string FigureColor;
 	string FigureFill;
 

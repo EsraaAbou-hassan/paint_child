@@ -13,6 +13,9 @@
 #include "Actions/ActionPickFigure.h"
 #include "Actions/ActionResize.h"
 #include"Actions/actionSelectFigure.h"
+#include "Figures/CSquare.h"
+#include "Figures/CElps.h"
+#include "Figures/CHex.h"
 #include<iostream>
 #include <fstream>
 
@@ -20,18 +23,18 @@
 ApplicationManager::ApplicationManager()
 {
 	//Create Input and output
-	pGUI = new GUI;	
-	
+	pGUI = new GUI;
+
 	FigCount = 0;
-		
+
 	//Create an array of figure pointers and set them to NULL		
-	for(int i=0; i<MaxFigCount; i++)
-		FigList[i] = NULL;	
+	for (int i = 0; i < MaxFigCount; i++)
+		FigList[i] = NULL;
 }
 void ApplicationManager::DeleteFigures() {
 	for (int i = 0; i < FigCount; i++) {
 		delete FigList[i];
-	}	
+	}
 	FigCount = 0;
 }
 void ApplicationManager::Run()
@@ -41,21 +44,21 @@ void ApplicationManager::Run()
 	{
 		int x, y;
 		//1- Read user action
-		ActType = pGUI->MapInputToActionType(x,y);
+		ActType = pGUI->MapInputToActionType(x, y);
 
 		//2- Create the corresponding Action
-		Action *pAct = CreateAction(ActType,x,y);
-		
+		Action* pAct = CreateAction(ActType, x, y);
+
 		//3- Execute the action
 		ExecuteAction(pAct);
 
 		//4- Update the interface
-		UpdateInterface();	
-	}while(ActType != EXIT);
-	
+		UpdateInterface();
+	} while (ActType != EXIT);
+
 }
 
-void ApplicationManager::reDrawBars() const{
+void ApplicationManager::reDrawBars() const {
 	pGUI->CreateDrawToolBar();
 	pGUI->CreateStatusBar();
 }
@@ -64,180 +67,180 @@ void ApplicationManager::reDrawBars() const{
 //								Actions Related Functions							//
 //==================================================================================//
 //Creates an action
-Action* ApplicationManager::CreateAction(ActionType ActType,int &x,int &y) 
+Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 {
 	Action* newAct = NULL;
 	CFigure* temp;
-	
+
 	bool s = false, clear = true;
-	
+
 	//According to Action Type, create the corresponding action object
 	switch (ActType)
 	{
-		case FIGURES:
-			pGUI->CreateFiguresToolBar();
-			break;
-		case DRAWING:
-			pGUI->CreateDrawToolBar();
-			break;
-		case DRAW_SQUARE:
-			newAct = new ActionAddSquare(this);
-			break;
+	case FIGURES:
+		pGUI->CreateFiguresToolBar();
+		break;
+	case DRAWING:
+		pGUI->CreateDrawToolBar();
+		break;
+	case DRAW_SQUARE:
+		newAct = new ActionAddSquare(this);
+		break;
 
-		case DRAW_ELPS:
-			///create ELPS here
-			newAct = new ActionAddElps(this);
-			break;
+	case DRAW_ELPS:
+		///create ELPS here
+		newAct = new ActionAddElps(this);
+		break;
 
-		case DRAW_HEX:
-			///create HEX here
-			newAct = new ActionAddHex(this);
-			
-			break;
+	case DRAW_HEX:
+		///create HEX here
+		newAct = new ActionAddHex(this);
 
-		case CHNG_DRAW_CLR:
-			for (int i = 0; i < FigCount; i++)
-			{
-				temp = FigList[i];
-				if (temp->IsSelected()) {
-					temp->changeFigureDrawClr(pGUI);
-					s = true;
-					break;
-				}
+		break;
+
+	case CHNG_DRAW_CLR:
+		for (int i = 0; i < FigCount; i++)
+		{
+			temp = FigList[i];
+			if (temp->IsSelected()) {
+				temp->changeFigureDrawClr(pGUI);
+				s = true;
+				break;
 			}
-			if(!s)
+		}
+		if (!s)
 			newAct = new ActionChangeDrawColor(this);
-			break;
+		break;
 
-		case CHNG_FILL_CLR:
-			for (int i = 0; i < FigCount; i++)
-			{
-				temp = FigList[i];
-				if (temp->IsSelected()) {
-					temp->changeFigureFillClr(pGUI);
-					s = true;
-					break;
-				}
+	case CHNG_FILL_CLR:
+		for (int i = 0; i < FigCount; i++)
+		{
+			temp = FigList[i];
+			if (temp->IsSelected()) {
+				temp->changeFigureFillClr(pGUI);
+				s = true;
+				break;
 			}
-			if(!s)
-				newAct = new ActionChangeFillColor(this);
-			break;
+		}
+		if (!s)
+			newAct = new ActionChangeFillColor(this);
+		break;
 
-		case CHNG_BK_CLR:
-			newAct = new ActionChangeBackgroundColor(this);
-			break;
+	case CHNG_BK_CLR:
+		newAct = new ActionChangeBackgroundColor(this);
+		break;
 
-		case DEL:
-			newAct = new ActionDeleteItem(this);
-			break;
+	case DEL:
+		newAct = new ActionDeleteItem(this);
+		break;
 
-		case SEND_BACK:
-			newAct = new ActionSendToBack(this);
-			break;
-		case BRNG_FRNT:
-			newAct = new ActionBringToFront(this);
-			break;
+	case SEND_BACK:
+		newAct = new ActionSendToBack(this);
+		break;
+	case BRNG_FRNT:
+		newAct = new ActionBringToFront(this);
+		break;
 
-		case EXIT:
-			if (FigCount != 0) {
-				pGUI->PrintMessage("Do you want to save the figuers ? y for yes");
-				char choicing = pGUI->GetKeyPressed();
-				if(choicing =='Y'||choicing=='y') {
-					newAct = new ActionSave(this, false, false);//with loading => false //for playing => false
-				}
-				DeleteFigures();
+	case EXIT:
+		if (FigCount != 0) {
+			pGUI->PrintMessage("Do you want to save the figuers ? y for yes");
+			char choicing = pGUI->GetKeyPressed();
+			if (choicing == 'Y' || choicing == 'y') {
+				newAct = new ActionSave(this, false, false);//with loading => false //for playing => false
 			}
-			
-			
-			break;
+			DeleteFigures();
+		}
 
-		case SAVE:
-			newAct = new ActionSave(this,false,false);//with loading => false //for playing => false
-			break;
-		case LOAD:
-			if (FigCount == 0) {
+
+		break;
+
+	case SAVE:
+		newAct = new ActionSave(this, false, false);//with loading => false //for playing => false
+		break;
+	case LOAD:
+		if (FigCount == 0) {
+			pGUI->PrintMessage("load");
+			newAct = new ActionLoad(this, false);
+		}
+		else {
+			pGUI->PrintMessage("Do you want to save the figuers ? y:n");
+			char choice = pGUI->GetKeyPressed();
+			switch (choice) {
+			case 'N':
+			case 'n':
 				pGUI->PrintMessage("load");
-				newAct = new ActionLoad(this,false);
+				newAct = new ActionLoad(this, false);
+				break;
+			case 'Y':
+			case 'y':
+				newAct = new ActionSave(this, true, false);//with loading => true //for playing => false
+				break;
 			}
-			else {
-				pGUI->PrintMessage("Do you want to save the figuers ? y:n");
-				char choice = pGUI->GetKeyPressed();
-				switch (choice) {
-				case 'N':
-				case 'n':
-					pGUI->PrintMessage("load");
-					newAct = new ActionLoad(this,false);
-					break;
-				case 'Y':
-				case 'y':
-					newAct = new ActionSave(this,true,false);//with loading => true //for playing => false
-					break;
-				}
+		}
+		///create AddLineAction here
+
+		break;
+
+	case DRAWING_AREA:
+		newAct = new SelectFigureAction(this, x, y);
+		break;
+	case PLAYING_AREA:
+		pGUI->PrintMessage("playing Area");
+		break;
+	case TO_PLAY:
+		if (FigCount != 0) {
+			newAct = new ActionSave(this, false, true);//with loading => false //for playing => true
+			pGUI->PrintMessage("playing");
+			pGUI->CreatePlayToolBar();
+		}
+		else {
+			pGUI->PrintMessage("draw figuers first");
+
+		}
+
+
+
+		break;
+
+	case TO_DRAW:
+		newAct = new ActionLoad(this, true);//with loading => false //for playing => true
+		pGUI->CreateDrawToolBar();
+		pGUI->PrintMessage("drwaing");
+		break;
+
+	case PLAY_FIGUERS:	 //play with figuer type
+		pGUI->PrintMessage("PLAY_FIGUERS");
+		newAct = new ActionPickFigure(this);
+
+		break;
+
+	case PLAY_COLORS:	 // play with color type
+		pGUI->PrintMessage("PLAY_COLORS");
+
+		break;
+
+	case PLAY_FIG_COL: //play with figuer type and color 
+		pGUI->PrintMessage("PLAY_FIG_COL");
+		break;
+
+	case RESIZE:
+		for (int i = 0; i < FigCount; i++)
+		{
+			temp = FigList[i];
+			if (temp->IsSelected()) {
+				temp->changeFigureSize(pGUI);
+				s = true;
+				break;
 			}
-			///create AddLineAction here
+		}
+		break;
+	case STATUS:	//a click on the status bar ==> no action
+		return NULL;
+		break;
 
-			break;
 
-		case DRAWING_AREA:
-			newAct = new SelectFigureAction(this,x,y);
-			break;
-		case PLAYING_AREA:
-			pGUI->PrintMessage("playing Area");
-			break;
-		case TO_PLAY:
-			if (FigCount != 0) {
-				newAct = new ActionSave(this, false, true);//with loading => false //for playing => true
-				pGUI->PrintMessage("playing");
-				pGUI->CreatePlayToolBar();
-			}
-			else {
-				pGUI->PrintMessage("draw figuers first");
+	}
 
-			}
-
-			
-
-			break;
-
-		case TO_DRAW:
-			newAct = new ActionLoad(this,true);//with loading => false //for playing => true
-			pGUI->CreateDrawToolBar();
-			pGUI->PrintMessage("drwaing");
-			break;
-
-		case PLAY_FIGUERS :	 //play with figuer type
-			pGUI->PrintMessage("PLAY_FIGUERS");
-			newAct = new ActionPickFigure(this);
-
-			break;
-
-		case PLAY_COLORS:	 // play with color type
-			pGUI->PrintMessage("PLAY_COLORS");
-
-			break;
-
-		case PLAY_FIG_COL: //play with figuer type and color 
-			pGUI->PrintMessage("PLAY_FIG_COL");
-			break;
-
-		case RESIZE:
-			for (int i = 0; i < FigCount; i++)
-			{
-				temp = FigList[i];
-				if (temp->IsSelected()) {
-					temp->changeFigureSize(pGUI);
-					s = true;
-					break;
-				}
-			}
-			break;
-		case STATUS:	//a click on the status bar ==> no action
-			return NULL;
-			break;
-
-		
-	}	
-	
 	return newAct;
 }
 //////////////////////////////////////////////////////////////////////
@@ -271,10 +274,10 @@ void ApplicationManager::BringToFront(int selectedIndex) {
 }
 //////////////////////////////////////////////////////////////////////
 //Executes the created Action
-void ApplicationManager::ExecuteAction(Action* &pAct) 
-{	
+void ApplicationManager::ExecuteAction(Action*& pAct)
+{
 	//Execute the created action
-	if(pAct != NULL)
+	if (pAct != NULL)
 	{
 		pAct->Execute();//Execute
 		delete pAct;	//Action is not needed any more ==> delete it
@@ -289,11 +292,11 @@ void ApplicationManager::ExecuteAction(Action* &pAct)
 //Add a figure to the list of figures
 void ApplicationManager::AddFigure(CFigure* pFig)
 {
-	if(FigCount < MaxFigCount )
-		FigList[FigCount++] = pFig;	
+	if (FigCount < MaxFigCount)
+		FigList[FigCount++] = pFig;
 }
 ////////////////////////////////////////////////////////////////////////////////////
-CFigure *ApplicationManager::GetFigure(int x, int y) const
+CFigure* ApplicationManager::GetFigure(int x, int y) const
 {
 	//If a figure is found return a pointer to it.
 	//if this point (x,y) does not belong to any figure return NULL
@@ -303,10 +306,13 @@ CFigure *ApplicationManager::GetFigure(int x, int y) const
 	CFigure* pFig;
 	for (int i = 0; i < FigCount; i++) {
 		pFig = FigList[i];
-		pFig->SetSelected(true);
+		if (pFig->IsSelected()) {
+			return pFig;
+		}
 
 	}
 	return NULL;
+	
 }
 void ApplicationManager::selectFigure(int& x, int& y)
 {
@@ -361,7 +367,7 @@ void ApplicationManager::SaveAll(ofstream& MyFile)
 		FigList[i]->Save(MyFile);
 
 	}
-		
+
 }
 //Delete a figure to the list of figures
 void ApplicationManager::DeleteSelectedItem() {
@@ -386,7 +392,7 @@ void ApplicationManager::DeleteSelectedItem() {
 		pGUI->ClearDrawArea();
 		UpdateInterface();
 	}
-	
+
 
 }
 void ApplicationManager::ShiftItem(int figure) {
@@ -397,29 +403,44 @@ void ApplicationManager::ShiftItem(int figure) {
 
 
 }
+int ApplicationManager::getAtypefromFigureList() {
+	int i = rand() % FigCount;
+	if (typeid(*FigList[i]) == typeid(CSquare)) {
+		return 1;
+	}
+	else if (typeid(*FigList[i]) == typeid(CElps)) {
+		return 2;
+	}
+	else if (typeid(*FigList[i]) == typeid(CHex)) {
+		return 3;
+	}
+	
+}
 //==================================================================================//
 //							Interface Management Functions							//
 //==================================================================================//
 
 //Draw all figures on the user interface
 void ApplicationManager::UpdateInterface() const
-{	
+{
 
-	for(int i=0; i<FigCount; i++)
+	for (int i = 0; i < FigCount; i++)
 		FigList[i]->DrawMe(pGUI);		//Call Draw function (virtual member fn)
 
-	
+
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Return a pointer to the interface
-GUI *ApplicationManager::GetGUI() const
-{	return pGUI; }
+GUI* ApplicationManager::GetGUI() const
+{
+	return pGUI;
+}
 ////////////////////////////////////////////////////////////////////////////////////
 //Destructor
 ApplicationManager::~ApplicationManager()
 {
-	for(int i=0; i<FigCount; i++)
+	for (int i = 0; i < FigCount; i++)
 		delete FigList[i];
 	delete pGUI;
-	
+
 }

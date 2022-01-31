@@ -38,7 +38,7 @@ public:
 	
 	void selectFigure(int& x, int& y);
 	void SaveAll(ofstream& MyFile);//Save all figures in figure list
-
+	int getAtypefromFigureList();
 	// -- Interface Management Functions	
 	GUI *GetGUI() const; //Return pointer to the interface
 	void UpdateInterface() const;	//Redraws all the drawing window	

@@ -8,7 +8,9 @@ CElps::CElps(Point P1, Point P2, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 	BottomRightCorner = P2;
 	ElpsNumber++;
 }
-CElps::CElps() {}
+CElps::CElps() {
+	ElpsNumber++;
+}
 
 void CElps::DrawMe(GUI* pGUI) const
 {
