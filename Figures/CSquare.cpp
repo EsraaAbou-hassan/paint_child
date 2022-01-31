@@ -1,11 +1,12 @@
 #include "CSquare.h"
 #include <fstream>
 #include <iostream>
-
+int CSquare::squarersNumber= 0;
 CSquare::CSquare(Point P1, int len, GfxInfo FigureGfxInfo):CFigure(FigureGfxInfo)
 {
 	TopLeftCorner = P1;
 	length = len;
+	squarersNumber++;
 }
 CSquare::CSquare() {}
 
