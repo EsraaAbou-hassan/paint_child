@@ -94,8 +94,15 @@ void ActionLoad::loading(char file[100])
 
 	MyReadFile >> DrawColor >> FillColor >> BackColor;
 	std::cout << DrawColor << " " << FillColor << " " << BackColor << " " << endl;
+	if (FillColor == "NO_FILL") {
+		UI.isFilled = false;
+		UI.FillColor = GREEN;
+	}
+	else {
+		UI.isFilled = true;
+		pGUI->setCrntFillColor(ConvertToColor(FillColor));
+	}
 	pGUI->setCrntDrawColor(ConvertToColor(DrawColor));
-	pGUI->setCrntFillColor(ConvertToColor(FillColor));
 	pGUI->setCrntBackgroundColor(ConvertToColor(BackColor));
 	pGUI->ClearDrawArea();
 

@@ -1,11 +1,12 @@
 #include "CElps.h"
 #include <fstream>
 #include <iostream>
-
+int CElps::ElpsNumber = 0;
 CElps::CElps(Point P1, Point P2, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
 	TopLeftCorner = P1;
 	BottomRightCorner = P2;
+	ElpsNumber++;
 }
 CElps::CElps() {}
 

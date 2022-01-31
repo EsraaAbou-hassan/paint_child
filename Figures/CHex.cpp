@@ -2,11 +2,13 @@
 #include "HexaStruct.h"
 #include <fstream>
 #include <iostream>
+int CHex::hexaNumber = 0;
 CHex::CHex(Point _center, float _rotation, int _radius, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
 	center = _center;
 	rotation = _rotation;
 	radius = _radius;
+	hexaNumber++;
 }
 CHex::CHex() {}
 

@@ -8,7 +8,9 @@ class CSquare : public CFigure
 private:
 	Point TopLeftCorner;	
 	int length;
+	
 public:
+	static int squarersNumber;
 	CSquare(Point , int, GfxInfo FigureGfxInfo );
 	CSquare::CSquare();
 	virtual void DrawMe(GUI* pOut) const;

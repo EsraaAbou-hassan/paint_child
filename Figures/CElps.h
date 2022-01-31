@@ -9,6 +9,7 @@ private:
 	Point TopLeftCorner;
 	Point BottomRightCorner;
 public:
+	static int ElpsNumber;
 	CElps(Point, Point, GfxInfo FigureGfxInfo);
 	CElps();
 	virtual void DrawMe(GUI* pOut) const;

@@ -37,8 +37,14 @@ void ActionSave::Execute()
 		}
 		MyFile.open(Filename + ".txt", ios::app);
 	}
-
-	MyFile << g->ConvertColorToString(UI.DrawColor) << "\t" << g->ConvertColorToString(UI.FillColor) << "\t" << g->ConvertColorToString(UI.BkGrndColor)<< endl;
+	string FillColor;
+	if (UI.isFilled == false) {
+		FillColor = "NO_FILL";
+	}
+	else {
+		FillColor = g->ConvertColorToString(UI.FillColor);
+	}
+	MyFile << g->ConvertColorToString(UI.DrawColor) << "\t" << FillColor << "\t" << g->ConvertColorToString(UI.BkGrndColor)<< endl;
 
 
 	pManager->SaveAll(MyFile);

@@ -10,6 +10,7 @@ private:
 	float rotation;
 	int radius;
 public:
+	static int hexaNumber;
 	CHex(Point _center, float _rotation, int _radius, GfxInfo FigureGfxInfo);
 	CHex();
 	virtual void DrawMe(GUI* pOut) const;
