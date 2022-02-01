@@ -127,7 +127,7 @@ void CSquare::Save(ofstream& MyFile)
 
 }
 
-bool CSquare::InsideAFigure(int x, int y)
+bool CSquare::InsideAFigure(int x, int y, GUI* pGUI)
 {
 	if (x >= TopLeftCorner.x && x <= TopLeftCorner.x+length && y >= TopLeftCorner.y && y <= TopLeftCorner.y+length)
 	{

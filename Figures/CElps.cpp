@@ -139,7 +139,7 @@ void CElps::changeFigureSize(GUI* pGUI)
 	pGUI->CreateDrawToolBar();
 }
 
-bool CElps::InsideAFigure(int x, int y)
+bool CElps::InsideAFigure(int x, int y, GUI* pGUI)
 {
 	int radiusX = (BottomRightCorner.x-TopLeftCorner.x)/2;
 	int radiusY = (BottomRightCorner.y - TopLeftCorner.y) / 2;
