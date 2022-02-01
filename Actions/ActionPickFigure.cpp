@@ -75,18 +75,18 @@ void ActionPickFigure::Execute()
 			--count;
 			pGUI->PrintMessage(" corect :" + to_string(correct) + " wrong :" + to_string(wrong));
 		}
-		string msg;
-		if (correct > wrong) {
-			msg = " congratulation you win";
-		}
-		else if (correct < wrong) {
-			msg = "sorry you lose";
-		}
-		else {
-			msg = "DRAW";
-		}
-		pGUI->PrintMessage(msg + "Do you want to play again ? y:n");
-		 choice = pGUI->GetKeyPressed();
+			string msg;
+			if (correct > wrong) {
+				msg = " congratulation you win";
+			}
+			else if (correct < wrong) {
+				msg = "sorry you lose";
+			}
+			else {
+				msg = "DRAW";
+			}
+			pGUI->PrintMessage(msg + "Do you want to play again ? y:n");
+			 choice = pGUI->GetKeyPressed();
 	} while (choice == 'y'|| choice == 'Y');
 
 

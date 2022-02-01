@@ -155,3 +155,7 @@ color CFigure::ConvertToColor(string s)
 		return ORANGE;
 	return BLACK;
 }
+
+color CFigure::GetFigureFillColor() {
+	return FigGfxInfo.FillClr;
+}
