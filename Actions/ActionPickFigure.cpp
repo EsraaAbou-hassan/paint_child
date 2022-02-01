@@ -14,14 +14,14 @@ ActionPickFigure::ActionPickFigure(ApplicationManager* pApp) :Action(pApp)
 
 void ActionPickFigure::Execute()
 {
-	char choice;
-	do {
+	GUI* pGUI = pManager->GetGUI();
+	
 		Action* pAct = new ActionLoad(pManager, true);
 		pAct->Execute();
 		pManager->UpdateInterface();
-	
+
 		int type = pManager->getAtypefromFigureList();
-		GUI* pGUI = pManager->GetGUI();
+		
 		pGUI->PrintMessage("Select all Squers ");
 		Point point;
 		int count;
@@ -49,6 +49,7 @@ void ActionPickFigure::Execute()
 		while (count) {
 
 			pGUI->GetPointClicked(point.x, point.y);
+			std::cout << "clicked";
 			if (!isValid(point))
 			{
 				point.x = 0;
@@ -75,20 +76,19 @@ void ActionPickFigure::Execute()
 			--count;
 			pGUI->PrintMessage(" corect :" + to_string(correct) + " wrong :" + to_string(wrong));
 		}
-			string msg;
-			if (correct > wrong) {
-				msg = " congratulation you win";
-			}
-			else if (correct < wrong) {
-				msg = "sorry you lose";
-			}
-			else {
-				msg = "DRAW";
-			}
-			pGUI->PrintMessage(msg + "Do you want to play again ? y:n");
-			 choice = pGUI->GetKeyPressed();
-	} while (choice == 'y'|| choice == 'Y');
-
+		string msg;
+		if (correct > wrong) {
+			msg = " congratulation you win";
+		}
+		else if (correct < wrong) {
+			msg = "sorry you lose";
+		}
+		else {
+			msg = "DRAW";
+		}
+		pGUI->PrintMessage(msg );
+		
+	
 
 }
 

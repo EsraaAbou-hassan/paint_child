@@ -15,12 +15,12 @@ ActionPickColor::ActionPickColor(ApplicationManager* pApp) :Action(pApp)
 
 void ActionPickColor::Execute()
 {
-	char choice;
-	do {
+	
+		GUI* pGUI = pManager->GetGUI();
 		Action* pAct = new ActionLoad(pManager, true);
 		pAct->Execute();
 		pManager->UpdateInterface();
-		GUI* pGUI = pManager->GetGUI();
+		
 		int count = 0;
 		color chossenColor = pManager->getAcolorfromFigureList(count);
 		string ColorMsg = pGUI->ConvertColorToString(chossenColor);
@@ -65,8 +65,6 @@ void ActionPickColor::Execute()
 		else {
 			msg = "DRAW";
 		}
-		pGUI->PrintMessage(msg + "Do you want to play again ? y:n");
-		choice = pGUI->GetKeyPressed();
-	} while (choice == 'y' || choice == 'Y');
-	
+		pGUI->PrintMessage(msg );
+		
 }
