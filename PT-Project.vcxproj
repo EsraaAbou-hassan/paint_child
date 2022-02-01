@@ -139,6 +139,7 @@
     <ClCompile Include="Actions\ActionLoad.cpp" />
     <ClCompile Include="Actions\ActionPickColor.cpp" />
     <ClCompile Include="Actions\ActionPickFigure.cpp" />
+    <ClCompile Include="Actions\ActionPickFig_Color.cpp" />
     <ClCompile Include="Actions\ActionResize.cpp" />
     <ClCompile Include="Actions\ActionSave.cpp" />
     <ClCompile Include="Actions\ActionSelectFigure.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Actions\ActionLoad.h" />
     <ClInclude Include="Actions\ActionPickColor.h" />
     <ClInclude Include="Actions\ActionPickFigure.h" />
+    <ClInclude Include="Actions\ActionPickFig_Color.h" />
     <ClInclude Include="Actions\ActionResize.h" />
     <ClInclude Include="Actions\ActionSave.h" />
     <ClInclude Include="Actions\actionSelectFigure.h" />

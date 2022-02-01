@@ -12,6 +12,7 @@
 #include "Actions/ActionBringToFront.h"
 #include "Actions/ActionPickFigure.h"
 #include "Actions/ActionPickColor.h"
+#include "Actions/ActionPickFig_Color.h"
 #include "Actions/ActionResize.h"
 #include"Actions/actionSelectFigure.h"
 #include "Figures/CSquare.h"
@@ -222,6 +223,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 
 	case PLAY_FIG_COL: //play with figuer type and color 
 		pGUI->PrintMessage("PLAY_FIG_COL");
+		newAct = new ActionPickFig_Color(this);
 		break;
 
 	case RESIZE:
@@ -433,6 +435,38 @@ string ApplicationManager::getAcolorfromFigureList(int & count) {
 		return "NONE";
 	
 	}
+}
+string ApplicationManager::getAtypeWithAcolor(int& count, string& figColor) {
+	int fig = rand() % FigCount;
+	string type;
+	
+	if (typeid(*FigList[fig]) == typeid(CSquare)) {
+		type= "Squers";
+	}
+	else if (typeid(*FigList[fig]) == typeid(CElps)) {
+		type= "Elps";
+	}
+	else if (typeid(*FigList[fig]) == typeid(CHex)) {
+		type= "Hexes";
+	}
+	if (FigList[fig]->IsFilled()) {
+		figColor = pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor());
+		for (int i = 0; i < FigCount; i++)
+		{
+			if ((typeid(*FigList[fig]) == typeid(*FigList[i])) && (pGUI->ConvertColorToString(FigList[i]->GetFigureFillColor()) == pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor()))) {
+				count++;
+			}
+		}
+	}
+	else {
+		figColor = "NONE";
+		for (int i = 0; i < FigCount; i++) {
+			if((typeid(*FigList[fig]) == typeid(*FigList[i])) && (!FigList[i]->IsFilled())) {
+				count++;
+			}
+		}
+	}
+	return type;
 }
 //==================================================================================//
 //							Interface Management Functions							//

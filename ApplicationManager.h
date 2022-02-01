@@ -40,6 +40,7 @@ public:
 	void SaveAll(ofstream& MyFile);//Save all figures in figure list
 	int getAtypefromFigureList();
 	string getAcolorfromFigureList(int& count);
+	string getAtypeWithAcolor(int & count,string & figColor );
 	// -- Interface Management Functions	
 	GUI *GetGUI() const; //Return pointer to the interface
 	void UpdateInterface() const;	//Redraws all the drawing window	

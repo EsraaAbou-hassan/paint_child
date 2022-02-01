@@ -23,7 +23,7 @@ void ActionPickColor::Execute()
 		
 		int count = 0;
 		string ColorMsg = pManager->getAcolorfromFigureList(count);
-		pGUI->PrintMessage("Select all figuers that Filled with"+ ColorMsg +" color " );
+		pGUI->PrintMessage("Select all figuers that Filled with "+ ColorMsg +" color " );
 		Point point;
 		int correct = 0;
 		int wrong = 0;
