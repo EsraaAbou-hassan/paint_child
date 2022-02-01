@@ -327,7 +327,7 @@ void ApplicationManager::selectFigure(int& x, int& y)
 		for (int i = 0; i < FigCount; i++)
 		{
 			temp = FigList[i];
-			if (temp->InsideAFigure(x,y))
+			if (temp->InsideAFigure(x,y,pGUI))
 			{
 				clear = false;
 				numberOfFiguresSelected++;

@@ -18,7 +18,7 @@ public:
 	virtual void Load(ifstream& file);
 	virtual void Save(ofstream& MyFile);
 	void changeFigureSize(GUI* pGUI);
-	bool InsideAFigure(int x, int y);
+	bool InsideAFigure(int x, int y, GUI* pGUI);
 
 };
 
