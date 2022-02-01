@@ -413,14 +413,26 @@ int ApplicationManager::getAtypefromFigureList() {
 	}
 	
 }
-color ApplicationManager::getAcolorfromFigureList(int & count) {
+string ApplicationManager::getAcolorfromFigureList(int & count) {
 	int fig = rand() % FigCount;
-	for (int i = 0; i < FigCount; i++) {
-		if (pGUI->ConvertColorToString(FigList[i]->GetFigureFillColor())  == pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor())) {
-			count++;
+	if (FigList[fig]->IsFilled()) {
+		for (int i = 0; i < FigCount; i++) {
+			if (pGUI->ConvertColorToString(FigList[i]->GetFigureFillColor()) == pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor())) {
+				count++;
+			}
 		}
+	return  pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor());
+
 	}
-	return FigList[fig]->GetFigureFillColor();
+	else {
+		for (int i = 0; i < FigCount; i++) {
+			if (!FigList[i]->IsFilled()) {
+				count++;
+			}
+		}
+		return "NONE";
+	
+	}
 }
 //==================================================================================//
 //							Interface Management Functions							//

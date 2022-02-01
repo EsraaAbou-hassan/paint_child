@@ -30,6 +30,10 @@ bool CFigure::IsSelected() const
 {
 	return Selected;
 }
+bool CFigure::IsFilled() const
+{
+	return FigGfxInfo.isFilled;
+}
 
 void CFigure::ChngDrawClr(color Dclr)
 {

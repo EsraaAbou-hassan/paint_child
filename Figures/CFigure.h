@@ -22,6 +22,7 @@ public:
 	
 	void SetSelected(bool);	//select/unselect the figure
 	bool IsSelected() const;	//check whether fig is selected
+	bool IsFilled() const;	//check whether fig is selected
 	virtual bool InsideAFigure(int x, int y, GUI* pGUI) = 0;
 	virtual void DrawMe(GUI*) const = 0;		//Draw the figure
 

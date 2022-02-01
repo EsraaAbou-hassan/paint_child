@@ -22,9 +22,8 @@ void ActionPickColor::Execute()
 		pManager->UpdateInterface();
 		
 		int count = 0;
-		color chossenColor = pManager->getAcolorfromFigureList(count);
-		string ColorMsg = pGUI->ConvertColorToString(chossenColor);
-		pGUI->PrintMessage("Select all figuers with color :" + ColorMsg);
+		string ColorMsg = pManager->getAcolorfromFigureList(count);
+		pGUI->PrintMessage("Select all figuers that Filled with"+ ColorMsg +" color " );
 		Point point;
 		int correct = 0;
 		int wrong = 0;
@@ -44,12 +43,23 @@ void ActionPickColor::Execute()
 				wrong++;
 			}
 			else {
-				if (pGUI->ConvertColorToString(fig->GetFigureFillColor()) == ColorMsg) {
-					correct++;
+				if (ColorMsg == "NONE") {
+					if (!fig->IsFilled()) {
+						correct++;
+					}
+					else {
+						wrong++;
+					}
 				}
 				else {
-					wrong++;
+					if (pGUI->ConvertColorToString(fig->GetFigureFillColor()) == ColorMsg) {
+						correct++;
+					}
+					else {
+						wrong++;
+					}
 				}
+				
 			}
 			pManager->DeleteSelectedItem();
 			--count;
