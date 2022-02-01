@@ -34,7 +34,8 @@ public:
 	virtual int getFigureData(POINT& p1, POINT& p2) = 0;
 	virtual string getFigureName() = 0;
 
-	color CFigure::ConvertToColor(string s);
+	color ConvertToColor(string s);
+	color GetFigureFillColor();
 	///The following functions should be supported by the figure class
 	///It should be overridden by each inherited figure
 

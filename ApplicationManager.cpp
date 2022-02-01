@@ -11,6 +11,7 @@
 #include "Actions/ActionSendToBack.h"
 #include "Actions/ActionBringToFront.h"
 #include "Actions/ActionPickFigure.h"
+#include "Actions/ActionPickColor.h"
 #include "Actions/ActionResize.h"
 #include"Actions/actionSelectFigure.h"
 #include "Figures/CSquare.h"
@@ -216,7 +217,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 
 	case PLAY_COLORS:	 // play with color type
 		pGUI->PrintMessage("PLAY_COLORS");
-
+		newAct = new ActionPickColor(this);
 		break;
 
 	case PLAY_FIG_COL: //play with figuer type and color 
@@ -411,6 +412,15 @@ int ApplicationManager::getAtypefromFigureList() {
 		return 3;
 	}
 	
+}
+color ApplicationManager::getAcolorfromFigureList(int & count) {
+	int fig = rand() % FigCount;
+	for (int i = 0; i < FigCount; i++) {
+		if (pGUI->ConvertColorToString(FigList[i]->GetFigureFillColor())  == pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor())) {
+			count++;
+		}
+	}
+	return FigList[fig]->GetFigureFillColor();
 }
 //==================================================================================//
 //							Interface Management Functions							//
