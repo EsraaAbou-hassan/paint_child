@@ -384,7 +384,7 @@ void ApplicationManager::DeleteSelectedItem() {
 		}
 	}
 	if (!flag) {
-		pGUI->PrintMessage("you must select  an item first");
+		pGUI->PrintMessage("you must select an item first!");
 	}
 	else {
 		pGUI->PrintMessage("Selected figuer Deleted");

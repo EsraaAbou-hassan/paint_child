@@ -19,4 +19,8 @@ void ActionSendToBack::Execute()
 		pManager->SendToBack(selectedIndexFigure);
 		pGUI->PrintMessage("The shape was sent to Back");
 	}
+	else
+	{
+		pGUI->PrintMessage("you must select an item first!");
+	}
 }
