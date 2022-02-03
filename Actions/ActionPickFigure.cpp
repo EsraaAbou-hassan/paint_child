@@ -64,6 +64,7 @@ void ActionPickFigure::Execute()
 
 				if ((typeid(*fig) == typeid(CSquare)) && type == 1 || (typeid(*fig) == typeid(CElps)) && type == 2 || (typeid(*fig) == typeid(CHex)) && type == 3) {
 					correct++;
+					--count;
 				}
 				else {
 					wrong++;
@@ -73,7 +74,7 @@ void ActionPickFigure::Execute()
 				wrong++;
 			}
 			pManager->DeleteSelectedItem();
-			--count;
+			
 			pGUI->PrintMessage(" corect :" + to_string(correct) + " wrong :" + to_string(wrong));
 		}
 		string msg;

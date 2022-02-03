@@ -46,6 +46,7 @@ void ActionPickColor::Execute()
 				if (ColorMsg == "NONE") {
 					if (!fig->IsFilled()) {
 						correct++;
+						--count;
 					}
 					else {
 						wrong++;
@@ -54,6 +55,7 @@ void ActionPickColor::Execute()
 				else {
 					if (pGUI->ConvertColorToString(fig->GetFigureFillColor()) == ColorMsg) {
 						correct++;
+						--count;
 					}
 					else {
 						wrong++;
@@ -62,7 +64,7 @@ void ActionPickColor::Execute()
 				
 			}
 			pManager->DeleteSelectedItem();
-			--count;
+			
 			pGUI->PrintMessage(" corect :" + to_string(correct) + " wrong :" + to_string(wrong));
 		}
 		string msg;

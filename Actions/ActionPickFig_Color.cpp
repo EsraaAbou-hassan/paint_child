@@ -45,6 +45,7 @@ void ActionPickFig_Color::Execute()
 			if (ColorMsg == "NONE") {
 				if (((typeid(*fig) == typeid(CSquare)) && type == "Squers" || (typeid(*fig) == typeid(CElps)) && type == "Elps" || (typeid(*fig) == typeid(CHex)) && type == "Hexes") && (!fig->IsFilled())) {
 					correct++;
+					--count;
 				}
 				else {
 					wrong++;
@@ -53,6 +54,7 @@ void ActionPickFig_Color::Execute()
 			else {
 				if (((typeid(*fig) == typeid(CSquare)) && type == "Squers" || (typeid(*fig) == typeid(CElps)) && type == "Elps" || (typeid(*fig) == typeid(CHex)) && type == "Hexes") && (pGUI->ConvertColorToString(fig->GetFigureFillColor()) == ColorMsg)) {
 					correct++;
+					--count;
 				}
 				else {
 					wrong++;
@@ -61,7 +63,7 @@ void ActionPickFig_Color::Execute()
 
 		}
 		pManager->DeleteSelectedItem();
-		--count;
+		
 		pGUI->PrintMessage(" corect :" + to_string(correct) + " wrong :" + to_string(wrong));
 	}
 	string msg;
