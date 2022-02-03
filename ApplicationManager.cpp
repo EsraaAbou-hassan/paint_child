@@ -146,7 +146,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 
 	case EXIT:
 		if (FigCount != 0) {
-			pGUI->PrintMessage("Do you want to save the figuers ? y for yes");
+			pGUI->PrintMessage("Do you want to save the figuers ? (Y = yes, N = no)");
 			char choicing = pGUI->GetKeyPressed();
 			if (choicing == 'Y' || choicing == 'y') {
 				newAct = new ActionSave(this, false, false);//with loading => false //for playing => false
@@ -166,7 +166,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 			newAct = new ActionLoad(this, false);
 		}
 		else {
-			pGUI->PrintMessage("Do you want to save the figuers ? y:n");
+			pGUI->PrintMessage("Do you want to save the figuers ? (Y = yes, N = no)");
 			char choice = pGUI->GetKeyPressed();
 			switch (choice) {
 			case 'N':
@@ -188,23 +188,23 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 		newAct = new SelectFigureAction(this, x, y);
 		break;
 	case PLAYING_AREA:
-		pGUI->PrintMessage("playing Area");
+		pGUI->PrintMessage("Playing Area");
 		break;
 	case TO_PLAY:
 		if (FigCount != 0) {
 			newAct = new ActionSave(this, false, true);//with loading => false //for playing => true
-			pGUI->PrintMessage("playing");
+			pGUI->PrintMessage("Playing");
 			pGUI->CreatePlayToolBar();
 		}
 		else {
-			pGUI->PrintMessage("draw figuers first");
+			pGUI->PrintMessage("Draw figuers first");
 		}
 		break;
 
 	case TO_DRAW:
 		newAct = new ActionLoad(this, true);//with loading => false //for playing => true
 		pGUI->CreateDrawToolBar();
-		pGUI->PrintMessage("drwaing");
+		pGUI->PrintMessage("Drwaing");
 		break;
 
 	case PLAY_FIGUERS:	 //play with figuer type
@@ -224,7 +224,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 		break;
 
 	case RESIZE:
-		pGUI->PrintMessage("you must select an item first!");
+		pGUI->PrintMessage("You must select a figure first!");
 
 		for (int i = 0; i < FigCount; i++)
 		{
@@ -322,7 +322,7 @@ void ApplicationManager::selectFigure(int& x, int& y)
 	int numberOfFiguresSelected = 0, previosFigure = 0;
 	bool s = false, clear = true;
 	if (FigCount == 0) {
-		pGUI->PrintMessage("no figures drawing");
+		pGUI->PrintMessage("Please Draw figures first");
 	}
 	else {
 		for (int i = 0; i < FigCount; i++)
@@ -383,7 +383,7 @@ void ApplicationManager::DeleteSelectedItem() {
 		}
 	}
 	if (!flag) {
-		pGUI->PrintMessage("you must select an item first!");
+		pGUI->PrintMessage("You must select a figure first!");
 	}
 	else {
 		pGUI->PrintMessage("Selected figuer Deleted");

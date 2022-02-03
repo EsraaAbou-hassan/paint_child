@@ -21,6 +21,6 @@ void ActionSendToBack::Execute()
 	}
 	else
 	{
-		pGUI->PrintMessage("you must select an item first!");
+		pGUI->PrintMessage("You must select a figure first!");
 	}
 }
