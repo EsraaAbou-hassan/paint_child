@@ -76,6 +76,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 	CFigure* temp;
 
 	bool s = false, clear = true;
+	bool resizeFlag = false;
 
 	//According to Action Type, create the corresponding action object
 	switch (ActType)
@@ -198,11 +199,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 		}
 		else {
 			pGUI->PrintMessage("draw figuers first");
-
 		}
-
-
-
 		break;
 
 	case TO_DRAW:
@@ -228,8 +225,11 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 		break;
 
 	case RESIZE:
+		pGUI->PrintMessage("you must select an item first!");
+
 		for (int i = 0; i < FigCount; i++)
 		{
+			resizeFlag = true;
 			temp = FigList[i];
 			if (temp->IsSelected()) {
 				temp->changeFigureSize(pGUI);
@@ -238,11 +238,10 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 			}
 		}
 		break;
+
 	case STATUS:	//a click on the status bar ==> no action
 		return NULL;
 		break;
-
-
 	}
 
 	return newAct;
@@ -304,7 +303,7 @@ CFigure* ApplicationManager::GetFigure(int x, int y) const
 {
 	//If a figure is found return a pointer to it.
 	//if this point (x,y) does not belong to any figure return NULL
-	
+
 
 	///Add your code here to search for a figure given a point x,y	
 	CFigure* pFig;
@@ -316,7 +315,7 @@ CFigure* ApplicationManager::GetFigure(int x, int y) const
 
 	}
 	return NULL;
-	
+
 }
 void ApplicationManager::selectFigure(int& x, int& y)
 {
@@ -346,7 +345,7 @@ void ApplicationManager::selectFigure(int& x, int& y)
 				clear = false;
 				numberOfFiguresSelected++;
 				temp->IsSelected() ? pGUI->ClearStatusBar() : pGUI->PrintMessage(temp->getFigureName());
-				s=temp->IsSelected();
+				s = temp->IsSelected();
 				for (int j = 0; j < FigCount; j++)FigList[j]->SetSelected(false);
 				s ? temp->SetSelected(false) : temp->SetSelected(true);
 		     if (clear)
@@ -403,7 +402,7 @@ void ApplicationManager::DeleteSelectedItem() {
 		}
 	}
 	if (!flag) {
-		pGUI->PrintMessage("you must select  an item first");
+		pGUI->PrintMessage("you must select an item first!");
 	}
 	else {
 		pGUI->PrintMessage("Selected figuer Deleted");
@@ -434,9 +433,9 @@ int ApplicationManager::getAtypefromFigureList() {
 	else if (typeid(*FigList[i]) == typeid(CHex)) {
 		return 3;
 	}
-	
+
 }
-string ApplicationManager::getAcolorfromFigureList(int & count) {
+string ApplicationManager::getAcolorfromFigureList(int& count) {
 	int fig = rand() % FigCount;
 	if (FigList[fig]->IsFilled()) {
 		for (int i = 0; i < FigCount; i++) {
@@ -444,7 +443,7 @@ string ApplicationManager::getAcolorfromFigureList(int & count) {
 				count++;
 			}
 		}
-	return  pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor());
+		return  pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor());
 
 	}
 	else {
@@ -454,21 +453,21 @@ string ApplicationManager::getAcolorfromFigureList(int & count) {
 			}
 		}
 		return "NONE";
-	
+
 	}
 }
 string ApplicationManager::getAtypeWithAcolor(int& count, string& figColor) {
 	int fig = rand() % FigCount;
 	string type;
-	
+
 	if (typeid(*FigList[fig]) == typeid(CSquare)) {
-		type= "Squers";
+		type = "Squers";
 	}
 	else if (typeid(*FigList[fig]) == typeid(CElps)) {
-		type= "Elps";
+		type = "Elps";
 	}
 	else if (typeid(*FigList[fig]) == typeid(CHex)) {
-		type= "Hexes";
+		type = "Hexes";
 	}
 	if (FigList[fig]->IsFilled()) {
 		figColor = pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor());
@@ -482,7 +481,7 @@ string ApplicationManager::getAtypeWithAcolor(int& count, string& figColor) {
 	else {
 		figColor = "NONE";
 		for (int i = 0; i < FigCount; i++) {
-			if((typeid(*FigList[fig]) == typeid(*FigList[i])) && (!FigList[i]->IsFilled())) {
+			if ((typeid(*FigList[fig]) == typeid(*FigList[i])) && (!FigList[i]->IsFilled())) {
 				count++;
 			}
 		}

@@ -17,7 +17,6 @@ void ActionRsize::Execute()
     switch (ActType) {
 
     case RESIZE_4:
-        
         pGUI->PrintMessage("resize 4");
         break;
     case RESIZE_2:

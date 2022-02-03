@@ -19,4 +19,8 @@ void ActionBringToFront::Execute()
 		pGUI->PrintMessage("The shape was brought to Front");
 		
 	}
+	else
+	{
+		pGUI->PrintMessage("you must select an item first!");
+	}
 }
