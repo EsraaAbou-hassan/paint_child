@@ -46,7 +46,7 @@ void ActionAddSquare::Execute()
 	//Read 2nd point and store in point P2
 	pGUI->GetPointClicked(P2.x, P2.y);
 
-	while (P2.x == P1.x || P2.y == P1.y)
+	while (P2.x == P1.x && P2.y == P1.y)
 	{
 		(pManager->GetGUI())->PrintMessage("Invalid point, please select another point");
 		pGUI->GetPointClicked(P2.x, P2.y);

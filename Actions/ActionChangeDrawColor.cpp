@@ -19,6 +19,9 @@ void ActionChangeDrawColor::Execute()
     pGUI->CreateColorToolBar();
     ActType = pGUI->MapInputToActionType(x,y);
     switch (ActType) {
+    case SELECT_COLOR_BEIGE:
+        pGUI->setCrntDrawColor(BEIGE);
+        break;
     case SELECT_COLOR_CYAN:
         pGUI->setCrntDrawColor(CYAN);
         break;

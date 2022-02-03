@@ -43,7 +43,7 @@ void ActionAddHex::Execute()
     //Read 2nd point and store in point FirstVertex
         pGUI->GetPointClicked(FirstVertex.x, FirstVertex.y);
 
-        while (Center.x == FirstVertex.x || Center.y == FirstVertex.y)
+        while (Center.x == FirstVertex.x && Center.y == FirstVertex.y)
         {
             (pManager->GetGUI())->PrintMessage("Invalid point, please select another point");
             pGUI->GetPointClicked(FirstVertex.x, FirstVertex.y);

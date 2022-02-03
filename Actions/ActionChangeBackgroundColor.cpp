@@ -20,6 +20,9 @@ void ActionChangeBackgroundColor::Execute()
     ActType = pGUI->MapInputToActionType(x,y);
     
     switch (ActType) {
+    case SELECT_COLOR_BEIGE:
+        pGUI->setCrntBackgroundColor(BEIGE);
+        break;
     case SELECT_COLOR_CYAN:
         pGUI->setCrntBackgroundColor(CYAN);
         break;
