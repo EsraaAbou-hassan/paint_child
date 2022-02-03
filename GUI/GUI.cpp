@@ -530,6 +530,8 @@ string GUI::ConvertColorToString(color c)
 		return "BROWN";
 	else if ((c.ucRed == ORANGE.ucRed) && (c.ucGreen == ORANGE.ucGreen) && (c.ucBlue == ORANGE.ucBlue))
 		return "ORANGE";
+	else if ((c.ucRed == BEIGE.ucRed) && (c.ucGreen == BEIGE.ucGreen) && (c.ucBlue == BEIGE.ucBlue))
+		return "BEIGE";
 	return "NO_FILL";
 
 }
