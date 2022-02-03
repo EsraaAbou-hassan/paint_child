@@ -56,6 +56,7 @@ enum PlayMenuItem //The items of the Play menu (you should add more items)
 };
 enum ColorMenuItm
 {
+	ITM_CLR_BEIGE_T,
 	ITM_CLR_CYAN_T,
 	ITM_CLR_GREEN_T,
 	ITM_CLR_RED_T,

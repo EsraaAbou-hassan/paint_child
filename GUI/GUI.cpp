@@ -20,7 +20,7 @@ GUI::GUI()
 	UI.DrawColor = BLUE;	//Drawing color
 	UI.FillColor = GREEN;	//Filling color
 	UI.MsgColor = RED;		//Messages color
-	UI.BkGrndColor = WHITE;	//Background color
+	UI.BkGrndColor = BEIGE;	//Background color
 	UI.HighlightColor = MAGENTA;	//This color should NOT be used to draw figures. use if for highlight only
 	UI.StatusBarColor = VIOLET;
 	UI.PenWidth = 3;	//width of the figures frames
@@ -165,7 +165,7 @@ ActionType GUI::MapInputToActionType(int &x,int &y) const
 			switch (ClickedItemOrder)
 			{
 
-
+			case ITM_CLR_BEIGE_T: return SELECT_COLOR_BEIGE;
 			case ITM_CLR_CYAN_T: return SELECT_COLOR_CYAN;
 			case ITM_CLR_GREEN_T: return SELECT_COLOR_GREEN;
 			case ITM_CLR_RED_T: return SELECT_COLOR_RED;
@@ -325,7 +325,7 @@ void GUI::CreateDrawToolBar() const
 
 
 	//Draw a line under the toolbar
-	pWind->SetPen(RED, 3);
+	pWind->SetPen(WHEAT, 2);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 
 }
@@ -355,7 +355,7 @@ void GUI::CreatePlayToolBar() const
 
 
 	//Draw a line under the toolbar
-	pWind->SetPen(RED, 3);
+	pWind->SetPen(WHEAT, 2);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 	
 }
@@ -366,6 +366,7 @@ void GUI::CreateColorToolBar() const
 	ClearBar();
 	UI.InterfaceMode = MODE_COLOR;
 	string MenuItemImages[Color_ITM_COUNT];
+	MenuItemImages[ITM_CLR_BEIGE_T] = "images\\MenuItems\\beige.jpg";
 	MenuItemImages[ITM_CLR_CYAN_T] = "images\\MenuItems\\cyan.jpg";
 	MenuItemImages[ITM_CLR_GREEN_T] = "images\\MenuItems\\green.jpg";
 	MenuItemImages[ITM_CLR_YELLOW_T] = "images\\MenuItems\\yellow.jpg";
@@ -388,7 +389,7 @@ void GUI::CreateColorToolBar() const
 
 
 	//Draw a line under the toolbar
-	pWind->SetPen(RED, 3);
+	pWind->SetPen(WHEAT, 2);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 }
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -412,7 +413,7 @@ void GUI::CreateResizeToolBar() const
 	}
 
 	//Draw a line under the toolbar
-	pWind->SetPen(RED, 3);
+	pWind->SetPen(WHEAT, 2);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 }
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -437,7 +438,7 @@ void GUI::CreateFiguresToolBar() const
 	}
 
 	//Draw a line under the toolbar
-	pWind->SetPen(RED, 3);
+	pWind->SetPen(WHEAT, 2);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 }
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -450,7 +451,7 @@ void GUI::ClearDrawArea() const
 }
 void GUI::ClearBar()const
 {
-	pWind->SetPen(WHITE, 1);
+	pWind->SetPen(WHITE, 2);
 	pWind->SetBrush(WHITE);
 	pWind->DrawRectangle(0, 0,  UI.width, UI.ToolBarHeight);
 }
@@ -462,7 +463,7 @@ void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 	
 	pWind->SetPen(UI.MsgColor, 50);
 	pWind->SetFont(20, BOLD , BY_NAME, "Roboto");   
-	pWind->DrawString(10, UI.height - (int)(UI.StatusBarHeight/1.5), msg);
+	pWind->DrawString(10, UI.height - (int)(UI.StatusBarHeight/1.2), msg);
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 void GUI::setCrntDrawColor(color c) const

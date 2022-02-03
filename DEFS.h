@@ -22,6 +22,7 @@ enum ActionType //The actions supported (you can add more if needed)
 	LOAD,			//Load a graph from a file
 	EXIT,			//Exit the application
 	SELECT_COLOR_CYAN, //Cyan Color selection 
+	SELECT_COLOR_BEIGE, //Begie Color selection 
 	SELECT_COLOR_GREEN, //Green Color selection
 	SELECT_COLOR_RED, //Red Color selection
 	SELECT_COLOR_BLACK, //black Color selection
