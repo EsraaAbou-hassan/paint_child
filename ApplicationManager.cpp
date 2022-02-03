@@ -20,6 +20,7 @@
 #include "Figures/CHex.h"
 #include<iostream>
 #include <fstream>
+#include <Windows.h>
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -328,7 +329,18 @@ void ApplicationManager::selectFigure(int& x, int& y)
 		for (int i = 0; i < FigCount; i++)
 		{
 			temp = FigList[i];
-			if (temp->InsideAFigure(x, y, pGUI))
+			
+
+			///- - - - - for multiple select - - -  -
+			if (temp->InsideAFigure(x, y,pGUI) && (GetKeyState(VK_CONTROL) & 0x8000))
+			{
+
+				temp->SetSelected(true);
+			}
+			
+			
+			/// - - - - - Noraml Single Select ------------
+			else if (temp->InsideAFigure(x,y,pGUI))
 			{
 				clear = false;
 				numberOfFiguresSelected++;
@@ -336,8 +348,7 @@ void ApplicationManager::selectFigure(int& x, int& y)
 				s = temp->IsSelected();
 				for (int j = 0; j < FigCount; j++)FigList[j]->SetSelected(false);
 				s ? temp->SetSelected(false) : temp->SetSelected(true);
-			}
-			else if (clear)
+		     if (clear)
 			{
 				pGUI->ClearStatusBar();
 			}
@@ -350,6 +361,9 @@ void ApplicationManager::selectFigure(int& x, int& y)
 				t->SetSelected(false);
 				previosFigure = i;
 			}
+			
+			}
+			
 		}
 		clear ? pGUI->ClearStatusBar() : true;
 	}
@@ -370,16 +384,21 @@ void ApplicationManager::SaveAll(ofstream& MyFile)
 //Delete a figure to the list of figures
 void ApplicationManager::DeleteSelectedItem() {
 	bool flag = false;
+	int temp = FigCount;
+	
 	for (int i = 0; i < FigCount; i++) {
 
 
 		if (FigList[i]->IsSelected()) {
+			
 			flag = true;
 			delete 	FigList[i];
 
 			FigList[i] = NULL;
-			ShiftItem(i);
 			FigCount--;
+			ShiftItem(i);
+			i--;
+			
 		}
 	}
 	if (!flag) {
@@ -396,7 +415,9 @@ void ApplicationManager::DeleteSelectedItem() {
 void ApplicationManager::ShiftItem(int figure) {
 
 	for (int i = figure; i < FigCount; i++) {
+		
 		FigList[i] = FigList[i + 1];
+
 	}
 
 
