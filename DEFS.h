@@ -45,7 +45,9 @@ enum ActionType //The actions supported (you can add more if needed)
 	TO_DRAW,		//Switch interface to Draw mode
 	TO_PLAY,		//Switch interface to Play mode
 	FIGURES,
-	DRAWING
+	DRAWING,
+	UNDO,
+	REDO
 	///TODO: Add more action types (if needed)
 };
 
