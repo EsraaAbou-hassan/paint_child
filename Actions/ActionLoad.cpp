@@ -20,12 +20,9 @@ ActionLoad::ActionLoad(ApplicationManager* pApp, bool forPlaying) :Action(pApp) 
 }
 void ActionLoad::Execute() {
 
-	CSquare* c;
-	c->squarersNumber = 0;
-	CElps* e;
-	e->ElpsNumber = 0;
-	CHex* h;
-	h->hexaNumber = 0;
+	CSquare::squarersNumber = 0;
+	CElps::ElpsNumber = 0;
+	CHex::hexaNumber = 0;
 
 	if (playing) {
 		
@@ -65,6 +62,8 @@ void ActionLoad::Execute() {
 }
 color ActionLoad::ConvertToColor(string s)
 {
+	if (s == "BEIGE")
+		return BEIGE;
 	if (s == "BLACK")
 		return BLACK;
 	if (s == "BLUE")
@@ -83,7 +82,6 @@ color ActionLoad::ConvertToColor(string s)
 		return MAGENTA;
 	if (s == "TURQUOISE")
 		return TURQUOISE;
-	return BLACK;
 }
 
 void ActionLoad::loading(char file[100])
@@ -101,7 +99,6 @@ void ActionLoad::loading(char file[100])
 	std::cout << DrawColor << " " << FillColor << " " << BackColor << " " << endl;
 	if (FillColor == "NO_FILL") {
 		UI.isFilled = false;
-		UI.FillColor = GREEN;
 	}
 	else {
 		UI.isFilled = true;

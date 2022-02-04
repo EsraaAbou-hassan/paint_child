@@ -55,6 +55,9 @@ void CFigure::changeFigureDrawClr(GUI* pGUI)
 	ActType = pGUI->MapInputToActionType(x,y);
 
 	switch (ActType) {
+	case SELECT_COLOR_BEIGE:
+		this->ChngDrawClr(BEIGE);
+		break;
 	case SELECT_COLOR_CYAN:
 		this->ChngDrawClr(CYAN);
 		break;
@@ -97,6 +100,9 @@ void CFigure::changeFigureFillClr(GUI* pGUI)
 	ActType = pGUI->MapInputToActionType(x, y);
 
 	switch (ActType) {
+	case SELECT_COLOR_BEIGE:
+		this->ChngFillClr(BEIGE);
+		break;
 	case SELECT_COLOR_CYAN:
 		this->ChngFillClr(CYAN);
 		break;
@@ -131,6 +137,8 @@ void CFigure::changeFigureFillClr(GUI* pGUI)
 
 color CFigure::ConvertToColor(string s)
 {
+	if (s == "BEIGE")
+		return BEIGE;
 	if (s == "BLACK")
 		return BLACK;
 	if (s == "BLUE")

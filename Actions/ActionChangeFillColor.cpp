@@ -28,9 +28,7 @@ void ActionChangeFillColor::Execute()
         break;
     case SELECT_COLOR_GREEN:
         pGUI->setCrntFillColor(GREEN);
-   
         break;
-        
     case SELECT_COLOR_RED:
         pGUI->setCrntFillColor(RED);
         break;

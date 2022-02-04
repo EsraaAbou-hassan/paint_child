@@ -144,6 +144,7 @@
     <ClCompile Include="Actions\ActionSave.cpp" />
     <ClCompile Include="Actions\ActionSelectFigure.cpp" />
     <ClCompile Include="Actions\ActionSendToBack.cpp" />
+    <ClCompile Include="Actions\ActionUndo.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp" />
     <ClCompile Include="CMUgraphicsLib\CMUgraphics.cpp" />
     <ClCompile Include="CMUgraphicsLib\image.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Actions\ActionSave.h" />
     <ClInclude Include="Actions\actionSelectFigure.h" />
     <ClInclude Include="Actions\ActionSendToBack.h" />
+    <ClInclude Include="Actions\ActionUndo.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />
     <ClInclude Include="CMUgraphicsLib\colors.h" />

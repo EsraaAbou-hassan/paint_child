@@ -15,11 +15,13 @@
 #include "Actions/ActionPickFig_Color.h"
 #include "Actions/ActionResize.h"
 #include"Actions/actionSelectFigure.h"
+#include"Actions/ActionUndo.h"
 #include "Figures/CSquare.h"
 #include "Figures/CElps.h"
 #include "Figures/CHex.h"
 #include<iostream>
 #include <fstream>
+#include <Windows.h>
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -41,6 +43,10 @@ void ApplicationManager::DeleteFigures() {
 }
 void ApplicationManager::Run()
 {
+	for (int i = 0; i < MaxFigCount; i++)
+	{
+		undoList[0][i] = FigList[i];
+	}
 	ActionType ActType;
 	do
 	{
@@ -75,6 +81,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 	CFigure* temp;
 
 	bool s = false, clear = true;
+	bool resizeFlag = false;
 
 	//According to Action Type, create the corresponding action object
 	switch (ActType)
@@ -145,7 +152,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 
 	case EXIT:
 		if (FigCount != 0) {
-			pGUI->PrintMessage("Do you want to save the figuers ? y for yes");
+			pGUI->PrintMessage("Do you want to save the figuers ? (Y = yes, N = no)");
 			char choicing = pGUI->GetKeyPressed();
 			if (choicing == 'Y' || choicing == 'y') {
 				newAct = new ActionSave(this, false, false);//with loading => false //for playing => false
@@ -165,7 +172,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 			newAct = new ActionLoad(this, false);
 		}
 		else {
-			pGUI->PrintMessage("Do you want to save the figuers ? y:n");
+			pGUI->PrintMessage("Do you want to save the figuers ? (Y = yes, N = no)");
 			char choice = pGUI->GetKeyPressed();
 			switch (choice) {
 			case 'N':
@@ -187,27 +194,23 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 		newAct = new SelectFigureAction(this, x, y);
 		break;
 	case PLAYING_AREA:
-		pGUI->PrintMessage("playing Area");
+		pGUI->PrintMessage("Playing Area");
 		break;
 	case TO_PLAY:
 		if (FigCount != 0) {
 			newAct = new ActionSave(this, false, true);//with loading => false //for playing => true
-			pGUI->PrintMessage("playing");
+			pGUI->PrintMessage("Playing");
 			pGUI->CreatePlayToolBar();
 		}
 		else {
-			pGUI->PrintMessage("draw figuers first");
-
+			pGUI->PrintMessage("Draw figuers first");
 		}
-
-
-
 		break;
 
 	case TO_DRAW:
 		newAct = new ActionLoad(this, true);//with loading => false //for playing => true
 		pGUI->CreateDrawToolBar();
-		pGUI->PrintMessage("drwaing");
+		pGUI->PrintMessage("Drwaing");
 		break;
 
 	case PLAY_FIGUERS:	 //play with figuer type
@@ -227,8 +230,11 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 		break;
 
 	case RESIZE:
+		pGUI->PrintMessage("You must select a figure first!");
+
 		for (int i = 0; i < FigCount; i++)
 		{
+			resizeFlag = true;
 			temp = FigList[i];
 			if (temp->IsSelected()) {
 				temp->changeFigureSize(pGUI);
@@ -237,13 +243,28 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 			}
 		}
 		break;
+
+	case UNDO:
+		pGUI->PrintMessage("undo");
+		//newAct = new ActionUndo(this);
+		Undo();
+		break;
+	case REDO:
+		pGUI->PrintMessage("redo");
+		break;
 	case STATUS:	//a click on the status bar ==> no action
 		return NULL;
 		break;
-
-
 	}
 
+	if (ActType != FIGURES && FigCount>0 && ActType != UNDO)
+	{
+		AddToUndoLIst();
+	}
+	//if (ActType == RESIZE||FigCount > 0  )
+	//{
+	//	AddToUndoLIst();
+	//}
 	return newAct;
 }
 //////////////////////////////////////////////////////////////////////
@@ -303,7 +324,7 @@ CFigure* ApplicationManager::GetFigure(int x, int y) const
 {
 	//If a figure is found return a pointer to it.
 	//if this point (x,y) does not belong to any figure return NULL
-	
+
 
 	///Add your code here to search for a figure given a point x,y	
 	CFigure* pFig;
@@ -315,7 +336,7 @@ CFigure* ApplicationManager::GetFigure(int x, int y) const
 
 	}
 	return NULL;
-	
+
 }
 void ApplicationManager::selectFigure(int& x, int& y)
 {
@@ -323,22 +344,32 @@ void ApplicationManager::selectFigure(int& x, int& y)
 	int numberOfFiguresSelected = 0, previosFigure = 0;
 	bool s = false, clear = true;
 	if (FigCount == 0) {
-		pGUI->PrintMessage("no figures drawing");
+		pGUI->PrintMessage("Please Draw figures first");
 	}
 	else {
 		for (int i = 0; i < FigCount; i++)
 		{
 			temp = FigList[i];
-			if (temp->InsideAFigure(x,y,pGUI))
+			
+
+			///- - - - - for multiple select - - -  -
+			if (temp->InsideAFigure(x, y,pGUI) && (GetKeyState(VK_CONTROL) & 0x8000))
+			{
+
+				temp->SetSelected(true);
+			}
+			
+			
+			/// - - - - - Noraml Single Select ------------
+			else if (temp->InsideAFigure(x,y,pGUI))
 			{
 				clear = false;
 				numberOfFiguresSelected++;
 				temp->IsSelected() ? pGUI->ClearStatusBar() : pGUI->PrintMessage(temp->getFigureName());
-				s=temp->IsSelected();
+				s = temp->IsSelected();
 				for (int j = 0; j < FigCount; j++)FigList[j]->SetSelected(false);
 				s ? temp->SetSelected(false) : temp->SetSelected(true);
-			}
-			else if(clear)
+		     if (clear)
 			{
 				pGUI->ClearStatusBar();
 			}
@@ -351,6 +382,9 @@ void ApplicationManager::selectFigure(int& x, int& y)
 				t->SetSelected(false);
 				previosFigure = i;
 			}
+			
+			}
+			
 		}
 		clear ? pGUI->ClearStatusBar() : true;
 	}
@@ -371,20 +405,25 @@ void ApplicationManager::SaveAll(ofstream& MyFile)
 //Delete a figure to the list of figures
 void ApplicationManager::DeleteSelectedItem() {
 	bool flag = false;
+	int temp = FigCount;
+	
 	for (int i = 0; i < FigCount; i++) {
 
 
 		if (FigList[i]->IsSelected()) {
+			
 			flag = true;
 			delete 	FigList[i];
 
 			FigList[i] = NULL;
-			ShiftItem(i);
 			FigCount--;
+			ShiftItem(i);
+			i--;
+			
 		}
 	}
 	if (!flag) {
-		pGUI->PrintMessage("you must select an item first!");
+		pGUI->PrintMessage("You must select a figure first!");
 	}
 	else {
 		pGUI->PrintMessage("Selected figuer Deleted");
@@ -397,7 +436,9 @@ void ApplicationManager::DeleteSelectedItem() {
 void ApplicationManager::ShiftItem(int figure) {
 
 	for (int i = figure; i < FigCount; i++) {
+		
 		FigList[i] = FigList[i + 1];
+
 	}
 
 
@@ -413,9 +454,9 @@ int ApplicationManager::getAtypefromFigureList() {
 	else if (typeid(*FigList[i]) == typeid(CHex)) {
 		return 3;
 	}
-	
+
 }
-string ApplicationManager::getAcolorfromFigureList(int & count) {
+string ApplicationManager::getAcolorfromFigureList(int& count) {
 	int fig = rand() % FigCount;
 	if (FigList[fig]->IsFilled()) {
 		for (int i = 0; i < FigCount; i++) {
@@ -423,7 +464,7 @@ string ApplicationManager::getAcolorfromFigureList(int & count) {
 				count++;
 			}
 		}
-	return  pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor());
+		return  pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor());
 
 	}
 	else {
@@ -433,21 +474,21 @@ string ApplicationManager::getAcolorfromFigureList(int & count) {
 			}
 		}
 		return "NONE";
-	
+
 	}
 }
 string ApplicationManager::getAtypeWithAcolor(int& count, string& figColor) {
 	int fig = rand() % FigCount;
 	string type;
-	
+
 	if (typeid(*FigList[fig]) == typeid(CSquare)) {
-		type= "Squers";
+		type = "Squers";
 	}
 	else if (typeid(*FigList[fig]) == typeid(CElps)) {
-		type= "Elps";
+		type = "Elps";
 	}
 	else if (typeid(*FigList[fig]) == typeid(CHex)) {
-		type= "Hexes";
+		type = "Hexes";
 	}
 	if (FigList[fig]->IsFilled()) {
 		figColor = pGUI->ConvertColorToString(FigList[fig]->GetFigureFillColor());
@@ -461,13 +502,73 @@ string ApplicationManager::getAtypeWithAcolor(int& count, string& figColor) {
 	else {
 		figColor = "NONE";
 		for (int i = 0; i < FigCount; i++) {
-			if((typeid(*FigList[fig]) == typeid(*FigList[i])) && (!FigList[i]->IsFilled())) {
+			if ((typeid(*FigList[fig]) == typeid(*FigList[i])) && (!FigList[i]->IsFilled())) {
 				count++;
 			}
 		}
 	}
 	return type;
 }
+
+//==================================================================================//
+//							      Undeo and redo functions   						//
+//==================================================================================//
+
+void ApplicationManager::AddToUndoLIst() {
+	//CFigure* tempList[MaxFigCount];	//List of all figures (Array of pointers)
+
+	for (int i = 0; i < FigCount; i++) {	
+		 
+		undoList[undoCount][i] = FigList[i];
+	}
+
+	//undoList[undoCount] = tempList;
+	figCountList[undoCount] = FigCount;
+	undoCount++;
+	std::cout << "undoCount" << undoCount << endl;
+	std::cout << "figcount" << FigCount << endl;
+}
+
+void ApplicationManager::Undo() {
+
+	if (undoCount == 1) {
+		pGUI->PrintMessage("UndoList Empty");
+		FigCount = 0;
+	}
+	else {
+		std::cout << "hamama" << endl;
+		std::cout << " undo undoCount" << undoCount << endl;
+		std::cout << " undo figcount" << FigCount << endl;
+		/*for (int i = 0; i < 100; i++) {
+			std::cout << "befor" <<undoList[i] << endl;
+		}*/
+
+		pGUI->PrintMessage("UndoList not Empty");
+		//undoList[undoCount] = NULL;
+		undoCount--;
+		
+			FigCount =	figCountList[undoCount];
+		
+			for (int i = 0; i < FigCount; i++) {
+
+				FigList[i] = undoList[undoCount][i];
+			}
+		
+		
+	}
+
+	pGUI->ClearDrawArea();
+	UpdateInterface();
+
+		std::cout << "undoCount from undo " << undoCount << endl;
+
+	//pGUI->PrintMessage("Undo");
+
+}
+
+
+
+
 //==================================================================================//
 //							Interface Management Functions							//
 //==================================================================================//
