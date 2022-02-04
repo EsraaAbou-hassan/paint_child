@@ -257,7 +257,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 		break;
 	}
 
-	if (ActType != FIGURES && FigCount>0 && ActType != UNDO)
+	if (ActType != FIGURES && FigCount > 0 && ActType != UNDO)
 	{
 		AddToUndoLIst();
 	}
@@ -350,41 +350,52 @@ void ApplicationManager::selectFigure(int& x, int& y)
 		for (int i = 0; i < FigCount; i++)
 		{
 			temp = FigList[i];
-			
+
 
 			///- - - - - for multiple select - - -  -
-			if (temp->InsideAFigure(x, y,pGUI) && (GetKeyState(VK_CONTROL) & 0x8000))
+			if (temp->InsideAFigure(x, y, pGUI))
 			{
+				if (GetKeyState(VK_CONTROL) & 0x8000)
+				{
+					cout << "multiple select\n";
+					temp->SetSelected(true);
+				}
+				else
+				{
+					cout << "normal select\n";
+					clear = false;
+					numberOfFiguresSelected++;
+					temp->IsSelected() ? pGUI->ClearStatusBar() : pGUI->PrintMessage(temp->getFigureName());
+					s = temp->IsSelected();
+					if (s) {
+						for (int j = 0; j <= i; j++)FigList[j]->SetSelected(false);
+					}
+					else {
+						if (numberOfFiguresSelected >1)
+						{
+							for (int j = 0; j <= i; j++)FigList[j]->SetSelected(false);
+						}
+						temp->SetSelected(true);
+						previosFigure = i;
+					}
+					
+				}
+			}
 
-				temp->SetSelected(true);
-			}
-			
-			
-			/// - - - - - Noraml Single Select ------------
-			else if (temp->InsideAFigure(x,y,pGUI))
+
+			/*/// - - - - - Noraml Single Select ------------
+			if (temp->InsideAFigure(x, y, pGUI))
 			{
-				clear = false;
-				numberOfFiguresSelected++;
-				temp->IsSelected() ? pGUI->ClearStatusBar() : pGUI->PrintMessage(temp->getFigureName());
-				s = temp->IsSelected();
-				for (int j = 0; j < FigCount; j++)FigList[j]->SetSelected(false);
-				s ? temp->SetSelected(false) : temp->SetSelected(true);
-		     if (clear)
+				
+
+			}*/
+			else if(!(GetKeyState(VK_CONTROL) & 0x8000))
 			{
-				pGUI->ClearStatusBar();
-			}
-			if (numberOfFiguresSelected == 0)temp->SetSelected(false);
-			if (numberOfFiguresSelected == 1 && previosFigure == 0) {
-				previosFigure = i;
-			}
-			else if (numberOfFiguresSelected > 1) {
-				CFigure* t = FigList[previosFigure];
-				t->SetSelected(false);
-				previosFigure = i;
+				temp->SetSelected(false);
+				cout << "c" << endl;
 			}
 			
-			}
-			
+
 		}
 		clear ? pGUI->ClearStatusBar() : true;
 	}
@@ -406,12 +417,12 @@ void ApplicationManager::SaveAll(ofstream& MyFile)
 void ApplicationManager::DeleteSelectedItem() {
 	bool flag = false;
 	int temp = FigCount;
-	
+
 	for (int i = 0; i < FigCount; i++) {
 
 
 		if (FigList[i]->IsSelected()) {
-			
+
 			flag = true;
 			delete 	FigList[i];
 
@@ -419,7 +430,7 @@ void ApplicationManager::DeleteSelectedItem() {
 			FigCount--;
 			ShiftItem(i);
 			i--;
-			
+
 		}
 	}
 	if (!flag) {
@@ -436,7 +447,7 @@ void ApplicationManager::DeleteSelectedItem() {
 void ApplicationManager::ShiftItem(int figure) {
 
 	for (int i = figure; i < FigCount; i++) {
-		
+
 		FigList[i] = FigList[i + 1];
 
 	}
@@ -514,11 +525,18 @@ string ApplicationManager::getAtypeWithAcolor(int& count, string& figColor) {
 //							      Undeo and redo functions   						//
 //==================================================================================//
 
+class shape {
+
+};
+class square
+{
+
+};
 void ApplicationManager::AddToUndoLIst() {
 	//CFigure* tempList[MaxFigCount];	//List of all figures (Array of pointers)
 
-	for (int i = 0; i < FigCount; i++) {	
-		 
+	for (int i = 0; i < FigCount; i++) {
+
 		undoList[undoCount][i] = FigList[i];
 	}
 
@@ -546,21 +564,21 @@ void ApplicationManager::Undo() {
 		pGUI->PrintMessage("UndoList not Empty");
 		//undoList[undoCount] = NULL;
 		undoCount--;
-		
-			FigCount =	figCountList[undoCount];
-		
-			for (int i = 0; i < FigCount; i++) {
 
-				FigList[i] = undoList[undoCount][i];
-			}
-		
-		
+		FigCount = figCountList[undoCount];
+
+		for (int i = 0; i < FigCount; i++) {
+
+			FigList[i] = undoList[undoCount][i];
+		}
+
+
 	}
 
 	pGUI->ClearDrawArea();
 	UpdateInterface();
 
-		std::cout << "undoCount from undo " << undoCount << endl;
+	std::cout << "undoCount from undo " << undoCount << endl;
 
 	//pGUI->PrintMessage("Undo");
 
