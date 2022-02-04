@@ -16,11 +16,18 @@ private:
 	int FigCount;		//Actual number of figures
 	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
 
+	CFigure* undoList[100][200] = {NULL};
+	
+	int figCountList[100];
+	int undoCount=1;
+	//CFigure** redoList[100] = {NULL};
+	//int redoCount=0;
 	//Pointers to Input and Output classes
 	GUI* pGUI;
 	
 
 public:	
+
 	ApplicationManager(); 
 	~ApplicationManager();
 
@@ -47,6 +54,8 @@ public:
 	void DeleteFigures(); //remove all figures from array
 	void DeleteSelectedItem() ; //remove selected figuer
 	void ShiftItem(int figure) ;  //shift other figuer un the array
+	void AddToUndoLIst();
+	void Undo();
 };
 
 #endif

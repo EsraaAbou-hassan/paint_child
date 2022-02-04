@@ -104,6 +104,8 @@ ActionType GUI::MapInputToActionType(int &x,int &y) const
 			case ITM_LOAD: return LOAD;
 			case ITM_PLAY: return TO_PLAY;
 			case ITM_RESIZE:return RESIZE;
+			case ITM_UNDO: return UNDO;
+			case ITM_REDO: return REDO;
 			
 			default: return EMPTY;	//A click on empty place in desgin toolbar
 			}
@@ -312,6 +314,8 @@ void GUI::CreateDrawToolBar() const
 	MenuItemImages[ITM_SAVE] = "images\\MenuItems\\Menu_Save.jpg";
 	MenuItemImages[ITM_LOAD] = "images\\MenuItems\\Menu_Load.jpg";
 	MenuItemImages[ITM_PLAY] = "images\\MenuItems\\play.jpeg";
+	MenuItemImages[ITM_UNDO] = "images\\MenuItems\\undo.jpg";
+	MenuItemImages[ITM_REDO] = "images\\MenuItems\\redo.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\Menu_Exit.jpg";
 
 

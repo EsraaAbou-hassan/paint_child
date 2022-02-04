@@ -15,6 +15,7 @@
 #include "Actions/ActionPickFig_Color.h"
 #include "Actions/ActionResize.h"
 #include"Actions/actionSelectFigure.h"
+#include"Actions/ActionUndo.h"
 #include "Figures/CSquare.h"
 #include "Figures/CElps.h"
 #include "Figures/CHex.h"
@@ -42,6 +43,10 @@ void ApplicationManager::DeleteFigures() {
 }
 void ApplicationManager::Run()
 {
+	for (int i = 0; i < MaxFigCount; i++)
+	{
+		undoList[0][i] = FigList[i];
+	}
 	ActionType ActType;
 	do
 	{
@@ -239,11 +244,27 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 		}
 		break;
 
+	case UNDO:
+		pGUI->PrintMessage("undo");
+		//newAct = new ActionUndo(this);
+		Undo();
+		break;
+	case REDO:
+		pGUI->PrintMessage("redo");
+		break;
 	case STATUS:	//a click on the status bar ==> no action
 		return NULL;
 		break;
 	}
 
+	if (ActType != FIGURES && FigCount>0 && ActType != UNDO)
+	{
+		AddToUndoLIst();
+	}
+	//if (ActType == RESIZE||FigCount > 0  )
+	//{
+	//	AddToUndoLIst();
+	//}
 	return newAct;
 }
 //////////////////////////////////////////////////////////////////////
@@ -488,6 +509,66 @@ string ApplicationManager::getAtypeWithAcolor(int& count, string& figColor) {
 	}
 	return type;
 }
+
+//==================================================================================//
+//							      Undeo and redo functions   						//
+//==================================================================================//
+
+void ApplicationManager::AddToUndoLIst() {
+	//CFigure* tempList[MaxFigCount];	//List of all figures (Array of pointers)
+
+	for (int i = 0; i < FigCount; i++) {	
+		 
+		undoList[undoCount][i] = FigList[i];
+	}
+
+	//undoList[undoCount] = tempList;
+	figCountList[undoCount] = FigCount;
+	undoCount++;
+	std::cout << "undoCount" << undoCount << endl;
+	std::cout << "figcount" << FigCount << endl;
+}
+
+void ApplicationManager::Undo() {
+
+	if (undoCount == 1) {
+		pGUI->PrintMessage("UndoList Empty");
+		FigCount = 0;
+	}
+	else {
+		std::cout << "hamama" << endl;
+		std::cout << " undo undoCount" << undoCount << endl;
+		std::cout << " undo figcount" << FigCount << endl;
+		/*for (int i = 0; i < 100; i++) {
+			std::cout << "befor" <<undoList[i] << endl;
+		}*/
+
+		pGUI->PrintMessage("UndoList not Empty");
+		//undoList[undoCount] = NULL;
+		undoCount--;
+		
+			FigCount =	figCountList[undoCount];
+		
+			for (int i = 0; i < FigCount; i++) {
+
+				FigList[i] = undoList[undoCount][i];
+			}
+		
+		
+	}
+
+	pGUI->ClearDrawArea();
+	UpdateInterface();
+
+		std::cout << "undoCount from undo " << undoCount << endl;
+
+	//pGUI->PrintMessage("Undo");
+
+}
+
+
+
+
 //==================================================================================//
 //							Interface Management Functions							//
 //==================================================================================//

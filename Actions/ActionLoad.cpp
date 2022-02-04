@@ -20,12 +20,9 @@ ActionLoad::ActionLoad(ApplicationManager* pApp, bool forPlaying) :Action(pApp) 
 }
 void ActionLoad::Execute() {
 
-	CSquare* c;
-	c->squarersNumber = 0;
-	CElps* e;
-	e->ElpsNumber = 0;
-	CHex* h;
-	h->hexaNumber = 0;
+	CSquare::squarersNumber = 0;
+	CElps::ElpsNumber = 0;
+	CHex::hexaNumber = 0;
 
 	if (playing) {
 		
