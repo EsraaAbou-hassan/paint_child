@@ -59,6 +59,16 @@ void ActionSave::Execute()
 	// - - - - - Playing Mode Behaviour - - - - -
 	if (playing) {
 		MyFile.open("playing.txt", ios::trunc);
+		string FillColor;
+		if (UI.isFilled == false) {
+			FillColor = "NO_FILL";
+		}
+		else {
+			FillColor = g->ConvertColorToString(UI.FillColor);
+		}
+		MyFile << g->ConvertColorToString(UI.DrawColor) << "\t" << FillColor << "\t" << g->ConvertColorToString(UI.BkGrndColor) << endl;
+		pManager->SaveAll(MyFile);
+		MyFile.close();
 
 	}
 
@@ -92,6 +102,14 @@ void ActionSave::Execute()
 		pManager->SaveAll(MyFile);
 		MyFile.close();
 		g->ClearStatusBar();
+		
+		
+		if (loading) {
+			g->PrintMessage("load");
+			Action* pAct = new ActionLoad(pManager, false);
+			pAct->Execute();
+
+		}
 
 		
 		
@@ -99,10 +117,5 @@ void ActionSave::Execute()
 	
 
 
-		if (loading) {
-			g->PrintMessage("load");
-			Action* pAct = new ActionLoad(pManager, false);
-			pAct->Execute();
-
-		}
+		
 	}
