@@ -492,10 +492,6 @@ void GUI::setCrntBackgroundColor(color c) const
 	UI.BkGrndColor = c;
 }
 
-//color GUI::getCrntBackgroundColor() const	//get current Background color
-//{
-//	return UI.BkGrndColor;
-//}
 //////////////////////////////////////////////////////////////////////////////////////////
 	
 int GUI::getCrntPenWidth() const		//get current pen width
