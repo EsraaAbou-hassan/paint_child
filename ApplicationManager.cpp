@@ -77,7 +77,6 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 	CFigure* temp;
 
 	bool s = false, clear = true;
-	bool resizeFlag = false;
 
 	//According to Action Type, create the corresponding action object
 	switch (ActType)
@@ -237,7 +236,6 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 
 		for (int i = 0; i < FigCount; i++)
 		{
-			resizeFlag = true;
 			temp = FigList[i];
 			if (temp->IsSelected()) {
 				temp->changeFigureSize(pGUI);
