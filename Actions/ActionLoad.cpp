@@ -76,12 +76,15 @@ color ActionLoad::ConvertToColor(string s)
 		return YELLOW;
 	if (s == "GREEN")
 		return GREEN;
-	if (s == "LIGHTGOLDENRODYELLOW")
-		return LIGHTGOLDENRODYELLOW;
-	if (s == "MAGENTA")
-		return MAGENTA;
-	if (s == "TURQUOISE")
-		return TURQUOISE;
+	if (s == "PINK")
+		return PINK;
+	if (s == "BROWN")
+		return BROWN;
+	if (s == "CYAN")
+		return CYAN;
+	if (s == "ORANGE")
+		return ORANGE;
+	
 }
 
 void ActionLoad::loading(char file[100])

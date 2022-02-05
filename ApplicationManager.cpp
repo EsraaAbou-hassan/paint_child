@@ -261,10 +261,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 	{
 		AddToUndoLIst();
 	}
-	//if (ActType == RESIZE||FigCount > 0  )
-	//{
-	//	AddToUndoLIst();
-	//}
+	
 	return newAct;
 }
 //////////////////////////////////////////////////////////////////////
@@ -357,12 +354,10 @@ void ApplicationManager::selectFigure(int& x, int& y)
 			{
 				if (GetKeyState(VK_CONTROL) & 0x8000)
 				{
-					cout << "multiple select\n";
 					temp->SetSelected(true);
 				}
 				else
 				{
-					cout << "normal select\n";
 					clear = false;
 					numberOfFiguresSelected++;
 					temp->IsSelected() ? pGUI->ClearStatusBar() : pGUI->PrintMessage(temp->getFigureName());
@@ -392,7 +387,6 @@ void ApplicationManager::selectFigure(int& x, int& y)
 			else if(!(GetKeyState(VK_CONTROL) & 0x8000))
 			{
 				temp->SetSelected(false);
-				cout << "c" << endl;
 			}
 			
 
@@ -525,26 +519,16 @@ string ApplicationManager::getAtypeWithAcolor(int& count, string& figColor) {
 //							      Undeo and redo functions   						//
 //==================================================================================//
 
-class shape {
-
-};
-class square
-{
-
-};
 void ApplicationManager::AddToUndoLIst() {
-	//CFigure* tempList[MaxFigCount];	//List of all figures (Array of pointers)
 
 	for (int i = 0; i < FigCount; i++) {
-
 		undoList[undoCount][i] = FigList[i];
 	}
 
 	//undoList[undoCount] = tempList;
 	figCountList[undoCount] = FigCount;
 	undoCount++;
-	std::cout << "undoCount" << undoCount << endl;
-	std::cout << "figcount" << FigCount << endl;
+	
 }
 
 void ApplicationManager::Undo() {
@@ -554,15 +538,8 @@ void ApplicationManager::Undo() {
 		FigCount = 0;
 	}
 	else {
-		std::cout << "hamama" << endl;
-		std::cout << " undo undoCount" << undoCount << endl;
-		std::cout << " undo figcount" << FigCount << endl;
-		/*for (int i = 0; i < 100; i++) {
-			std::cout << "befor" <<undoList[i] << endl;
-		}*/
-
+		
 		pGUI->PrintMessage("UndoList not Empty");
-		//undoList[undoCount] = NULL;
 		undoCount--;
 
 		FigCount = figCountList[undoCount];
@@ -572,15 +549,10 @@ void ApplicationManager::Undo() {
 			FigList[i] = undoList[undoCount][i];
 		}
 
-
 	}
 
 	pGUI->ClearDrawArea();
 	UpdateInterface();
-
-	std::cout << "undoCount from undo " << undoCount << endl;
-
-	//pGUI->PrintMessage("Undo");
 
 }
 
