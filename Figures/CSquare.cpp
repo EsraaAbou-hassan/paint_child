@@ -68,10 +68,6 @@ void CSquare::changeFigureSize(GUI* pGUI)
 
 
 
-	//result that get print out: 122.34
-
-
-
 	this->length = this->length * factor;
 	x = this->length + this->TopLeftCorner.x;
 	y = this->length + this->TopLeftCorner.y;
