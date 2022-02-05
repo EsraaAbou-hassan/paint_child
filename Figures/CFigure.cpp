@@ -151,8 +151,6 @@ color CFigure::ConvertToColor(string s)
 		return YELLOW;
 	if (s == "GREEN")
 		return GREEN;
-	if (s == "LIGHTGOLDENRODYELLOW")
-		return LIGHTGOLDENRODYELLOW;
 	if (s == "MAGENTA")
 		return MAGENTA;
 	if (s == "TURQUOISE")

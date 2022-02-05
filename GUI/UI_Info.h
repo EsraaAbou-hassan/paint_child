@@ -5,7 +5,6 @@
 
 //User Interface information file.
 //This file contains info that is needed by Input and Output classes to
-//handle the user interface
 
 enum GUI_MODE	//Graphical user interface mode
 {
@@ -19,8 +18,6 @@ enum GUI_MODE	//Graphical user interface mode
 
 enum DrawMenuItem //The items of the Draw menu (you should add more items)
 {
-	//Note: Items are ordered here as they appear in menu
-	//If you want to change the menu items order, change the order here
 	ITM_FIGURES,		//Hexa item in menu
 	ITM_DRAW_CLR,	//Draw Color item in menu
 	ITM_FILL_CLR,	//Fill Color item in menu
@@ -33,9 +30,6 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 	ITM_REDO,
 	ITM_UNDO,
 	ITM_RESIZE,
-	
-	//TODO: Add more items names here
-
 	ITM_EXIT,		//Exit item
 	ITM_PLAY,
 	
@@ -45,10 +39,7 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 
 enum PlayMenuItem //The items of the Play menu (you should add more items)
 {
-	//Note: Items are ordered here as they appear in menu
-	//If you want to change the menu items order, change the order here
 
-	//TODO: Add more items names here
 	ITM_FIGURE,
 	ITM_COLOR,
 	ITM_FIG_COL,
@@ -111,7 +102,6 @@ struct UI_Info	//User Interface Info.
 	color StatusBarColor;	//Status bar color
 	int PenWidth;			//width of the pen that draws shapes
 
-	/// Add more members if needed
 	
 }UI;	//create a global object UI
 

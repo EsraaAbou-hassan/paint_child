@@ -102,6 +102,9 @@ void CHex::changeFigureSize(GUI* pGUI)
 	case RESIZE_0_25:
 		factor = 0.25;
 		break;
+	case DRAWING_AREA:
+		factor = 1;
+		break;
 	};
 
 	this->radius = this->radius * factor;
@@ -120,7 +123,15 @@ void CHex::changeFigureSize(GUI* pGUI)
 	else
 	{
 		this->radius = this->radius / factor;
-		pGUI->PrintMessage(factor == 2 || factor == 4 ? "exceeds the window limit" : "too small");
+		if (factor == 4 || factor == 2) {
+			pGUI->PrintMessage("exceeds the window limit");
+		}
+		else if (factor == 1) {
+			pGUI->PrintMessage("Same Size");
+		}
+		else {
+			pGUI->PrintMessage("Too small");
+		}
 	}
 	pGUI->ClearDrawArea();
 	pGUI->CreateDrawToolBar();

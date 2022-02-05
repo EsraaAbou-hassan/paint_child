@@ -111,6 +111,9 @@ void CElps::changeFigureSize(GUI* pGUI)
 		factor = 0.25;
 		pGUI->PrintMessage("resize 0.25");
 		break;
+	case DRAWING_AREA:
+		factor = 1;
+		break;
 
 	};
 
@@ -131,7 +134,15 @@ void CElps::changeFigureSize(GUI* pGUI)
 	}
 	else
 	{
-		pGUI->PrintMessage("exceeds the window limit");
+		if (factor == 4 || factor == 2) {
+			pGUI->PrintMessage("exceeds the window limit");
+		}
+		else if (factor==1) {
+			pGUI->PrintMessage("Same Size");
+		}
+		else {
+			pGUI->PrintMessage("Too small");
+		}
 		TopLeftCorner.x = p1.x; TopLeftCorner.y = p1.y;
 		BottomRightCorner.y = p2.y; BottomRightCorner.x = p2.x;
 	}

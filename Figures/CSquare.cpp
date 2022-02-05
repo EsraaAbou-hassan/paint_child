@@ -60,6 +60,9 @@ void CSquare::changeFigureSize(GUI* pGUI)
 	case RESIZE_0_25:
 		factor = 0.25;
 		break;
+	case DRAWING_AREA:
+		factor = 1;
+		break;
 
 	};
 
@@ -77,7 +80,15 @@ void CSquare::changeFigureSize(GUI* pGUI)
 	else
 	{
 		this->length = this->length / factor;
-		pGUI->PrintMessage(factor==2||factor==4?"exceeds the window limit": "too small");
+		if (factor == 4 || factor == 2) {
+			pGUI->PrintMessage("exceeds the window limit");
+		}
+		else if (factor == 1) {
+			pGUI->PrintMessage("Same Size");
+		}
+		else {
+			pGUI->PrintMessage("Too small");
+		}
 	}
 	pGUI->CreateDrawToolBar();
 	pGUI->ClearDrawArea();

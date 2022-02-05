@@ -56,6 +56,7 @@ void ActionLoad::Execute() {
 		}
 		else {
 			std::cout << "no file selected ";
+			pManager->GetGUI()->PrintMessage("no file selected ");
 		}
 	}
 
@@ -102,6 +103,7 @@ void ActionLoad::loading(char file[100])
 	std::cout << DrawColor << " " << FillColor << " " << BackColor << " " << endl;
 	if (FillColor == "NO_FILL") {
 		UI.isFilled = false;
+
 	}
 	else {
 		UI.isFilled = true;
@@ -109,7 +111,7 @@ void ActionLoad::loading(char file[100])
 	}
 	pGUI->setCrntDrawColor(ConvertToColor(DrawColor));
 	pGUI->setCrntBackgroundColor(ConvertToColor(BackColor));
-	pGUI->ClearDrawArea();
+	
 
 	MyReadFile >> FigursNumber;
 	std::cout << FigursNumber << endl;
@@ -132,6 +134,7 @@ void ActionLoad::loading(char file[100])
 		figer->Load(MyReadFile);
 		pManager->AddFigure(figer);
 		FigNumbers--;
+		delete figer;
 	}
 
 

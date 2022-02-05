@@ -149,7 +149,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 
 	case EXIT:
 		if (FigCount != 0) {
-			pGUI->PrintMessage("Do you want to save the figuers ? (Y = yes, N = no)");
+			pGUI->PrintMessage("Do you want to save the figuers ? (Y = yes)");
 			char choicing = pGUI->GetKeyPressed();
 			if (choicing == 'Y' || choicing == 'y') {
 				newAct = new ActionSave(this, false, false);//with loading => false //for playing => false
@@ -169,19 +169,26 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 			newAct = new ActionLoad(this, false);
 		}
 		else {
-			pGUI->PrintMessage("Do you want to save the figuers ? (Y = yes, N = no)");
-			char choice = pGUI->GetKeyPressed();
-			switch (choice) {
-			case 'N':
-			case 'n':
-				pGUI->PrintMessage("load");
-				newAct = new ActionLoad(this, false);
-				break;
-			case 'Y':
-			case 'y':
-				newAct = new ActionSave(this, true, false);//with loading => true //for playing => false
-				break;
-			}
+			char choice;
+			do {
+
+
+				pGUI->PrintMessage("Do you want to save the figuers ? (Y = yes, N = no)");
+				choice = pGUI->GetKeyPressed();
+				switch (choice) {
+				case 'N':
+				case 'n':
+					pGUI->PrintMessage("load");
+					newAct = new ActionLoad(this, false);
+					break;
+				case 'Y':
+				case 'y':
+					newAct = new ActionSave(this, true, false);//with loading => true //for playing => false
+					break;
+
+				}
+
+			} while (choice != 'y' && choice != 'Y' && choice != 'N' && choice != 'n');
 		}
 		///create AddLineAction here
 
@@ -258,7 +265,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType, int& x, int& y)
 	{
 		AddToUndoLIst();
 	}
-	
+
 	return newAct;
 }
 //////////////////////////////////////////////////////////////////////
@@ -363,14 +370,14 @@ void ApplicationManager::selectFigure(int& x, int& y)
 						for (int j = 0; j <= i; j++)FigList[j]->SetSelected(false);
 					}
 					else {
-						if (numberOfFiguresSelected >1)
+						if (numberOfFiguresSelected > 1)
 						{
 							for (int j = 0; j <= i; j++)FigList[j]->SetSelected(false);
 						}
 						temp->SetSelected(true);
 						previosFigure = i;
 					}
-					
+
 				}
 			}
 
@@ -378,14 +385,14 @@ void ApplicationManager::selectFigure(int& x, int& y)
 			/*/// - - - - - Noraml Single Select ------------
 			if (temp->InsideAFigure(x, y, pGUI))
 			{
-				
+
 
 			}*/
-			else if(!(GetKeyState(VK_CONTROL) & 0x8000))
+			else if (!(GetKeyState(VK_CONTROL) & 0x8000))
 			{
 				temp->SetSelected(false);
 			}
-			
+
 
 		}
 		clear ? pGUI->ClearStatusBar() : true;
@@ -525,7 +532,7 @@ void ApplicationManager::AddToUndoLIst() {
 	//undoList[undoCount] = tempList;
 	figCountList[undoCount] = FigCount;
 	undoCount++;
-	
+
 }
 
 void ApplicationManager::Undo() {
@@ -535,7 +542,7 @@ void ApplicationManager::Undo() {
 		FigCount = 0;
 	}
 	else {
-		
+
 		pGUI->PrintMessage("UndoList not Empty");
 		undoCount--;
 

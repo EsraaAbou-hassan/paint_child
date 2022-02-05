@@ -153,10 +153,7 @@ ActionType GUI::MapInputToActionType(int &x,int &y) const
 		return STATUS;
 	}
 	else if (UI.InterfaceMode == MODE_COLOR) {
-		///TODO:
-		//perform checks similar to Draw mode checks above
 		//and return the correspoding action
-		//return TO_PLAY;	//just for now. This should be updated
 		//[1] If user clicks on the Toolbar
 		if (y >= 0 && y < UI.ToolBarHeight)
 		{
@@ -320,7 +317,6 @@ void GUI::CreateDrawToolBar() const
 
 
 
-	//TODO: Prepare images for each menu item and add it to the list
 
 	//Draw menu item one image at a time
 	for (int i = 0; i < DRAW_ITM_COUNT; i++)
@@ -347,7 +343,6 @@ void GUI::CreatePlayToolBar() const
 	MenuItemImages[ITM_FIG_COL] = "images\\MenuItems\\fig&colors.JPG";
 	MenuItemImages[ITM_DRAW] = "images\\MenuItems\\Draw.jpg";
 
-	//TODO: Prepare images for each menu item a	nd add it to the list
 
 	//Draw menu item one image at a time
 	for (int i = 0; i < PLAY_ITM_COUNT; i++) {
@@ -380,7 +375,6 @@ void GUI::CreateColorToolBar() const
 	MenuItemImages[ITM_CLR_BLACK_T] = "images\\MenuItems\\black.jpg";
 	MenuItemImages[ITM_CLR_RED_T] = "images\\MenuItems\\red.jpg";
 	MenuItemImages[ITM_CLR_BROWN_T] = "images\\MenuItems\\brown.jpg";
-	//TODO: Prepare images for each menu item a	nd add it to the list
 
 	//Draw menu item one image at a time
 	for (int i = 0; i < Color_ITM_COUNT; i++) {
@@ -403,6 +397,7 @@ void GUI::CreateResizeToolBar() const
 	UI.InterfaceMode = MODE_RESIZE;
 
 	string MenuItemImages[Resize_ITM_COUNT];
+
 	MenuItemImages[ITM_4_SIZE] = "images\\MenuItems\\resize4.jpg";
 	MenuItemImages[ITM_2_SIZE] = "images\\MenuItems\\resize2.jpg";
 	MenuItemImages[ITM_0_5_SIZE] = "images\\MenuItems\\resize0.5.jpg";
