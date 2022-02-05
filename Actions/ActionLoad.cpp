@@ -111,7 +111,7 @@ void ActionLoad::loading(char file[100])
 	}
 	pGUI->setCrntDrawColor(ConvertToColor(DrawColor));
 	pGUI->setCrntBackgroundColor(ConvertToColor(BackColor));
-	
+	pGUI->ClearDrawArea();
 
 	MyReadFile >> FigursNumber;
 	std::cout << FigursNumber << endl;
@@ -135,8 +135,6 @@ void ActionLoad::loading(char file[100])
 		pManager->AddFigure(figer);
 		FigNumbers--;
 	}
-
-
 
 	MyReadFile.close();
 }
