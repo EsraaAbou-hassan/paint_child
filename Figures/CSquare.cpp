@@ -45,7 +45,7 @@ void CSquare::changeFigureSize(GUI* pGUI)
 	pGUI->PrintMessage("resize");
 	pGUI->CreateResizeToolBar();
 	ActType = pGUI->MapInputToActionType(x, y);
-	double factor = 0;
+	float factor = 0;
 	switch (ActType) {
 
 	case RESIZE_4:
@@ -65,6 +65,12 @@ void CSquare::changeFigureSize(GUI* pGUI)
 		break;
 
 	};
+
+
+
+	//result that get print out: 122.34
+
+
 
 	this->length = this->length * factor;
 	x = this->length + this->TopLeftCorner.x;

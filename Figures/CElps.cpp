@@ -129,8 +129,10 @@ void CElps::changeFigureSize(GUI* pGUI)
 	
 	if ( (factor==4||factor==2)&&BottomRightCorner.x <= endingPoint.x && TopLeftCorner.x >= startingPoint.x && TopLeftCorner.y >= startingPoint.y && BottomRightCorner.y <= endingPoint.y)
 	{
+		pGUI->PrintMessage("resize " + to_string(factor));
 	}
 	else if((factor == 0.5 || factor == 0.25)&&radiusX>20&&radiusY>20){
+		pGUI->PrintMessage("resize " + to_string(factor));
 	}
 	else
 	{
