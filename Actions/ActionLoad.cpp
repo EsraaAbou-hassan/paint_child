@@ -134,7 +134,6 @@ void ActionLoad::loading(char file[100])
 		figer->Load(MyReadFile);
 		pManager->AddFigure(figer);
 		FigNumbers--;
-		delete figer;
 	}
 
 
