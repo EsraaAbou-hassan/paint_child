@@ -66,10 +66,7 @@ void ApplicationManager::Run()
 
 }
 
-void ApplicationManager::reDrawBars() const {
-	pGUI->CreateDrawToolBar();
-	pGUI->CreateStatusBar();
-}
+
 
 //==================================================================================//
 //								Actions Related Functions							//

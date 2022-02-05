@@ -32,7 +32,6 @@ public:
 	~ApplicationManager();
 
 	void Run();		//to run the application
-	void reDrawBars() const;
 	// -- Action-Related Functions
 	Action* CreateAction(ActionType, int& x, int& y);
 	int GetSelectedIndexFigure();
