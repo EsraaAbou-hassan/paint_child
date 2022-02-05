@@ -79,7 +79,6 @@ void ActionAddSquare::Execute()
 		pGUI->inDrawingArea(bottomRightX, bottomRightY)) {
 		//Step 3 - Create a Square with the parameters read from the user
 		CSquare* R = new CSquare(topLeft, SideLength, SqrGfxInfo);
-		std::cout << "sqr object is squre: " << (typeid(*R) == typeid(CSquare)) << endl;
 		//Step 4 - Add the Square to the list of figures
 		pManager->AddFigure(R);
 	}
