@@ -13,7 +13,6 @@
 #include "Actions/ActionPickFigure.h"
 #include "Actions/ActionPickColor.h"
 #include "Actions/ActionPickFig_Color.h"
-#include "Actions/ActionResize.h"
 #include"Actions/actionSelectFigure.h"
 #include"Actions/ActionUndo.h"
 #include "Figures/CSquare.h"

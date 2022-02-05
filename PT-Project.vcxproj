@@ -140,7 +140,6 @@
     <ClCompile Include="Actions\ActionPickColor.cpp" />
     <ClCompile Include="Actions\ActionPickFigure.cpp" />
     <ClCompile Include="Actions\ActionPickFig_Color.cpp" />
-    <ClCompile Include="Actions\ActionResize.cpp" />
     <ClCompile Include="Actions\ActionSave.cpp" />
     <ClCompile Include="Actions\ActionSelectFigure.cpp" />
     <ClCompile Include="Actions\ActionSendToBack.cpp" />
@@ -201,7 +200,6 @@
     <ClInclude Include="Actions\ActionPickColor.h" />
     <ClInclude Include="Actions\ActionPickFigure.h" />
     <ClInclude Include="Actions\ActionPickFig_Color.h" />
-    <ClInclude Include="Actions\ActionResize.h" />
     <ClInclude Include="Actions\ActionSave.h" />
     <ClInclude Include="Actions\actionSelectFigure.h" />
     <ClInclude Include="Actions\ActionSendToBack.h" />
